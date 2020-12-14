@@ -5,8 +5,10 @@ library("sf")
 library("ggmap")
 library("ggspatial")
 library("OpenStreetMap")
+source(here("scripts", "DdM_to_decimal_degrees.R"))
 
-register_google("AIzaSyBcZed7UyQ8Gs5GDaF2abjVzpoSAfb4vOw")
+google_api <- rstudioapi::askForSecret("Google API Key")
+register_google(google_api)
 
 readxl::read_xlsx(path = "/Users/david/Google Drive/PhD/Rodent Trapping/Data/trap_sites.xlsx", sheet = 2) %>%
   write_csv(here("data", "trap_sites.csv")) #Read the data file from excel document and save within the repo as csv
