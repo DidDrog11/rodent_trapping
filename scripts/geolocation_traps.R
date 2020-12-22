@@ -1,11 +1,5 @@
-library("tidyverse")
 library("here")
-library("rgdal")
-library("sf")
-library("ggmap")
-library("ggspatial")
-library("OpenStreetMap")
-library("googledrive")
+source(here("scripts", "project_library.R"))
 source(here("scripts", "DdM_to_decimal_degrees.R"))
 
 google_api <- rstudioapi::askForSecret("Google API Key")
@@ -26,6 +20,7 @@ location_rodents <- trapped_rodents %>%
             by = c("rodent_id", "trap_night")) %>%
   select(rodent_id, trap_night, initial_species_id, village, habitat)
 
+
 # lalehun -----------------------------------------------------------------
 
 lalehun_traps <- trap_sites %>%
@@ -42,6 +37,18 @@ lalehun_rodents <- location_rodents %>%
   filter(village == "lalehun") %>%
   ggplot() +
   geom_bar(aes(x = trap_night))
+
+lalehun_test <- trap_sites %>%
+  mutate(lon_DdM = paste(paste(lon_degree, lon_dec, sep = "_"), "'", sep = ""),
+         lat_DdM = paste(paste(lat_degree, lat_dec, sep = "_"), "'", sep = ""),
+         lon = dg2dec(var = lon_DdM, Dg = "_", Min = "'"),
+         lat = dg2dec(var = lat_DdM, Dg = "_", Min = "'")) 
+
+coordinates(lalehun_test) <- c("lat", "lon")
+proj4string(lalehun_test) <- CRS("+proj=longlat +datum=WGS84")  ## for example
+
+res <- spTransform(lalehun_test, CRS("+proj=utm +zone=29 ellps=WGS84"))
+res
   
 # seilama -----------------------------------------------------------------
 
@@ -125,6 +132,15 @@ traps_seilama_16 <- ggmap(seilama_16) +
        y = "Latitude") +
   theme_minimal() +
   guides(alpha = F)
+
+ggplotly(ggplot() +
+  geom_sf(data = seilama_traps %>%
+            mutate(trap_night = as_factor(trap_night)),
+          aes(geometry = geometry,
+              colour = grid_number,
+              text = paste(trap_uid),
+              alpha = 0.2),
+          inherit.aes = F))
 
 # lalehun OSM ---------------------------------------------------------------------
 
