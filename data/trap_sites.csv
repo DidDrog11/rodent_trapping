@@ -774,55 +774,55 @@ seilama,1,2020-12-05T00:00:00Z,1,1,7,46,fish,palm_plantation,by_tree,8,7.371,11,
 seilama,1,2020-12-05T00:00:00Z,1,1,7,47,fish,palm_plantation,"by_tree, leaf_litter",8,7.374,11,11.537,840,seilama_1_1_1_47,y,y,n,n,na,dry,NA
 seilama,1,2020-12-05T00:00:00Z,1,1,7,48,fish,palm_plantation,by_palm_tree,8,7.379,11,11.536,842,seilama_1_1_1_48,y,y,n,n,na,dry,NA
 seilama,1,2020-12-05T00:00:00Z,1,1,7,49,fish,palm_plantation,"thick_bush, by_clearing, edge",8,7.38,11,11.535,842,seilama_1_1_1_49,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,1,50,fish,cocaoo_coffee_plantation,"by_tree, leaf_litter, edge",8,7.375,11,11.653,838,seilama_1_1_2_50,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,1,51,fish,cocaoo_coffee_plantation,"by_tree, leaf_litter, edge",8,7.377,11,11.655,841,seilama_1_1_2_51,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,1,52,fish,cocaoo_coffee_plantation,"by_banan_tree, leaf_litter, edge",8,7.377,11,11.658,842,seilama_1_1_2_52,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,1,53,fish,cocaoo_coffee_plantation,"by_banan_tree, leaf_litter, edge",8,7.381,11,11.664,842,seilama_1_1_2_53,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,1,54,fish,cocaoo_coffee_plantation,"by_tree, by_shrubs, by_path, edge",8,7.382,11,11.666,842,seilama_1_1_2_54,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,1,55,fish,cocaoo_coffee_plantation,"by_shrubs, by_path",8,7.383,11,11.668,842,seilama_1_1_2_55,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,1,56,fish,cocaoo_coffee_plantation,low_grass,8,7.384,11,11.67,844,seilama_1_1_2_56,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,2,57,fish,cocaoo_coffee_plantation,"by_tree, by_river, leaf_litter",8,7.378,11,11.649,847,seilama_1_1_2_57,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,2,58,fish,cocaoo_coffee_plantation,"by_tree, leaf_litter",8,7.38,11,11.655,848,seilama_1_1_2_58,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,2,59,fish,cocaoo_coffee_plantation,by_tree,8,7.382,11,11.657,848,seilama_1_1_2_59,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,2,60,fish,cocaoo_coffee_plantation,"by_tree, by_path",8,7.383,11,11.658,849,seilama_1_1_2_60,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,2,61,fish,cocaoo_coffee_plantation,"by_tree, by_path",8,7.388,11,11.663,851,seilama_1_1_2_61,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,2,62,fish,cocaoo_coffee_plantation,"by_tree, leaf_litter",8,7.39,11,11.665,852,seilama_1_1_2_62,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,2,63,fish,cocaoo_coffee_plantation,by_coconut_tree,8,7.392,11,11.669,853,seilama_1_1_2_63,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,3,64,fish,cocaoo_coffee_plantation,"by_tree, by_path, by_river",8,7.379,11,11.65,851,seilama_1_1_2_64,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,3,65,fish,cocaoo_coffee_plantation,"open, by_path",8,7.381,11,11.649,851,seilama_1_1_2_65,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,3,66,fish,cocaoo_coffee_plantation,"open, by_path",8,7.385,11,11.653,852,seilama_1_1_2_66,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,3,67,fish,cocaoo_coffee_plantation,open,8,7.389,11,11.659,851,seilama_1_1_2_67,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,3,68,fish,cocaoo_coffee_plantation,"by_tree, by_path",8,7.392,11,11.66,851,seilama_1_1_2_68,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,3,69,fish,cocaoo_coffee_plantation,"open, by_path",8,7.395,11,11.664,851,seilama_1_1_2_69,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,3,70,fish,cocaoo_coffee_plantation,by_tree,8,7.396,11,11.665,851,seilama_1_1_2_70,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,4,71,fish,cocaoo_coffee_plantation,"by_tree, by_path",8,7.388,11,11.65,850,seilama_1_1_2_71,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,4,72,fish,cocaoo_coffee_plantation,"by_tree, by_path",8,7.392,11,11.652,853,seilama_1_1_2_72,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,4,73,fish,cocaoo_coffee_plantation,"low_bush, by_path",8,7.393,11,11.654,853,seilama_1_1_2_73,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,4,74,fish,cocaoo_coffee_plantation,"leaf_litter, open",8,7.396,11,11.656,853,seilama_1_1_2_74,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,4,75,fish,cocaoo_coffee_plantation,"open, by_fallen_log",8,7.398,11,11.66,853,seilama_1_1_2_75,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,4,76,fish,cocaoo_coffee_plantation,open,8,7.401,11,11.661,853,seilama_1_1_2_76,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,4,77,fish,cocaoo_coffee_plantation,"low_bush, edge",8,7.405,11,11.664,854,seilama_1_1_2_77,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,5,78,fish,cocaoo_coffee_plantation,"by_tree, edge",8,7.393,11,11.648,848,seilama_1_1_2_78,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,5,79,fish,cocaoo_coffee_plantation,open,8,7.396,11,11.647,848,seilama_1_1_2_79,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,5,80,fish,cocaoo_coffee_plantation,by_tree,8,7.398,11,11.651,849,seilama_1_1_2_80,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,5,81,fish,cocaoo_coffee_plantation,by_tree,8,7.4,11,11.655,852,seilama_1_1_2_81,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,5,82,fish,cocaoo_coffee_plantation,by_tree,8,7.402,11,11.654,854,seilama_1_1_2_82,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,5,83,fish,cocaoo_coffee_plantation,"by_tree, edge",8,7.405,11,11.654,855,seilama_1_1_2_83,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,5,84,fish,cocaoo_coffee_plantation,thick_bush,8,7.408,11,11.656,857,seilama_1_1_2_84,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,6,85,fish,cocaoo_coffee_plantation,"by_tree, by_river",8,7.4,11,11.645,845,seilama_1_1_2_85,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,6,86,fish,cocaoo_coffee_plantation,thick_bush,8,7.401,11,11.644,847,seilama_1_1_2_86,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,6,87,fish,cocaoo_coffee_plantation,thick_bush,8,7.403,11,11.645,850,seilama_1_1_2_87,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,1,50,fish,cocao_coffee_plantation,"by_tree, leaf_litter, edge",8,7.375,11,11.653,838,seilama_1_1_2_50,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,1,51,fish,cocao_coffee_plantation,"by_tree, leaf_litter, edge",8,7.377,11,11.655,841,seilama_1_1_2_51,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,1,52,fish,cocao_coffee_plantation,"by_banan_tree, leaf_litter, edge",8,7.377,11,11.658,842,seilama_1_1_2_52,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,1,53,fish,cocao_coffee_plantation,"by_banan_tree, leaf_litter, edge",8,7.381,11,11.664,842,seilama_1_1_2_53,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,1,54,fish,cocao_coffee_plantation,"by_tree, by_shrubs, by_path, edge",8,7.382,11,11.666,842,seilama_1_1_2_54,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,1,55,fish,cocao_coffee_plantation,"by_shrubs, by_path",8,7.383,11,11.668,842,seilama_1_1_2_55,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,1,56,fish,cocao_coffee_plantation,low_grass,8,7.384,11,11.67,844,seilama_1_1_2_56,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,2,57,fish,cocao_coffee_plantation,"by_tree, by_river, leaf_litter",8,7.378,11,11.649,847,seilama_1_1_2_57,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,2,58,fish,cocao_coffee_plantation,"by_tree, leaf_litter",8,7.38,11,11.655,848,seilama_1_1_2_58,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,2,59,fish,cocao_coffee_plantation,by_tree,8,7.382,11,11.657,848,seilama_1_1_2_59,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,2,60,fish,cocao_coffee_plantation,"by_tree, by_path",8,7.383,11,11.658,849,seilama_1_1_2_60,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,2,61,fish,cocao_coffee_plantation,"by_tree, by_path",8,7.388,11,11.663,851,seilama_1_1_2_61,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,2,62,fish,cocao_coffee_plantation,"by_tree, leaf_litter",8,7.39,11,11.665,852,seilama_1_1_2_62,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,2,63,fish,cocao_coffee_plantation,by_coconut_tree,8,7.392,11,11.669,853,seilama_1_1_2_63,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,3,64,fish,cocao_coffee_plantation,"by_tree, by_path, by_river",8,7.379,11,11.65,851,seilama_1_1_2_64,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,3,65,fish,cocao_coffee_plantation,"open, by_path",8,7.381,11,11.649,851,seilama_1_1_2_65,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,3,66,fish,cocao_coffee_plantation,"open, by_path",8,7.385,11,11.653,852,seilama_1_1_2_66,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,3,67,fish,cocao_coffee_plantation,open,8,7.389,11,11.659,851,seilama_1_1_2_67,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,3,68,fish,cocao_coffee_plantation,"by_tree, by_path",8,7.392,11,11.66,851,seilama_1_1_2_68,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,3,69,fish,cocao_coffee_plantation,"open, by_path",8,7.395,11,11.664,851,seilama_1_1_2_69,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,3,70,fish,cocao_coffee_plantation,by_tree,8,7.396,11,11.665,851,seilama_1_1_2_70,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,4,71,fish,cocao_coffee_plantation,"by_tree, by_path",8,7.388,11,11.65,850,seilama_1_1_2_71,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,4,72,fish,cocao_coffee_plantation,"by_tree, by_path",8,7.392,11,11.652,853,seilama_1_1_2_72,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,4,73,fish,cocao_coffee_plantation,"low_bush, by_path",8,7.393,11,11.654,853,seilama_1_1_2_73,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,4,74,fish,cocao_coffee_plantation,"leaf_litter, open",8,7.396,11,11.656,853,seilama_1_1_2_74,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,4,75,fish,cocao_coffee_plantation,"open, by_fallen_log",8,7.398,11,11.66,853,seilama_1_1_2_75,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,4,76,fish,cocao_coffee_plantation,open,8,7.401,11,11.661,853,seilama_1_1_2_76,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,4,77,fish,cocao_coffee_plantation,"low_bush, edge",8,7.405,11,11.664,854,seilama_1_1_2_77,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,5,78,fish,cocao_coffee_plantation,"by_tree, edge",8,7.393,11,11.648,848,seilama_1_1_2_78,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,5,79,fish,cocao_coffee_plantation,open,8,7.396,11,11.647,848,seilama_1_1_2_79,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,5,80,fish,cocao_coffee_plantation,by_tree,8,7.398,11,11.651,849,seilama_1_1_2_80,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,5,81,fish,cocao_coffee_plantation,by_tree,8,7.4,11,11.655,852,seilama_1_1_2_81,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,5,82,fish,cocao_coffee_plantation,by_tree,8,7.402,11,11.654,854,seilama_1_1_2_82,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,5,83,fish,cocao_coffee_plantation,"by_tree, edge",8,7.405,11,11.654,855,seilama_1_1_2_83,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,5,84,fish,cocao_coffee_plantation,thick_bush,8,7.408,11,11.656,857,seilama_1_1_2_84,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,6,85,fish,cocao_coffee_plantation,"by_tree, by_river",8,7.4,11,11.645,845,seilama_1_1_2_85,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,6,86,fish,cocao_coffee_plantation,thick_bush,8,7.401,11,11.644,847,seilama_1_1_2_86,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,6,87,fish,cocao_coffee_plantation,thick_bush,8,7.403,11,11.645,850,seilama_1_1_2_87,y,y,n,n,na,dry,NA
 seilama,1,2020-12-05T00:00:00Z,1,1,7,44,fish,palm_plantation,by_path,8,7.362,11,11.534,847,seilama_1_1_1_44,n,y,y,y,SEI-003,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,6,89,fish,cocaoo_coffee_plantation,thick_bush,8,7.41,11,11.651,855,seilama_1_1_2_89,y,n,y,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,6,90,fish,cocaoo_coffee_plantation,thick_bush,8,7.411,11,11.651,859,seilama_1_1_2_90,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,6,91,fish,cocaoo_coffee_plantation,thick_bush,8,7.413,11,11.653,857,seilama_1_1_2_91,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,7,92,fish,cocaoo_coffee_plantation,"edge, thick_bush",8,7.4,11,11.643,841,seilama_1_1_2_92,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,7,93,fish,cocaoo_coffee_plantation,thick_bush,8,7.406,11,11.645,845,seilama_1_1_2_93,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,7,94,fish,cocaoo_coffee_plantation,thick_bush,8,7.407,11,11.645,850,seilama_1_1_2_94,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,7,95,fish,cocaoo_coffee_plantation,thick_bush,8,7.41,11,11.647,853,seilama_1_1_2_95,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,7,96,fish,cocaoo_coffee_plantation,thick_bush,8,7.412,11,11.648,856,seilama_1_1_2_96,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,7,97,fish,cocaoo_coffee_plantation,thick_bush,8,7.415,11,11.646,855,seilama_1_1_2_97,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,7,98,fish,cocaoo_coffee_plantation,thick_bush,8,7.417,11,11.649,858,seilama_1_1_2_98,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,6,89,fish,cocao_coffee_plantation,thick_bush,8,7.41,11,11.651,855,seilama_1_1_2_89,y,n,y,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,6,90,fish,cocao_coffee_plantation,thick_bush,8,7.411,11,11.651,859,seilama_1_1_2_90,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,6,91,fish,cocao_coffee_plantation,thick_bush,8,7.413,11,11.653,857,seilama_1_1_2_91,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,7,92,fish,cocao_coffee_plantation,"edge, thick_bush",8,7.4,11,11.643,841,seilama_1_1_2_92,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,7,93,fish,cocao_coffee_plantation,thick_bush,8,7.406,11,11.645,845,seilama_1_1_2_93,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,7,94,fish,cocao_coffee_plantation,thick_bush,8,7.407,11,11.645,850,seilama_1_1_2_94,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,7,95,fish,cocao_coffee_plantation,thick_bush,8,7.41,11,11.647,853,seilama_1_1_2_95,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,7,96,fish,cocao_coffee_plantation,thick_bush,8,7.412,11,11.648,856,seilama_1_1_2_96,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,7,97,fish,cocao_coffee_plantation,thick_bush,8,7.415,11,11.646,855,seilama_1_1_2_97,y,y,n,n,na,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,7,98,fish,cocao_coffee_plantation,thick_bush,8,7.417,11,11.649,858,seilama_1_1_2_98,y,y,n,n,na,dry,NA
 seilama,1,2020-12-05T00:00:00Z,1,3,1,99,fish,harvested_dry_rice_farm,"low_bush, edge",8,7.424,11,11.657,872,seilama_1_1_3_99,y,y,n,n,na,dry,NA
 seilama,1,2020-12-05T00:00:00Z,1,3,1,100,fish,harvested_dry_rice_farm,"hillside, fallen_log",8,7.43,11,11.655,870,seilama_1_1_3_100,y,y,n,n,na,dry,NA
 seilama,1,2020-12-05T00:00:00Z,1,3,1,101,fish,harvested_dry_rice_farm,by_burnt_tree,8,7.434,11,11.658,867,seilama_1_1_3_101,y,y,n,n,na,dry,NA
@@ -864,7 +864,7 @@ seilama,1,2020-12-05T00:00:00Z,1,3,6,143,fish,harvested_dry_rice_farm,by_burnt_t
 seilama,1,2020-12-05T00:00:00Z,1,3,6,144,fish,harvested_dry_rice_farm,fallen_log,8,7.461,11,11.679,869,seilama_1_1_3_144,y,y,n,n,na,dry,NA
 seilama,1,2020-12-05T00:00:00Z,1,3,6,145,fish,harvested_dry_rice_farm,low_bush,8,7.464,11,11.676,868,seilama_1_1_3_145,y,y,n,n,na,dry,NA
 seilama,1,2020-12-05T00:00:00Z,1,3,6,146,fish,harvested_dry_rice_farm,open,8,7.465,11,11.675,868,seilama_1_1_3_146,y,y,n,n,na,dry,NA
-seilama,1,2020-12-05T00:00:00Z,1,2,6,88,fish,cocaoo_coffee_plantation,thick_bush,8,7.406,11,11.649,851,seilama_1_1_2_88,n,n,y,y,SEI-004,dry,NA
+seilama,1,2020-12-05T00:00:00Z,1,2,6,88,fish,cocao_coffee_plantation,thick_bush,8,7.406,11,11.649,851,seilama_1_1_2_88,n,n,y,y,SEI-004,dry,NA
 seilama,1,2020-12-05T00:00:00Z,1,3,7,138,fish,harvested_dry_rice_farm,"thick_bush, edge",8,7.443,11,11.685,869,seilama_1_1_3_138,n,n,y,y,SEI-005,dry,NA
 seilama,1,2020-12-05T00:00:00Z,1,3,7,139,fish,harvested_dry_rice_farm,open,8,7.445,11,11.684,870,seilama_1_1_3_139,y,n,y,n,na,dry,NA
 seilama,1,2020-12-05T00:00:00Z,1,3,7,140,fish,harvested_dry_rice_farm,open,8,7.448,11,11.685,869,seilama_1_1_3_140,y,y,n,n,na,dry,NA
@@ -991,7 +991,7 @@ seilama,1,2020-12-06T00:00:00Z,1,6,3,265,fish,village,low_grass,8,7.334,11,11.59
 seilama,1,2020-12-06T00:00:00Z,1,6,3,266,fish,village,low_grass,8,7.339,11,11.599,916,seilama_1_1_6_266,y,y,n,n,na,rain,NA
 seilama,1,2020-12-06T00:00:00Z,1,6,3,267,fish,village,low_grass,8,7.346,11,11.6,914,seilama_1_1_6_267,y,y,y,n,na,rain,NA
 seilama,1,2020-12-06T00:00:00Z,1,6,3,268,fish,village,low_grass,8,7.352,11,11.602,911,seilama_1_1_6_268,y,y,y,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,1,6,4,269,fish,village,cacao_nursery,8,7.401,11,11.637,927,seilama_1_1_6_269,y,y,n,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,1,6,4,269,fish,village,cacao_nursery,8,7.374,11,11.632,927,seilama_1_1_6_269,y,y,n,n,na,rain,NA
 seilama,1,2020-12-06T00:00:00Z,1,6,4,270,fish,village,cacao_nursery,8,7.378,11,11.63,923,seilama_1_1_6_270,y,y,n,n,na,rain,NA
 seilama,1,2020-12-06T00:00:00Z,1,6,4,271,fish,village,cacao_nursery,8,7.379,11,11.627,919,seilama_1_1_6_271,y,y,n,n,na,rain,NA
 seilama,1,2020-12-06T00:00:00Z,1,6,4,272,fish,village,cacao_nursery,8,7.379,11,11.622,915,seilama_1_1_6_272,y,y,n,n,na,rain,NA
@@ -1042,7 +1042,7 @@ seilama,1,2020-12-06T00:00:00Z,2,1,5,34,fish,palm_plantation,thick_bush,8,7.374,
 seilama,1,2020-12-06T00:00:00Z,2,1,5,35,fish,palm_plantation,thick_bush,8,7.377,11,11.52,843,seilama_1_2_1_35,y,y,y,n,na,rain,NA
 seilama,1,2020-12-06T00:00:00Z,2,1,6,36,fish,palm_plantation,thick_bush,8,7.361,11,11.532,846,seilama_1_2_1_36,y,y,y,n,na,rain,NA
 seilama,1,2020-12-06T00:00:00Z,2,1,6,37,fish,palm_plantation,by_coconut_tree,8,7.362,11,11.533,845,seilama_1_2_1_37,y,y,y,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,1,52,fish,cocaoo_coffee_plantation,"by_banan_tree, leaf_litter, edge",8,7.377,11,11.658,842,seilama_1_2_2_52,n,y,y,y,SEI-011,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,1,52,fish,cocao_coffee_plantation,"by_banan_tree, leaf_litter, edge",8,7.377,11,11.658,842,seilama_1_2_2_52,n,y,y,y,SEI-011,rain,NA
 seilama,1,2020-12-06T00:00:00Z,2,1,6,39,fish,palm_plantation,thick_bush,8,7.37,11,11.528,844,seilama_1_2_1_39,y,y,y,n,na,rain,NA
 seilama,1,2020-12-06T00:00:00Z,2,1,6,40,fish,palm_plantation,low_shrubs,8,7.372,11,11.525,840,seilama_1_2_1_40,y,y,n,n,na,rain,NA
 seilama,1,2020-12-06T00:00:00Z,2,1,6,41,fish,palm_plantation,thick_bush,8,7.377,11,11.53,841,seilama_1_2_1_41,y,y,n,n,na,rain,NA
@@ -1054,55 +1054,55 @@ seilama,1,2020-12-06T00:00:00Z,2,1,7,46,fish,palm_plantation,by_tree,8,7.371,11,
 seilama,1,2020-12-06T00:00:00Z,2,1,7,47,fish,palm_plantation,"by_tree, leaf_litter",8,7.374,11,11.537,840,seilama_1_2_1_47,y,y,n,n,na,rain,NA
 seilama,1,2020-12-06T00:00:00Z,2,1,7,48,fish,palm_plantation,by_palm_tree,8,7.379,11,11.536,842,seilama_1_2_1_48,y,y,n,n,na,rain,NA
 seilama,1,2020-12-06T00:00:00Z,2,1,7,49,fish,palm_plantation,"thick_bush, by_clearing, edge",8,7.38,11,11.535,842,seilama_1_2_1_49,y,y,n,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,1,50,fish,cocaoo_coffee_plantation,"by_tree, leaf_litter, edge",8,7.375,11,11.653,838,seilama_1_2_2_50,y,y,n,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,1,51,fish,cocaoo_coffee_plantation,"by_tree, leaf_litter, edge",8,7.377,11,11.655,841,seilama_1_2_2_51,y,y,n,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,1,50,fish,cocao_coffee_plantation,"by_tree, leaf_litter, edge",8,7.375,11,11.653,838,seilama_1_2_2_50,y,y,n,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,1,51,fish,cocao_coffee_plantation,"by_tree, leaf_litter, edge",8,7.377,11,11.655,841,seilama_1_2_2_51,y,y,n,n,na,rain,NA
 seilama,1,2020-12-06T00:00:00Z,2,3,1,103,fish,harvested_dry_rice_farm,"hillside, edge",8,7.44,11,11.662,870,seilama_1_2_3_103,n,y,y,y,SEI-012,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,1,53,fish,cocaoo_coffee_plantation,"by_banan_tree, leaf_litter, edge",8,7.381,11,11.664,842,seilama_1_2_2_53,y,y,n,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,1,54,fish,cocaoo_coffee_plantation,"by_tree, by_shrubs, by_path, edge",8,7.382,11,11.666,842,seilama_1_2_2_54,y,y,n,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,1,55,fish,cocaoo_coffee_plantation,"by_shrubs, by_path",8,7.383,11,11.668,842,seilama_1_2_2_55,y,y,n,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,1,56,fish,cocaoo_coffee_plantation,low_grass,8,7.384,11,11.67,844,seilama_1_2_2_56,y,y,n,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,2,57,fish,cocaoo_coffee_plantation,"by_tree, by_river, leaf_litter",8,7.378,11,11.649,847,seilama_1_2_2_57,y,y,n,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,2,58,fish,cocaoo_coffee_plantation,"by_tree, leaf_litter",8,7.38,11,11.655,848,seilama_1_2_2_58,y,y,n,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,2,59,fish,cocaoo_coffee_plantation,by_tree,8,7.382,11,11.657,848,seilama_1_2_2_59,y,y,n,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,2,60,fish,cocaoo_coffee_plantation,"by_tree, by_path",8,7.383,11,11.658,849,seilama_1_2_2_60,y,y,n,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,2,61,fish,cocaoo_coffee_plantation,"by_tree, by_path",8,7.388,11,11.663,851,seilama_1_2_2_61,y,y,n,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,2,62,fish,cocaoo_coffee_plantation,"by_tree, leaf_litter",8,7.39,11,11.665,852,seilama_1_2_2_62,y,y,n,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,2,63,fish,cocaoo_coffee_plantation,by_coconut_tree,8,7.392,11,11.669,853,seilama_1_2_2_63,y,y,n,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,3,64,fish,cocaoo_coffee_plantation,"by_tree, by_path, by_river",8,7.379,11,11.65,851,seilama_1_2_2_64,y,y,y,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,3,65,fish,cocaoo_coffee_plantation,"open, by_path",8,7.381,11,11.649,851,seilama_1_2_2_65,y,y,n,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,3,66,fish,cocaoo_coffee_plantation,"open, by_path",8,7.385,11,11.653,852,seilama_1_2_2_66,y,y,n,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,3,67,fish,cocaoo_coffee_plantation,open,8,7.389,11,11.659,851,seilama_1_2_2_67,y,y,n,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,3,68,fish,cocaoo_coffee_plantation,"by_tree, by_path",8,7.392,11,11.66,851,seilama_1_2_2_68,y,y,n,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,3,69,fish,cocaoo_coffee_plantation,"open, by_path",8,7.395,11,11.664,851,seilama_1_2_2_69,y,y,y,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,3,70,fish,cocaoo_coffee_plantation,by_tree,8,7.396,11,11.665,851,seilama_1_2_2_70,y,y,n,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,4,71,fish,cocaoo_coffee_plantation,"by_tree, by_path",8,7.388,11,11.65,850,seilama_1_2_2_71,y,y,n,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,4,72,fish,cocaoo_coffee_plantation,"by_tree, by_path",8,7.392,11,11.652,853,seilama_1_2_2_72,y,y,n,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,4,73,fish,cocaoo_coffee_plantation,"low_bush, by_path",8,7.393,11,11.654,853,seilama_1_2_2_73,y,y,n,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,4,74,fish,cocaoo_coffee_plantation,"leaf_litter, open",8,7.396,11,11.656,853,seilama_1_2_2_74,y,y,n,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,4,75,fish,cocaoo_coffee_plantation,"open, by_fallen_log",8,7.398,11,11.66,853,seilama_1_2_2_75,y,y,n,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,4,76,fish,cocaoo_coffee_plantation,open,8,7.401,11,11.661,853,seilama_1_2_2_76,y,y,n,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,4,77,fish,cocaoo_coffee_plantation,"low_bush, edge",8,7.405,11,11.664,854,seilama_1_2_2_77,y,y,n,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,5,78,fish,cocaoo_coffee_plantation,"by_tree, edge",8,7.393,11,11.648,848,seilama_1_2_2_78,y,y,n,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,5,79,fish,cocaoo_coffee_plantation,open,8,7.396,11,11.647,848,seilama_1_2_2_79,y,y,y,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,5,80,fish,cocaoo_coffee_plantation,by_tree,8,7.398,11,11.651,849,seilama_1_2_2_80,y,y,n,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,5,81,fish,cocaoo_coffee_plantation,by_tree,8,7.4,11,11.655,852,seilama_1_2_2_81,y,y,n,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,5,82,fish,cocaoo_coffee_plantation,by_tree,8,7.402,11,11.654,854,seilama_1_2_2_82,y,y,n,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,5,83,fish,cocaoo_coffee_plantation,"by_tree, edge",8,7.405,11,11.654,855,seilama_1_2_2_83,y,y,n,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,5,84,fish,cocaoo_coffee_plantation,thick_bush,8,7.408,11,11.656,857,seilama_1_2_2_84,y,y,n,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,6,85,fish,cocaoo_coffee_plantation,"by_tree, by_river",8,7.4,11,11.645,845,seilama_1_2_2_85,y,y,y,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,6,86,fish,cocaoo_coffee_plantation,thick_bush,8,7.401,11,11.644,847,seilama_1_2_2_86,y,y,n,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,6,87,fish,cocaoo_coffee_plantation,thick_bush,8,7.403,11,11.645,850,seilama_1_2_2_87,y,y,n,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,6,88,fish,cocaoo_coffee_plantation,thick_bush,8,7.406,11,11.649,851,seilama_1_2_2_88,y,y,n,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,6,89,fish,cocaoo_coffee_plantation,thick_bush,8,7.41,11,11.651,855,seilama_1_2_2_89,y,y,n,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,6,90,fish,cocaoo_coffee_plantation,thick_bush,8,7.411,11,11.651,859,seilama_1_2_2_90,y,y,y,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,6,91,fish,cocaoo_coffee_plantation,thick_bush,8,7.413,11,11.653,857,seilama_1_2_2_91,y,y,n,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,7,92,fish,cocaoo_coffee_plantation,"edge, thick_bush",8,7.4,11,11.643,841,seilama_1_2_2_92,y,y,n,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,7,93,fish,cocaoo_coffee_plantation,thick_bush,8,7.406,11,11.645,845,seilama_1_2_2_93,y,y,n,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,7,94,fish,cocaoo_coffee_plantation,thick_bush,8,7.407,11,11.645,850,seilama_1_2_2_94,y,y,n,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,7,95,fish,cocaoo_coffee_plantation,thick_bush,8,7.41,11,11.647,853,seilama_1_2_2_95,y,y,n,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,7,96,fish,cocaoo_coffee_plantation,thick_bush,8,7.412,11,11.648,856,seilama_1_2_2_96,y,y,n,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,7,97,fish,cocaoo_coffee_plantation,thick_bush,8,7.415,11,11.646,855,seilama_1_2_2_97,y,y,n,n,na,rain,NA
-seilama,1,2020-12-06T00:00:00Z,2,2,7,98,fish,cocaoo_coffee_plantation,thick_bush,8,7.417,11,11.649,858,seilama_1_2_2_98,y,y,n,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,1,53,fish,cocao_coffee_plantation,"by_banan_tree, leaf_litter, edge",8,7.381,11,11.664,842,seilama_1_2_2_53,y,y,n,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,1,54,fish,cocao_coffee_plantation,"by_tree, by_shrubs, by_path, edge",8,7.382,11,11.666,842,seilama_1_2_2_54,y,y,n,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,1,55,fish,cocao_coffee_plantation,"by_shrubs, by_path",8,7.383,11,11.668,842,seilama_1_2_2_55,y,y,n,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,1,56,fish,cocao_coffee_plantation,low_grass,8,7.384,11,11.67,844,seilama_1_2_2_56,y,y,n,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,2,57,fish,cocao_coffee_plantation,"by_tree, by_river, leaf_litter",8,7.378,11,11.649,847,seilama_1_2_2_57,y,y,n,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,2,58,fish,cocao_coffee_plantation,"by_tree, leaf_litter",8,7.38,11,11.655,848,seilama_1_2_2_58,y,y,n,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,2,59,fish,cocao_coffee_plantation,by_tree,8,7.382,11,11.657,848,seilama_1_2_2_59,y,y,n,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,2,60,fish,cocao_coffee_plantation,"by_tree, by_path",8,7.383,11,11.658,849,seilama_1_2_2_60,y,y,n,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,2,61,fish,cocao_coffee_plantation,"by_tree, by_path",8,7.388,11,11.663,851,seilama_1_2_2_61,y,y,n,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,2,62,fish,cocao_coffee_plantation,"by_tree, leaf_litter",8,7.39,11,11.665,852,seilama_1_2_2_62,y,y,n,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,2,63,fish,cocao_coffee_plantation,by_coconut_tree,8,7.392,11,11.669,853,seilama_1_2_2_63,y,y,n,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,3,64,fish,cocao_coffee_plantation,"by_tree, by_path, by_river",8,7.379,11,11.65,851,seilama_1_2_2_64,y,y,y,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,3,65,fish,cocao_coffee_plantation,"open, by_path",8,7.381,11,11.649,851,seilama_1_2_2_65,y,y,n,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,3,66,fish,cocao_coffee_plantation,"open, by_path",8,7.385,11,11.653,852,seilama_1_2_2_66,y,y,n,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,3,67,fish,cocao_coffee_plantation,open,8,7.389,11,11.659,851,seilama_1_2_2_67,y,y,n,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,3,68,fish,cocao_coffee_plantation,"by_tree, by_path",8,7.392,11,11.66,851,seilama_1_2_2_68,y,y,n,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,3,69,fish,cocao_coffee_plantation,"open, by_path",8,7.395,11,11.664,851,seilama_1_2_2_69,y,y,y,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,3,70,fish,cocao_coffee_plantation,by_tree,8,7.396,11,11.665,851,seilama_1_2_2_70,y,y,n,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,4,71,fish,cocao_coffee_plantation,"by_tree, by_path",8,7.388,11,11.65,850,seilama_1_2_2_71,y,y,n,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,4,72,fish,cocao_coffee_plantation,"by_tree, by_path",8,7.392,11,11.652,853,seilama_1_2_2_72,y,y,n,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,4,73,fish,cocao_coffee_plantation,"low_bush, by_path",8,7.393,11,11.654,853,seilama_1_2_2_73,y,y,n,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,4,74,fish,cocao_coffee_plantation,"leaf_litter, open",8,7.396,11,11.656,853,seilama_1_2_2_74,y,y,n,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,4,75,fish,cocao_coffee_plantation,"open, by_fallen_log",8,7.398,11,11.66,853,seilama_1_2_2_75,y,y,n,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,4,76,fish,cocao_coffee_plantation,open,8,7.401,11,11.661,853,seilama_1_2_2_76,y,y,n,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,4,77,fish,cocao_coffee_plantation,"low_bush, edge",8,7.405,11,11.664,854,seilama_1_2_2_77,y,y,n,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,5,78,fish,cocao_coffee_plantation,"by_tree, edge",8,7.393,11,11.648,848,seilama_1_2_2_78,y,y,n,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,5,79,fish,cocao_coffee_plantation,open,8,7.396,11,11.647,848,seilama_1_2_2_79,y,y,y,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,5,80,fish,cocao_coffee_plantation,by_tree,8,7.398,11,11.651,849,seilama_1_2_2_80,y,y,n,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,5,81,fish,cocao_coffee_plantation,by_tree,8,7.4,11,11.655,852,seilama_1_2_2_81,y,y,n,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,5,82,fish,cocao_coffee_plantation,by_tree,8,7.402,11,11.654,854,seilama_1_2_2_82,y,y,n,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,5,83,fish,cocao_coffee_plantation,"by_tree, edge",8,7.405,11,11.654,855,seilama_1_2_2_83,y,y,n,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,5,84,fish,cocao_coffee_plantation,thick_bush,8,7.408,11,11.656,857,seilama_1_2_2_84,y,y,n,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,6,85,fish,cocao_coffee_plantation,"by_tree, by_river",8,7.4,11,11.645,845,seilama_1_2_2_85,y,y,y,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,6,86,fish,cocao_coffee_plantation,thick_bush,8,7.401,11,11.644,847,seilama_1_2_2_86,y,y,n,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,6,87,fish,cocao_coffee_plantation,thick_bush,8,7.403,11,11.645,850,seilama_1_2_2_87,y,y,n,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,6,88,fish,cocao_coffee_plantation,thick_bush,8,7.406,11,11.649,851,seilama_1_2_2_88,y,y,n,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,6,89,fish,cocao_coffee_plantation,thick_bush,8,7.41,11,11.651,855,seilama_1_2_2_89,y,y,n,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,6,90,fish,cocao_coffee_plantation,thick_bush,8,7.411,11,11.651,859,seilama_1_2_2_90,y,y,y,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,6,91,fish,cocao_coffee_plantation,thick_bush,8,7.413,11,11.653,857,seilama_1_2_2_91,y,y,n,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,7,92,fish,cocao_coffee_plantation,"edge, thick_bush",8,7.4,11,11.643,841,seilama_1_2_2_92,y,y,n,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,7,93,fish,cocao_coffee_plantation,thick_bush,8,7.406,11,11.645,845,seilama_1_2_2_93,y,y,n,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,7,94,fish,cocao_coffee_plantation,thick_bush,8,7.407,11,11.645,850,seilama_1_2_2_94,y,y,n,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,7,95,fish,cocao_coffee_plantation,thick_bush,8,7.41,11,11.647,853,seilama_1_2_2_95,y,y,n,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,7,96,fish,cocao_coffee_plantation,thick_bush,8,7.412,11,11.648,856,seilama_1_2_2_96,y,y,n,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,7,97,fish,cocao_coffee_plantation,thick_bush,8,7.415,11,11.646,855,seilama_1_2_2_97,y,y,n,n,na,rain,NA
+seilama,1,2020-12-06T00:00:00Z,2,2,7,98,fish,cocao_coffee_plantation,thick_bush,8,7.417,11,11.649,858,seilama_1_2_2_98,y,y,n,n,na,rain,NA
 seilama,1,2020-12-06T00:00:00Z,2,3,1,99,fish,harvested_dry_rice_farm,"low_bush, edge",8,7.424,11,11.657,872,seilama_1_2_3_99,y,y,n,n,na,rain,NA
 seilama,1,2020-12-06T00:00:00Z,2,3,1,100,fish,harvested_dry_rice_farm,"hillside, fallen_log",8,7.43,11,11.655,870,seilama_1_2_3_100,y,y,n,n,na,rain,NA
 seilama,1,2020-12-06T00:00:00Z,2,3,1,101,fish,harvested_dry_rice_farm,by_burnt_tree,8,7.434,11,11.658,867,seilama_1_2_3_101,y,y,n,n,na,rain,NA
@@ -1271,7 +1271,7 @@ seilama,1,2020-12-07T00:00:00Z,2,6,3,265,fish,village,low_grass,8,7.328,11,11.59
 seilama,1,2020-12-07T00:00:00Z,2,6,3,266,fish,village,low_grass,8,7.334,11,11.597,916,seilama_1_2_6_266,y,y,n,n,na,dry,NA
 seilama,1,2020-12-07T00:00:00Z,2,6,3,267,fish,village,low_grass,8,7.339,11,11.599,914,seilama_1_2_6_267,y,y,n,n,na,dry,NA
 seilama,1,2020-12-07T00:00:00Z,2,6,3,268,fish,village,low_grass,8,7.346,11,11.6,911,seilama_1_2_6_268,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,2,6,4,269,fish,village,cacao_nursery,8,7.401,11,11.637,927,seilama_1_2_6_269,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,2,6,4,269,fish,village,cacao_nursery,8,7.374,11,11.632,927,seilama_1_2_6_269,y,y,n,n,na,dry,NA
 seilama,1,2020-12-07T00:00:00Z,2,6,4,270,fish,village,cacao_nursery,8,7.401,11,11.637,923,seilama_1_2_6_270,y,y,n,n,na,dry,NA
 seilama,1,2020-12-07T00:00:00Z,2,6,4,271,fish,village,cacao_nursery,8,7.378,11,11.63,919,seilama_1_2_6_271,y,y,n,n,na,dry,NA
 seilama,1,2020-12-07T00:00:00Z,2,6,4,272,fish,village,cacao_nursery,8,7.379,11,11.627,915,seilama_1_2_6_272,y,y,y,n,na,dry,NA
@@ -1334,55 +1334,55 @@ seilama,1,2020-12-07T00:00:00Z,3,1,7,46,fish,palm_plantation,by_tree,8,7.371,11,
 seilama,1,2020-12-07T00:00:00Z,3,1,7,47,fish,palm_plantation,"by_tree, leaf_litter",8,7.374,11,11.537,840,seilama_1_3_1_47,y,y,y,n,na,dry,NA
 seilama,1,2020-12-07T00:00:00Z,3,1,7,48,fish,palm_plantation,by_palm_tree,8,7.379,11,11.536,842,seilama_1_3_1_48,y,y,n,n,na,dry,NA
 seilama,1,2020-12-07T00:00:00Z,3,1,7,49,fish,palm_plantation,"thick_bush, by_clearing, edge",8,7.38,11,11.535,842,seilama_1_3_1_49,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,1,50,fish,cocaoo_coffee_plantation,"by_tree, leaf_litter, edge",8,7.375,11,11.653,838,seilama_1_3_2_50,n,y,y,y,SEI-028,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,1,51,fish,cocaoo_coffee_plantation,"by_tree, leaf_litter, edge",8,7.377,11,11.655,841,seilama_1_3_2_51,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,1,52,fish,cocaoo_coffee_plantation,"by_banan_tree, leaf_litter, edge",8,7.377,11,11.658,842,seilama_1_3_2_52,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,1,53,fish,cocaoo_coffee_plantation,"by_banan_tree, leaf_litter, edge",8,7.381,11,11.664,842,seilama_1_3_2_53,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,1,54,fish,cocaoo_coffee_plantation,"by_tree, by_shrubs, by_path, edge",8,7.382,11,11.666,842,seilama_1_3_2_54,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,1,55,fish,cocaoo_coffee_plantation,"by_shrubs, by_path",8,7.383,11,11.668,842,seilama_1_3_2_55,y,y,y,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,1,56,fish,cocaoo_coffee_plantation,low_grass,8,7.384,11,11.67,844,seilama_1_3_2_56,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,2,57,fish,cocaoo_coffee_plantation,"by_tree, by_river, leaf_litter",8,7.378,11,11.649,847,seilama_1_3_2_57,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,2,58,fish,cocaoo_coffee_plantation,"by_tree, leaf_litter",8,7.38,11,11.655,848,seilama_1_3_2_58,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,2,59,fish,cocaoo_coffee_plantation,by_tree,8,7.382,11,11.657,848,seilama_1_3_2_59,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,2,60,fish,cocaoo_coffee_plantation,"by_tree, by_path",8,7.383,11,11.658,849,seilama_1_3_2_60,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,2,61,fish,cocaoo_coffee_plantation,"by_tree, by_path",8,7.388,11,11.663,851,seilama_1_3_2_61,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,2,62,fish,cocaoo_coffee_plantation,"by_tree, leaf_litter",8,7.39,11,11.665,852,seilama_1_3_2_62,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,2,63,fish,cocaoo_coffee_plantation,by_coconut_tree,8,7.392,11,11.669,853,seilama_1_3_2_63,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,3,64,fish,cocaoo_coffee_plantation,"by_tree, by_path, by_river",8,7.379,11,11.65,851,seilama_1_3_2_64,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,3,65,fish,cocaoo_coffee_plantation,"open, by_path",8,7.381,11,11.649,851,seilama_1_3_2_65,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,3,66,fish,cocaoo_coffee_plantation,"open, by_path",8,7.385,11,11.653,852,seilama_1_3_2_66,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,3,67,fish,cocaoo_coffee_plantation,open,8,7.389,11,11.659,851,seilama_1_3_2_67,y,y,y,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,3,68,fish,cocaoo_coffee_plantation,"by_tree, by_path",8,7.392,11,11.66,851,seilama_1_3_2_68,y,y,y,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,3,69,fish,cocaoo_coffee_plantation,"open, by_path",8,7.395,11,11.664,851,seilama_1_3_2_69,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,3,70,fish,cocaoo_coffee_plantation,by_tree,8,7.396,11,11.665,851,seilama_1_3_2_70,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,4,71,fish,cocaoo_coffee_plantation,"by_tree, by_path",8,7.388,11,11.65,850,seilama_1_3_2_71,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,4,72,fish,cocaoo_coffee_plantation,"by_tree, by_path",8,7.392,11,11.652,853,seilama_1_3_2_72,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,4,73,fish,cocaoo_coffee_plantation,"low_bush, by_path",8,7.393,11,11.654,853,seilama_1_3_2_73,y,y,y,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,4,74,fish,cocaoo_coffee_plantation,"leaf_litter, open",8,7.396,11,11.656,853,seilama_1_3_2_74,n,y,y,y,SEI-029,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,4,75,fish,cocaoo_coffee_plantation,"open, by_fallen_log",8,7.398,11,11.66,853,seilama_1_3_2_75,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,4,76,fish,cocaoo_coffee_plantation,open,8,7.401,11,11.661,853,seilama_1_3_2_76,y,y,y,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,4,77,fish,cocaoo_coffee_plantation,"low_bush, edge",8,7.405,11,11.664,854,seilama_1_3_2_77,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,5,78,fish,cocaoo_coffee_plantation,"by_tree, edge",8,7.393,11,11.648,848,seilama_1_3_2_78,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,5,79,fish,cocaoo_coffee_plantation,open,8,7.396,11,11.647,848,seilama_1_3_2_79,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,5,80,fish,cocaoo_coffee_plantation,by_tree,8,7.398,11,11.651,849,seilama_1_3_2_80,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,5,81,fish,cocaoo_coffee_plantation,by_tree,8,7.4,11,11.655,852,seilama_1_3_2_81,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,5,82,fish,cocaoo_coffee_plantation,by_tree,8,7.402,11,11.654,854,seilama_1_3_2_82,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,5,83,fish,cocaoo_coffee_plantation,"by_tree, edge",8,7.405,11,11.654,855,seilama_1_3_2_83,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,5,84,fish,cocaoo_coffee_plantation,thick_bush,8,7.408,11,11.656,857,seilama_1_3_2_84,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,6,85,fish,cocaoo_coffee_plantation,"by_tree, by_river",8,7.4,11,11.645,845,seilama_1_3_2_85,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,6,86,fish,cocaoo_coffee_plantation,thick_bush,8,7.401,11,11.644,847,seilama_1_3_2_86,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,6,87,fish,cocaoo_coffee_plantation,thick_bush,8,7.403,11,11.645,850,seilama_1_3_2_87,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,6,88,fish,cocaoo_coffee_plantation,thick_bush,8,7.406,11,11.649,851,seilama_1_3_2_88,y,y,y,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,6,89,fish,cocaoo_coffee_plantation,thick_bush,8,7.41,11,11.651,855,seilama_1_3_2_89,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,6,90,fish,cocaoo_coffee_plantation,thick_bush,8,7.411,11,11.651,859,seilama_1_3_2_90,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,6,91,fish,cocaoo_coffee_plantation,thick_bush,8,7.413,11,11.653,857,seilama_1_3_2_91,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,7,92,fish,cocaoo_coffee_plantation,"edge, thick_bush",8,7.4,11,11.643,841,seilama_1_3_2_92,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,7,93,fish,cocaoo_coffee_plantation,thick_bush,8,7.406,11,11.645,845,seilama_1_3_2_93,y,y,y,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,7,94,fish,cocaoo_coffee_plantation,thick_bush,8,7.407,11,11.645,850,seilama_1_3_2_94,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,7,95,fish,cocaoo_coffee_plantation,thick_bush,8,7.41,11,11.647,853,seilama_1_3_2_95,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,7,96,fish,cocaoo_coffee_plantation,thick_bush,8,7.412,11,11.648,856,seilama_1_3_2_96,n,y,y,y,SEI-030,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,7,97,fish,cocaoo_coffee_plantation,thick_bush,8,7.415,11,11.646,855,seilama_1_3_2_97,y,y,y,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,3,2,7,98,fish,cocaoo_coffee_plantation,thick_bush,8,7.417,11,11.649,858,seilama_1_3_2_98,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,1,50,fish,cocao_coffee_plantation,"by_tree, leaf_litter, edge",8,7.375,11,11.653,838,seilama_1_3_2_50,n,y,y,y,SEI-028,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,1,51,fish,cocao_coffee_plantation,"by_tree, leaf_litter, edge",8,7.377,11,11.655,841,seilama_1_3_2_51,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,1,52,fish,cocao_coffee_plantation,"by_banan_tree, leaf_litter, edge",8,7.377,11,11.658,842,seilama_1_3_2_52,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,1,53,fish,cocao_coffee_plantation,"by_banan_tree, leaf_litter, edge",8,7.381,11,11.664,842,seilama_1_3_2_53,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,1,54,fish,cocao_coffee_plantation,"by_tree, by_shrubs, by_path, edge",8,7.382,11,11.666,842,seilama_1_3_2_54,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,1,55,fish,cocao_coffee_plantation,"by_shrubs, by_path",8,7.383,11,11.668,842,seilama_1_3_2_55,y,y,y,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,1,56,fish,cocao_coffee_plantation,low_grass,8,7.384,11,11.67,844,seilama_1_3_2_56,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,2,57,fish,cocao_coffee_plantation,"by_tree, by_river, leaf_litter",8,7.378,11,11.649,847,seilama_1_3_2_57,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,2,58,fish,cocao_coffee_plantation,"by_tree, leaf_litter",8,7.38,11,11.655,848,seilama_1_3_2_58,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,2,59,fish,cocao_coffee_plantation,by_tree,8,7.382,11,11.657,848,seilama_1_3_2_59,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,2,60,fish,cocao_coffee_plantation,"by_tree, by_path",8,7.383,11,11.658,849,seilama_1_3_2_60,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,2,61,fish,cocao_coffee_plantation,"by_tree, by_path",8,7.388,11,11.663,851,seilama_1_3_2_61,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,2,62,fish,cocao_coffee_plantation,"by_tree, leaf_litter",8,7.39,11,11.665,852,seilama_1_3_2_62,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,2,63,fish,cocao_coffee_plantation,by_coconut_tree,8,7.392,11,11.669,853,seilama_1_3_2_63,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,3,64,fish,cocao_coffee_plantation,"by_tree, by_path, by_river",8,7.379,11,11.65,851,seilama_1_3_2_64,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,3,65,fish,cocao_coffee_plantation,"open, by_path",8,7.381,11,11.649,851,seilama_1_3_2_65,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,3,66,fish,cocao_coffee_plantation,"open, by_path",8,7.385,11,11.653,852,seilama_1_3_2_66,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,3,67,fish,cocao_coffee_plantation,open,8,7.389,11,11.659,851,seilama_1_3_2_67,y,y,y,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,3,68,fish,cocao_coffee_plantation,"by_tree, by_path",8,7.392,11,11.66,851,seilama_1_3_2_68,y,y,y,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,3,69,fish,cocao_coffee_plantation,"open, by_path",8,7.395,11,11.664,851,seilama_1_3_2_69,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,3,70,fish,cocao_coffee_plantation,by_tree,8,7.396,11,11.665,851,seilama_1_3_2_70,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,4,71,fish,cocao_coffee_plantation,"by_tree, by_path",8,7.388,11,11.65,850,seilama_1_3_2_71,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,4,72,fish,cocao_coffee_plantation,"by_tree, by_path",8,7.392,11,11.652,853,seilama_1_3_2_72,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,4,73,fish,cocao_coffee_plantation,"low_bush, by_path",8,7.393,11,11.654,853,seilama_1_3_2_73,y,y,y,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,4,74,fish,cocao_coffee_plantation,"leaf_litter, open",8,7.396,11,11.656,853,seilama_1_3_2_74,n,y,y,y,SEI-029,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,4,75,fish,cocao_coffee_plantation,"open, by_fallen_log",8,7.398,11,11.66,853,seilama_1_3_2_75,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,4,76,fish,cocao_coffee_plantation,open,8,7.401,11,11.661,853,seilama_1_3_2_76,y,y,y,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,4,77,fish,cocao_coffee_plantation,"low_bush, edge",8,7.405,11,11.664,854,seilama_1_3_2_77,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,5,78,fish,cocao_coffee_plantation,"by_tree, edge",8,7.393,11,11.648,848,seilama_1_3_2_78,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,5,79,fish,cocao_coffee_plantation,open,8,7.396,11,11.647,848,seilama_1_3_2_79,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,5,80,fish,cocao_coffee_plantation,by_tree,8,7.398,11,11.651,849,seilama_1_3_2_80,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,5,81,fish,cocao_coffee_plantation,by_tree,8,7.4,11,11.655,852,seilama_1_3_2_81,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,5,82,fish,cocao_coffee_plantation,by_tree,8,7.402,11,11.654,854,seilama_1_3_2_82,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,5,83,fish,cocao_coffee_plantation,"by_tree, edge",8,7.405,11,11.654,855,seilama_1_3_2_83,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,5,84,fish,cocao_coffee_plantation,thick_bush,8,7.408,11,11.656,857,seilama_1_3_2_84,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,6,85,fish,cocao_coffee_plantation,"by_tree, by_river",8,7.4,11,11.645,845,seilama_1_3_2_85,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,6,86,fish,cocao_coffee_plantation,thick_bush,8,7.401,11,11.644,847,seilama_1_3_2_86,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,6,87,fish,cocao_coffee_plantation,thick_bush,8,7.403,11,11.645,850,seilama_1_3_2_87,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,6,88,fish,cocao_coffee_plantation,thick_bush,8,7.406,11,11.649,851,seilama_1_3_2_88,y,y,y,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,6,89,fish,cocao_coffee_plantation,thick_bush,8,7.41,11,11.651,855,seilama_1_3_2_89,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,6,90,fish,cocao_coffee_plantation,thick_bush,8,7.411,11,11.651,859,seilama_1_3_2_90,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,6,91,fish,cocao_coffee_plantation,thick_bush,8,7.413,11,11.653,857,seilama_1_3_2_91,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,7,92,fish,cocao_coffee_plantation,"edge, thick_bush",8,7.4,11,11.643,841,seilama_1_3_2_92,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,7,93,fish,cocao_coffee_plantation,thick_bush,8,7.406,11,11.645,845,seilama_1_3_2_93,y,y,y,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,7,94,fish,cocao_coffee_plantation,thick_bush,8,7.407,11,11.645,850,seilama_1_3_2_94,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,7,95,fish,cocao_coffee_plantation,thick_bush,8,7.41,11,11.647,853,seilama_1_3_2_95,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,7,96,fish,cocao_coffee_plantation,thick_bush,8,7.412,11,11.648,856,seilama_1_3_2_96,n,y,y,y,SEI-030,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,7,97,fish,cocao_coffee_plantation,thick_bush,8,7.415,11,11.646,855,seilama_1_3_2_97,y,y,y,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,3,2,7,98,fish,cocao_coffee_plantation,thick_bush,8,7.417,11,11.649,858,seilama_1_3_2_98,y,y,n,n,na,dry,NA
 seilama,1,2020-12-07T00:00:00Z,3,3,1,99,fish,harvested_dry_rice_farm,"low_bush, edge",8,7.424,11,11.657,872,seilama_1_3_3_99,y,y,n,n,na,dry,NA
 seilama,1,2020-12-07T00:00:00Z,3,3,1,100,fish,harvested_dry_rice_farm,"hillside, fallen_log",8,7.43,11,11.655,870,seilama_1_3_3_100,y,y,y,n,na,dry,NA
 seilama,1,2020-12-07T00:00:00Z,3,3,1,101,fish,harvested_dry_rice_farm,by_burnt_tree,8,7.434,11,11.658,867,seilama_1_3_3_101,y,y,n,n,na,dry,NA
@@ -1551,16 +1551,16 @@ seilama,1,2020-12-08T00:00:00Z,3,6,3,265,fish,village,low_grass,8,7.334,11,11.59
 seilama,1,2020-12-08T00:00:00Z,3,6,3,266,fish,village,low_grass,8,7.339,11,11.599,916,seilama_1_3_6_266,y,y,n,n,na,dry,NA
 seilama,1,2020-12-08T00:00:00Z,3,6,3,267,fish,village,low_grass,8,7.346,11,11.6,914,seilama_1_3_6_267,y,y,n,n,na,dry,NA
 seilama,1,2020-12-08T00:00:00Z,3,6,3,268,fish,village,low_grass,8,7.352,11,11.602,911,seilama_1_3_6_268,y,y,n,n,na,dry,NA
-seilama,1,2020-12-08T00:00:00Z,3,6,4,269,fish,village,cacao_nursery,8,7.401,11,11.637,927,seilama_1_3_6_269,y,y,n,n,na,dry,NA
+seilama,1,2020-12-08T00:00:00Z,3,6,4,269,fish,village,cacao_nursery,8,7.374,11,11.632,927,seilama_1_3_6_269,y,y,n,n,na,dry,NA
 seilama,1,2020-12-08T00:00:00Z,3,6,4,270,fish,village,cacao_nursery,8,7.378,11,11.63,923,seilama_1_3_6_270,y,y,n,n,na,dry,NA
 seilama,1,2020-12-07T00:00:00Z,4,1,1,1,fish,palm_plantation,"by_palm_tree, by_road, by_path",8,7.378,11,11.529,818,seilama_1_4_1_1,n,y,y,y,SEI-036,dry,NA
-seilama,1,2020-12-08T00:00:00Z,3,6,4,271,fish,village,cacao_nursery,8,7.379,11,11.627,919,seilama_1_3_6_271,n,y,y,y,SEI-041,dry,NA
+seilama,1,2020-12-08T00:00:00Z,3,6,4,271,fish,village,cacao_nursery,8,7.379,11,11.627,919,seilama_1_3_6_271,y,y,n,n,na,dry,NA
 seilama,1,2020-12-08T00:00:00Z,3,6,4,272,fish,village,cacao_nursery,8,7.379,11,11.622,915,seilama_1_3_6_272,y,y,n,n,na,dry,NA
 seilama,1,2020-12-08T00:00:00Z,3,6,4,273,fish,village,cacao_nursery,8,7.378,11,11.618,912,seilama_1_3_6_273,y,y,n,n,na,dry,NA
 seilama,1,2020-12-08T00:00:00Z,3,6,4,274,fish,village,cacao_nursery,8,7.377,11,11.617,914,seilama_1_3_6_274,y,y,n,n,na,dry,NA
 seilama,1,2020-12-07T00:00:00Z,4,3,7,136,fish,harvested_dry_rice_farm,farmhouse,8,7.447,11,11.678,870,seilama_1_4_3_136,n,y,y,y,SEI-037,dry,NA
 seilama,1,2020-12-08T00:00:00Z,3,6,4,275,fish,village,cacao_nursery,8,7.375,11,11.611,915,seilama_1_3_6_275,y,y,n,n,na,dry,NA
-seilama,1,2020-12-08T00:00:00Z,3,6,5,276,fish,village,by_house,8,7.362,11,11.611,929,seilama_1_3_6_276,n,y,y,y,SEI-042,dry,NA
+seilama,1,2020-12-08T00:00:00Z,3,6,5,276,fish,village,by_house,8,7.362,11,11.611,929,seilama_1_3_6_276,y,n,y,n,na,dry,NA
 seilama,1,2020-12-08T00:00:00Z,3,6,5,277,fish,village,open,8,7.358,11,11.613,926,seilama_1_3_6_277,y,y,n,n,na,dry,NA
 seilama,1,2020-12-08T00:00:00Z,3,6,5,278,fish,village,by_egg_plant,8,7.353,11,11.618,924,seilama_1_3_6_278,y,n,y,n,na,dry,NA
 seilama,1,2020-12-08T00:00:00Z,3,6,5,279,fish,village,grave_site,8,7.347,11,11.618,921,seilama_1_3_6_279,y,y,n,n,na,dry,NA
@@ -1614,55 +1614,55 @@ seilama,1,2020-12-07T00:00:00Z,4,1,7,46,fish,palm_plantation,by_tree,8,7.371,11,
 seilama,1,2020-12-07T00:00:00Z,4,1,7,47,fish,palm_plantation,"by_tree, leaf_litter",8,7.374,11,11.537,840,seilama_1_4_1_47,y,y,n,n,na,dry,NA
 seilama,1,2020-12-07T00:00:00Z,4,1,7,48,fish,palm_plantation,by_palm_tree,8,7.379,11,11.536,842,seilama_1_4_1_48,y,y,n,n,na,dry,NA
 seilama,1,2020-12-07T00:00:00Z,4,1,7,49,fish,palm_plantation,"thick_bush, by_clearing, edge",8,7.38,11,11.535,842,seilama_1_4_1_49,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,1,50,fish,cocaoo_coffee_plantation,"by_tree, leaf_litter, edge",8,7.375,11,11.653,838,seilama_1_4_2_50,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,1,51,fish,cocaoo_coffee_plantation,"by_tree, leaf_litter, edge",8,7.377,11,11.655,841,seilama_1_4_2_51,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,1,52,fish,cocaoo_coffee_plantation,"by_banan_tree, leaf_litter, edge",8,7.377,11,11.658,842,seilama_1_4_2_52,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,1,53,fish,cocaoo_coffee_plantation,"by_banan_tree, leaf_litter, edge",8,7.381,11,11.664,842,seilama_1_4_2_53,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,1,54,fish,cocaoo_coffee_plantation,"by_tree, by_shrubs, by_path, edge",8,7.382,11,11.666,842,seilama_1_4_2_54,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,1,55,fish,cocaoo_coffee_plantation,"by_shrubs, by_path",8,7.383,11,11.668,842,seilama_1_4_2_55,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,1,56,fish,cocaoo_coffee_plantation,low_grass,8,7.384,11,11.67,844,seilama_1_4_2_56,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,2,57,fish,cocaoo_coffee_plantation,"by_tree, by_river, leaf_litter",8,7.378,11,11.649,847,seilama_1_4_2_57,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,2,58,fish,cocaoo_coffee_plantation,"by_tree, leaf_litter",8,7.38,11,11.655,848,seilama_1_4_2_58,y,y,y,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,2,59,fish,cocaoo_coffee_plantation,by_tree,8,7.382,11,11.657,848,seilama_1_4_2_59,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,2,60,fish,cocaoo_coffee_plantation,"by_tree, by_path",8,7.383,11,11.658,849,seilama_1_4_2_60,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,2,61,fish,cocaoo_coffee_plantation,"by_tree, by_path",8,7.388,11,11.663,851,seilama_1_4_2_61,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,2,62,fish,cocaoo_coffee_plantation,"by_tree, leaf_litter",8,7.39,11,11.665,852,seilama_1_4_2_62,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,2,63,fish,cocaoo_coffee_plantation,by_coconut_tree,8,7.392,11,11.669,853,seilama_1_4_2_63,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,3,64,fish,cocaoo_coffee_plantation,"by_tree, by_path, by_river",8,7.379,11,11.65,851,seilama_1_4_2_64,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,3,65,fish,cocaoo_coffee_plantation,"open, by_path",8,7.381,11,11.649,851,seilama_1_4_2_65,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,3,66,fish,cocaoo_coffee_plantation,"open, by_path",8,7.385,11,11.653,852,seilama_1_4_2_66,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,3,67,fish,cocaoo_coffee_plantation,open,8,7.389,11,11.659,851,seilama_1_4_2_67,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,3,68,fish,cocaoo_coffee_plantation,"by_tree, by_path",8,7.392,11,11.66,851,seilama_1_4_2_68,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,3,69,fish,cocaoo_coffee_plantation,"open, by_path",8,7.395,11,11.664,851,seilama_1_4_2_69,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,3,70,fish,cocaoo_coffee_plantation,by_tree,8,7.396,11,11.665,851,seilama_1_4_2_70,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,4,71,fish,cocaoo_coffee_plantation,"by_tree, by_path",8,7.388,11,11.65,850,seilama_1_4_2_71,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,4,72,fish,cocaoo_coffee_plantation,"by_tree, by_path",8,7.392,11,11.652,853,seilama_1_4_2_72,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,4,73,fish,cocaoo_coffee_plantation,"low_bush, by_path",8,7.393,11,11.654,853,seilama_1_4_2_73,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,4,74,fish,cocaoo_coffee_plantation,"leaf_litter, open",8,7.396,11,11.656,853,seilama_1_4_2_74,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,4,75,fish,cocaoo_coffee_plantation,"open, by_fallen_log",8,7.398,11,11.66,853,seilama_1_4_2_75,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,4,76,fish,cocaoo_coffee_plantation,open,8,7.401,11,11.661,853,seilama_1_4_2_76,y,y,y,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,4,77,fish,cocaoo_coffee_plantation,"low_bush, edge",8,7.405,11,11.664,854,seilama_1_4_2_77,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,5,78,fish,cocaoo_coffee_plantation,"by_tree, edge",8,7.393,11,11.648,848,seilama_1_4_2_78,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,5,79,fish,cocaoo_coffee_plantation,open,8,7.396,11,11.647,848,seilama_1_4_2_79,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,5,80,fish,cocaoo_coffee_plantation,by_tree,8,7.398,11,11.651,849,seilama_1_4_2_80,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,5,81,fish,cocaoo_coffee_plantation,by_tree,8,7.4,11,11.655,852,seilama_1_4_2_81,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,5,82,fish,cocaoo_coffee_plantation,by_tree,8,7.402,11,11.654,854,seilama_1_4_2_82,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,5,83,fish,cocaoo_coffee_plantation,"by_tree, edge",8,7.405,11,11.654,855,seilama_1_4_2_83,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,5,84,fish,cocaoo_coffee_plantation,thick_bush,8,7.408,11,11.656,857,seilama_1_4_2_84,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,6,85,fish,cocaoo_coffee_plantation,"by_tree, by_river",8,7.4,11,11.645,845,seilama_1_4_2_85,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,6,86,fish,cocaoo_coffee_plantation,thick_bush,8,7.401,11,11.644,847,seilama_1_4_2_86,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,6,87,fish,cocaoo_coffee_plantation,thick_bush,8,7.403,11,11.645,850,seilama_1_4_2_87,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,6,88,fish,cocaoo_coffee_plantation,thick_bush,8,7.406,11,11.649,851,seilama_1_4_2_88,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,6,89,fish,cocaoo_coffee_plantation,thick_bush,8,7.41,11,11.651,855,seilama_1_4_2_89,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,6,90,fish,cocaoo_coffee_plantation,thick_bush,8,7.411,11,11.651,859,seilama_1_4_2_90,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,6,91,fish,cocaoo_coffee_plantation,thick_bush,8,7.413,11,11.653,857,seilama_1_4_2_91,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,7,92,fish,cocaoo_coffee_plantation,"edge, thick_bush",8,7.4,11,11.643,841,seilama_1_4_2_92,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,7,93,fish,cocaoo_coffee_plantation,thick_bush,8,7.406,11,11.645,845,seilama_1_4_2_93,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,7,94,fish,cocaoo_coffee_plantation,thick_bush,8,7.407,11,11.645,850,seilama_1_4_2_94,y,y,y,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,7,95,fish,cocaoo_coffee_plantation,thick_bush,8,7.41,11,11.647,853,seilama_1_4_2_95,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,7,96,fish,cocaoo_coffee_plantation,thick_bush,8,7.412,11,11.648,856,seilama_1_4_2_96,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,7,97,fish,cocaoo_coffee_plantation,thick_bush,8,7.415,11,11.646,855,seilama_1_4_2_97,y,y,n,n,na,dry,NA
-seilama,1,2020-12-07T00:00:00Z,4,2,7,98,fish,cocaoo_coffee_plantation,thick_bush,8,7.417,11,11.649,858,seilama_1_4_2_98,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,1,50,fish,cocao_coffee_plantation,"by_tree, leaf_litter, edge",8,7.375,11,11.653,838,seilama_1_4_2_50,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,1,51,fish,cocao_coffee_plantation,"by_tree, leaf_litter, edge",8,7.377,11,11.655,841,seilama_1_4_2_51,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,1,52,fish,cocao_coffee_plantation,"by_banan_tree, leaf_litter, edge",8,7.377,11,11.658,842,seilama_1_4_2_52,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,1,53,fish,cocao_coffee_plantation,"by_banan_tree, leaf_litter, edge",8,7.381,11,11.664,842,seilama_1_4_2_53,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,1,54,fish,cocao_coffee_plantation,"by_tree, by_shrubs, by_path, edge",8,7.382,11,11.666,842,seilama_1_4_2_54,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,1,55,fish,cocao_coffee_plantation,"by_shrubs, by_path",8,7.383,11,11.668,842,seilama_1_4_2_55,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,1,56,fish,cocao_coffee_plantation,low_grass,8,7.384,11,11.67,844,seilama_1_4_2_56,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,2,57,fish,cocao_coffee_plantation,"by_tree, by_river, leaf_litter",8,7.378,11,11.649,847,seilama_1_4_2_57,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,2,58,fish,cocao_coffee_plantation,"by_tree, leaf_litter",8,7.38,11,11.655,848,seilama_1_4_2_58,y,y,y,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,2,59,fish,cocao_coffee_plantation,by_tree,8,7.382,11,11.657,848,seilama_1_4_2_59,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,2,60,fish,cocao_coffee_plantation,"by_tree, by_path",8,7.383,11,11.658,849,seilama_1_4_2_60,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,2,61,fish,cocao_coffee_plantation,"by_tree, by_path",8,7.388,11,11.663,851,seilama_1_4_2_61,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,2,62,fish,cocao_coffee_plantation,"by_tree, leaf_litter",8,7.39,11,11.665,852,seilama_1_4_2_62,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,2,63,fish,cocao_coffee_plantation,by_coconut_tree,8,7.392,11,11.669,853,seilama_1_4_2_63,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,3,64,fish,cocao_coffee_plantation,"by_tree, by_path, by_river",8,7.379,11,11.65,851,seilama_1_4_2_64,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,3,65,fish,cocao_coffee_plantation,"open, by_path",8,7.381,11,11.649,851,seilama_1_4_2_65,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,3,66,fish,cocao_coffee_plantation,"open, by_path",8,7.385,11,11.653,852,seilama_1_4_2_66,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,3,67,fish,cocao_coffee_plantation,open,8,7.389,11,11.659,851,seilama_1_4_2_67,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,3,68,fish,cocao_coffee_plantation,"by_tree, by_path",8,7.392,11,11.66,851,seilama_1_4_2_68,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,3,69,fish,cocao_coffee_plantation,"open, by_path",8,7.395,11,11.664,851,seilama_1_4_2_69,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,3,70,fish,cocao_coffee_plantation,by_tree,8,7.396,11,11.665,851,seilama_1_4_2_70,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,4,71,fish,cocao_coffee_plantation,"by_tree, by_path",8,7.388,11,11.65,850,seilama_1_4_2_71,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,4,72,fish,cocao_coffee_plantation,"by_tree, by_path",8,7.392,11,11.652,853,seilama_1_4_2_72,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,4,73,fish,cocao_coffee_plantation,"low_bush, by_path",8,7.393,11,11.654,853,seilama_1_4_2_73,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,4,74,fish,cocao_coffee_plantation,"leaf_litter, open",8,7.396,11,11.656,853,seilama_1_4_2_74,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,4,75,fish,cocao_coffee_plantation,"open, by_fallen_log",8,7.398,11,11.66,853,seilama_1_4_2_75,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,4,76,fish,cocao_coffee_plantation,open,8,7.401,11,11.661,853,seilama_1_4_2_76,y,y,y,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,4,77,fish,cocao_coffee_plantation,"low_bush, edge",8,7.405,11,11.664,854,seilama_1_4_2_77,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,5,78,fish,cocao_coffee_plantation,"by_tree, edge",8,7.393,11,11.648,848,seilama_1_4_2_78,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,5,79,fish,cocao_coffee_plantation,open,8,7.396,11,11.647,848,seilama_1_4_2_79,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,5,80,fish,cocao_coffee_plantation,by_tree,8,7.398,11,11.651,849,seilama_1_4_2_80,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,5,81,fish,cocao_coffee_plantation,by_tree,8,7.4,11,11.655,852,seilama_1_4_2_81,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,5,82,fish,cocao_coffee_plantation,by_tree,8,7.402,11,11.654,854,seilama_1_4_2_82,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,5,83,fish,cocao_coffee_plantation,"by_tree, edge",8,7.405,11,11.654,855,seilama_1_4_2_83,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,5,84,fish,cocao_coffee_plantation,thick_bush,8,7.408,11,11.656,857,seilama_1_4_2_84,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,6,85,fish,cocao_coffee_plantation,"by_tree, by_river",8,7.4,11,11.645,845,seilama_1_4_2_85,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,6,86,fish,cocao_coffee_plantation,thick_bush,8,7.401,11,11.644,847,seilama_1_4_2_86,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,6,87,fish,cocao_coffee_plantation,thick_bush,8,7.403,11,11.645,850,seilama_1_4_2_87,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,6,88,fish,cocao_coffee_plantation,thick_bush,8,7.406,11,11.649,851,seilama_1_4_2_88,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,6,89,fish,cocao_coffee_plantation,thick_bush,8,7.41,11,11.651,855,seilama_1_4_2_89,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,6,90,fish,cocao_coffee_plantation,thick_bush,8,7.411,11,11.651,859,seilama_1_4_2_90,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,6,91,fish,cocao_coffee_plantation,thick_bush,8,7.413,11,11.653,857,seilama_1_4_2_91,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,7,92,fish,cocao_coffee_plantation,"edge, thick_bush",8,7.4,11,11.643,841,seilama_1_4_2_92,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,7,93,fish,cocao_coffee_plantation,thick_bush,8,7.406,11,11.645,845,seilama_1_4_2_93,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,7,94,fish,cocao_coffee_plantation,thick_bush,8,7.407,11,11.645,850,seilama_1_4_2_94,y,y,y,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,7,95,fish,cocao_coffee_plantation,thick_bush,8,7.41,11,11.647,853,seilama_1_4_2_95,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,7,96,fish,cocao_coffee_plantation,thick_bush,8,7.412,11,11.648,856,seilama_1_4_2_96,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,7,97,fish,cocao_coffee_plantation,thick_bush,8,7.415,11,11.646,855,seilama_1_4_2_97,y,y,n,n,na,dry,NA
+seilama,1,2020-12-07T00:00:00Z,4,2,7,98,fish,cocao_coffee_plantation,thick_bush,8,7.417,11,11.649,858,seilama_1_4_2_98,y,y,n,n,na,dry,NA
 seilama,1,2020-12-07T00:00:00Z,4,3,1,99,fish,harvested_dry_rice_farm,"low_bush, edge",8,7.424,11,11.657,872,seilama_1_4_3_99,y,y,n,n,na,dry,NA
 seilama,1,2020-12-07T00:00:00Z,4,3,1,100,fish,harvested_dry_rice_farm,"hillside, fallen_log",8,7.43,11,11.655,870,seilama_1_4_3_100,y,y,n,n,na,dry,NA
 seilama,1,2020-12-07T00:00:00Z,4,3,1,101,fish,harvested_dry_rice_farm,by_burnt_tree,8,7.434,11,11.658,867,seilama_1_4_3_101,y,y,n,n,na,dry,NA
@@ -1831,14 +1831,14 @@ seilama,1,2020-12-08T00:00:00Z,4,6,3,265,fish,village,low_grass,8,7.334,11,11.59
 seilama,1,2020-12-08T00:00:00Z,4,6,3,266,fish,village,low_grass,8,7.339,11,11.599,916,seilama_1_4_6_266,y,y,n,n,na,dry,NA
 seilama,1,2020-12-08T00:00:00Z,4,6,3,267,fish,village,low_grass,8,7.346,11,11.6,914,seilama_1_4_6_267,y,y,n,n,na,dry,NA
 seilama,1,2020-12-08T00:00:00Z,4,6,3,268,fish,village,low_grass,8,7.352,11,11.602,911,seilama_1_4_6_268,y,y,n,n,na,dry,NA
-seilama,1,2020-12-08T00:00:00Z,4,6,4,269,fish,village,cacao_nursery,8,7.401,11,11.637,927,seilama_1_4_6_269,y,y,n,n,na,dry,NA
+seilama,1,2020-12-08T00:00:00Z,4,6,4,269,fish,village,cacao_nursery,8,7.374,11,11.632,927,seilama_1_4_6_269,y,y,n,n,na,dry,NA
 seilama,1,2020-12-08T00:00:00Z,4,6,4,270,fish,village,cacao_nursery,8,7.378,11,11.63,923,seilama_1_4_6_270,y,n,y,n,na,dry,NA
-seilama,1,2020-12-08T00:00:00Z,4,6,4,271,fish,village,cacao_nursery,8,7.379,11,11.627,919,seilama_1_4_6_271,y,y,n,n,na,dry,NA
+seilama,1,2020-12-08T00:00:00Z,4,6,4,271,fish,village,cacao_nursery,8,7.379,11,11.627,919,seilama_1_4_6_271,n,y,y,y,SEI-041,dry,NA
 seilama,1,2020-12-08T00:00:00Z,4,6,4,272,fish,village,cacao_nursery,8,7.379,11,11.622,915,seilama_1_4_6_272,y,y,n,n,na,dry,NA
 seilama,1,2020-12-08T00:00:00Z,4,6,4,273,fish,village,cacao_nursery,8,7.378,11,11.618,912,seilama_1_4_6_273,y,y,n,n,na,dry,NA
 seilama,1,2020-12-08T00:00:00Z,4,6,4,274,fish,village,cacao_nursery,8,7.377,11,11.617,914,seilama_1_4_6_274,y,y,n,n,na,dry,NA
 seilama,1,2020-12-08T00:00:00Z,4,6,4,275,fish,village,cacao_nursery,8,7.375,11,11.611,915,seilama_1_4_6_275,y,y,n,n,na,dry,NA
-seilama,1,2020-12-08T00:00:00Z,4,6,5,276,fish,village,by_house,8,7.362,11,11.611,929,seilama_1_4_6_276,y,n,y,n,na,dry,NA
+seilama,1,2020-12-08T00:00:00Z,4,6,5,276,fish,village,by_house,8,7.362,11,11.611,929,seilama_1_4_6_276,n,y,y,y,SEI-042,dry,NA
 seilama,1,2020-12-08T00:00:00Z,4,6,5,277,fish,village,open,8,7.358,11,11.613,926,seilama_1_4_6_277,y,y,n,n,na,dry,NA
 seilama,1,2020-12-08T00:00:00Z,4,6,5,278,fish,village,by_egg_plant,8,7.353,11,11.618,924,seilama_1_4_6_278,y,y,n,n,na,dry,NA
 seilama,1,2020-12-08T00:00:00Z,4,6,5,279,fish,village,grave_site,8,7.347,11,11.618,921,seilama_1_4_6_279,y,y,n,n,na,dry,NA
