@@ -75,17 +75,22 @@ traps_lalehun_16 <- ggmap(lalehun_16) +
   geom_sf(data = lalehun_traps,
           aes(geometry = geometry,
               colour = rodent_trapped,
+              shape = grid_number,
               alpha = 0.2),
           inherit.aes = F) +
   coord_sf(xlim = c(-11.083, -11.077), ylim = c(8.193, 8.202)) +
   scale_colour_manual(values = c("orange", "purple")) +
+  scale_shape_manual(values = c(15, 16, 17, 18, 19, 7, 10)) +
   labs(title = "Trap locations Lalehun near Panguma",
        color = "Trap success",
+       shape = "Grid number",
        alpha = NULL,
        x = "Longitude",
        y = "Latitude") +
   theme_minimal() +
   guides(alpha = F)
+
+ggsave(plot = traps_lalehun_16, path = here("reports", "figures"), filename = "lalehun_traps.png")
 
 # seilama ggmap -------------------------------------------------------------------
 
@@ -111,10 +116,12 @@ traps_seilama_16 <- ggmap(seilama_16) +
   geom_sf(data = seilama_traps,
           aes(geometry = geometry,
               colour = rodent_trapped,
+              shape = grid_number,
               alpha = 0.2),
           inherit.aes = F) +
   coord_sf(xlim = c(-11.199, -11.19), ylim = c(8.119, 8.125)) +
   scale_colour_manual(values = c("orange", "purple")) +
+  scale_shape_manual(values = c(15, 16, 17, 18, 19, 7, 10)) +
   labs(title = "Trap locations Seilama near Panguma",
        color = "Trap success",
        alpha = NULL,
@@ -123,14 +130,7 @@ traps_seilama_16 <- ggmap(seilama_16) +
   theme_minimal() +
   guides(alpha = F)
 
-ggplotly(ggplot() +
-  geom_sf(data = seilama_traps %>%
-            mutate(trap_night = as_factor(trap_night)),
-          aes(geometry = geometry,
-              colour = grid_number,
-              text = paste(trap_uid),
-              alpha = 0.2),
-          inherit.aes = F))
+ggsave(plot = traps_seilama_16, path = here("reports", "figures"), filename = "seilama_traps.png")
 
 # lalehun OSM ---------------------------------------------------------------------
 

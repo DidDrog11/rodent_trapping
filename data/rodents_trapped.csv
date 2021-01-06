@@ -32,13 +32,13 @@ date,rodent_id,trap_id,site_id,trap_night,initial_species_id,weight,head_body,ta
 2020-12-06T00:00:00Z,SEI-009,22,1,2,praomys_spp,17,85,18,24,17,27,male,outside,developed,na,na,na,na,y,SEI-009,y,y,y,y,y,praomys_spp,NA
 2020-12-06T00:00:00Z,SEI-010,38,1,2,crocidura_spp,33,114,74,24,8,35,male,inside,developed,na,na,na,na,y,SEI-010,y,y,y,n,y,crocidura_spp,NA
 2020-12-06T00:00:00Z,SEI-011,52,2,2,praomys_spp,14,78,95,22,16,33,male,outside,developed,na,na,na,na,y,SEI-011,y,y,y,y,y,praomys_spp,NA
-2020-12-06T00:00:00Z,SEI-012,103,3,2,NA,10,73,73,23,15,28,male,not_noted,developed,na,na,na,na,y,SEI-012,y,y,y,y,y,NA,NA
+2020-12-06T00:00:00Z,SEI-012,103,3,2,l_striatus,10,73,73,23,15,28,male,not_noted,developed,na,na,na,na,y,SEI-012,y,y,y,y,y,l_striatus,NA
 2020-12-06T00:00:00Z,SEI-013,117,3,2,crocidura_spp,19,98,68,19,8,29,female,na,na,open,visible,not_counted,3,y,SEI-013,y,y,y,n,y,crocidura_spp,NA
 2020-12-06T00:00:00Z,SEI-014,131,3,2,praomys_spp,43,105,122,25,19,35,female,na,na,not_open,not_noted,6,0,y,SEI-014,y,y,y,y,y,praomys_spp,NA
 2020-12-06T00:00:00Z,SEI-015,133,3,2,praomys_spp,45,118,130,27,20,43,male,outside,developed,na,na,na,na,y,SEI-015,y,y,y,y,y,praomys_spp,NA
 2020-12-06T00:00:00Z,SEI-016,142,3,2,praomys_spp,9,61,93,17,16,22,female,na,na,not_open,barely_visible,not_counted,0,y,SEI-016,y,y,y,y,y,praomys_spp,NA
 2020-12-06T00:00:00Z,SEI-017,176,4,2,crocidura_spp,35,113,74,17,9,35,male,outside,developed,na,na,na,na,y,SEI-017,y,y,y,n,y,crocidura_spp,NA
-2020-12-06T00:00:00Z,SEI-018,161,4,2,tatera,180,174,172,38,25,57,female,na,na,open,visible,3,6,y,SEI-018,y,y,y,y,y,tatera,NA
+2020-12-06T00:00:00Z,SEI-018,161,4,2,gerbillinae_spp,180,174,172,38,25,57,female,na,na,open,visible,3,6,y,SEI-018,y,y,y,y,y,gerbillinae_spp,NA
 2020-12-06T00:00:00Z,SEI-019,169,4,2,l_sikapusi,45,188,58,17,15,37,female,na,na,open,visible,2,0,y,SEI-019,y,y,y,y,y,l_sikapusi,NA
 2020-12-06T00:00:00Z,SEI-020,196,4,2,l_sikapusi,55,115,NA,18,15,35,male,not_noted,developed,na,na,na,na,y,SEI-020,y,y,y,y,y,l_sikapusi,no_tail
 2020-12-06T00:00:00Z,SEI-021,215,5,2,praomys_spp,53,123,143,27,19,45,male,outside,developed,na,na,na,na,y,SEI-021,y,y,y,y,y,praomys_spp,NA
@@ -47,7 +47,7 @@ date,rodent_id,trap_id,site_id,trap_night,initial_species_id,weight,head_body,ta
 2020-12-06T00:00:00Z,SEI-024,226,5,2,praomys_spp,44,109,139,26,19,41,female,na,na,not_noted,visible,3,3,y,SEI-024,y,y,y,y,y,praomys_spp,NA
 2020-12-06T00:00:00Z,SEI-025,232,5,2,praomys_spp,37,105,118,26,19,36,female,na,na,open,visible,3,3,y,SEI-025,y,y,y,y,y,praomys_spp,NA
 2020-12-06T00:00:00Z,SEI-026,245,5,2,praomys_spp,31,105,133,26,19,39,female,na,na,open,visible,3,0,y,SEI-026,y,y,y,y,y,praomys_spp,NA
-2020-12-06T00:00:00Z,SEI-027,252,6,2,m_minutoides,10,69,47,17,13,26,female,na,na,open,visible,3,2,y,SEI-027,y,y,y,y,y,m_minutoides,NA
+2020-12-06T00:00:00Z,SEI-027,252,6,1,m_minutoides,10,69,47,17,13,26,female,na,na,open,visible,3,2,y,SEI-027,y,y,y,y,y,m_minutoides,NA
 2020-12-07T00:00:00Z,SEI-028,50,2,3,l_sikapusi,60,123,63,23,16,33,male,outside,developed,na,na,na,na,y,SEI-028,y,y,y,y,y,l_sikapusi,NA
 2020-12-07T00:00:00Z,SEI-029,74,2,3,mastomys_spp,58,122,113,24,18,36,male,outside,developed,na,na,na,na,y,SEI-029,y,y,y,y,y,mastomys_spp,NA
 2020-12-07T00:00:00Z,SEI-030,96,2,3,hylomyscus_spp,13,78,95,18,16,29,male,outside,developed,na,na,na,na,y,SEI-030,y,y,y,y,y,hylomyscus_spp,NA

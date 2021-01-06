@@ -1,8 +1,6 @@
 library("here")
 source(here("scripts", "project_library.R"))
 
-google_api <- rstudioapi::askForSecret("Google API Key")
-register_google(google_api)
 drive_download("https://drive.google.com/file/d/1kxpH6RvWgAMwhpqZ4yoH_6SYso06uuDa/view?usp=sharing", path = here("data", "trap_sites_all.xlsx"), overwrite = T)
 
 readxl::read_xlsx(path = here("data", "trap_sites_all.xlsx"), sheet = 2) %>%
