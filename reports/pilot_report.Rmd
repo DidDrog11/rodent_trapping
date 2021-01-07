@@ -186,6 +186,7 @@ trap_sites %>%
 ```
 
 65 Rodents were trapped during the pilot study:
+
   * 22 in Lalehun for an overall trap success rate of 3% 
   * 43 from Seilama for a trap success rate of 3.8%
 
@@ -331,6 +332,30 @@ I generated a taxanomic key for the small mammals likely to be trapped in the si
 
 The `field_id` is based on their initial classification. I have then compared the measurements obtained in the field with the published measurements to corroborate their classification or suggest potential misclassification. All rodents were photographed and tissue samples were taken for chromosomal ID if required.
 
+The below table captures the mean and range of the recorded morphometry we have collected in the field. Some species are missing catalogue data.
 ``` {r, rodent_id, echo=F}
 DT::datatable(rodent_ids)
+```
+
+This data is matched to the measurements in the literature in `scripts/matching_species.R`. It is split into Rodents and Shrews as they can be distinguished at that level. In future versions I will do similar for the genera of the rodents for those that are able to be taxanomically distinguished based on external appearance.
+
+This generates two dataframes where for each individual I rank the similarity to the literature measurements. I allow them to match to the mean +/- 10%, there is no allowance for being above or below the min/max. A weighted score is then generated from the proportion of means that were matched between the individual and reference species across the morphometric measurements (termed the `mean_match`). The same is done for ranges (termed the `range_match`). A weighted score is then produced where the range match is worth half of the mean match. These weighted scores are then ranked for each individual to give a similarity index for each individual against all the reference species. At the moment these can be viewed in the below tables. I will use this to revisit some of the classifications. For example it seems the species that have been labelled *Mus minutoides* more closely resemble *Mus setulosus*
+
+```{r rodent_matching, echo=F}
+rodent_matches <- read_rds(here("data", "speciation", "rodent_matches.rds"))
+names(rodent_matches) <- snakecase::to_sentence_case(names(rodent_matches))
+DT::datatable(rodent_matches %<>%
+  rename("Rodent ID" = "Rodent id",
+         "Initial Species ID" = "Initial species id") %>%
+  mutate(`Initial Species ID` = snakecase::to_sentence_case(`Initial Species ID`)))
+```
+
+And for shrews
+```{r shrew_matching, echo=F}
+shrew_matches <- read_rds(here("data", "speciation", "shrew_matches.rds"))
+names(shrew_matches) <- snakecase::to_sentence_case(names(shrew_matches))
+DT::datatable(shrew_matches %<>%
+  rename("Rodent ID" = "Rodent id",
+         "Initial Species ID" = "Initial species id") %>%
+  mutate(`Initial Species ID` = snakecase::to_sentence_case(`Initial Species ID`)))
 ```
