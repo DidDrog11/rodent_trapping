@@ -2,7 +2,10 @@
 title: "Pilot Report"
 author: "David Simons"
 date: "`r format(Sys.time(), '%A %d %B %Y')`"
-output: html_document
+output:
+  word_document: default
+  html_document: default
+always_allow_html: yes
 ---
 
 ```{r setup, include=FALSE, quietly=TRUE}
@@ -232,8 +235,7 @@ trapped_rodents %>%
                                  "lalehun" = "Lalehun",
                                  "seilama" = "Seilama")) %>%
   ggplot() +
-  geom_bar(aes(x = habitat, fill = village)) +
-  coord_flip() +
+  geom_bar(aes(x = village, fill = habitat)) +
   facet_wrap(genus ~ .) +
   theme_minimal() +
   labs(title = "Habitats of trapped rodents",
@@ -328,18 +330,18 @@ There was some degree of increased abundance in the agricultural and fallow site
 We will go on to calculate species diversity with for example the Shannon-Wiener index but I'd like to do some further work speciating the trapped rodents before this.
 
 ### Species ID
-I generated a taxanomic key for the small mammals likely to be trapped in the sites based on occurence data from two sources. The first by [Ara Monadjem et al.](https://www.degruyter.com/view/title/126014) which had data on rodents and the second by [Kingdon and Happold](https://www.bloomsbury.com/uk/mammals-of-africa-9781408122570/). These resources provided data that has been extracted into `rodent_ids.R`. The local team also had expertise in identifying rodents to species which was invaluable.
+I generated a taxanomic key for the small mammals likely to be trapped in the sites based on occurrence data from two sources. The first by [Ara Monadjem et al.](https://www.degruyter.com/view/title/126014) which had data on rodents and the second by [Kingdon and Happold](https://www.bloomsbury.com/uk/mammals-of-africa-9781408122570/). These resources provided data that has been extracted into `rodent_ids.R`. The local team also had expertise in identifying rodents to species which was invaluable.
 
 The `field_id` is based on their initial classification. I have then compared the measurements obtained in the field with the published measurements to corroborate their classification or suggest potential misclassification. All rodents were photographed and tissue samples were taken for chromosomal ID if required.
 
-The below table captures the mean and range of the recorded morphometry we have collected in the field. Some species are missing catalogue data.
+The below table captures the mean and range of the metrics we have recorded in the field. Some species are missing catalogue data. This produces the reference species list.
 ``` {r, rodent_id, echo=F}
 DT::datatable(rodent_ids)
 ```
 
 This data is matched to the measurements in the literature in `scripts/matching_species.R`. It is split into Rodents and Shrews as they can be distinguished at that level. In future versions I will do similar for the genera of the rodents for those that are able to be taxanomically distinguished based on external appearance.
 
-This generates two dataframes where for each individual I rank the similarity to the literature measurements. I allow them to match to the mean +/- 10%, there is no allowance for being above or below the min/max. A weighted score is then generated from the proportion of means that were matched between the individual and reference species across the morphometric measurements (termed the `mean_match`). The same is done for ranges (termed the `range_match`). A weighted score is then produced where the range match is worth half of the mean match. These weighted scores are then ranked for each individual to give a similarity index for each individual against all the reference species. At the moment these can be viewed in the below tables. I will use this to revisit some of the classifications. For example it seems the species that have been labelled *Mus minutoides* more closely resemble *Mus setulosus*
+This generates two dataframes (one for rodents and one for shrews) where for each individual I rank the similarity to the literature measurements. I allow them to match to the mean +/- 10%, there is no allowance for being above or below the min/max. A weighted score is then generated from the proportion of means that were matched between the individual and reference species across the morphometric measurements (termed the `mean_match`). The same is done for ranges (termed the `range_match`). A weighted score is then produced where the range match is worth half of the mean match. These weighted scores are then ranked for each individual to give a similarity index for each individual against all the reference species. At the moment these can be viewed in the below tables. I will use this to revisit some of the classifications. For example it seems the species that have been labelled *Mus minutoides* more closely resemble *Mus setulosus*
 
 ```{r rodent_matching, echo=F}
 rodent_matches <- read_rds(here("data", "speciation", "rodent_matches.rds"))
@@ -350,7 +352,7 @@ DT::datatable(rodent_matches %<>%
   mutate(`Initial Species ID` = snakecase::to_sentence_case(`Initial Species ID`)))
 ```
 
-And for shrews
+And for Shrews
 ```{r shrew_matching, echo=F}
 shrew_matches <- read_rds(here("data", "speciation", "shrew_matches.rds"))
 names(shrew_matches) <- snakecase::to_sentence_case(names(shrew_matches))

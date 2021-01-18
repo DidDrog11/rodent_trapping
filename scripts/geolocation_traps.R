@@ -124,6 +124,7 @@ traps_seilama_16 <- ggmap(seilama_16) +
   scale_shape_manual(values = c(15, 16, 17, 18, 19, 7, 10)) +
   labs(title = "Trap locations Seilama near Panguma",
        color = "Trap success",
+       shape = "Grid number",
        alpha = NULL,
        x = "Longitude",
        y = "Latitude") +
