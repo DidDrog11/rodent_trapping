@@ -1,0 +1,29 @@
+---
+title: "Trapping protocol"
+date: "`r Sys.Date()`"
+author: 
+  - first_name: "David"
+    last_name: "Simons"
+    url: https://www.dsimons.org
+    orcid_id: 0000-0001-9655-1656
+output: 
+  distill::distill_article
+always_allow_html: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Preparation for field work
+
+Before going to the field it's important the following are checked
+
+  1. Adequate number of clean and functioning Sherman traps are brought. You will need at least *324* to set up the correct number so please bring some extra.
+  2. Enough sample pots for rodent specimens
+  3. Spare batteries for GPS devices
+  4. Battery packs if possible for the electronic tablets
+  5. Working portable freezer that can be stored at Panguma Hospital Lab
+  6. Paper copies of the data entry form in case the pads stop working
+
+

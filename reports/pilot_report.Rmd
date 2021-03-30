@@ -3,8 +3,8 @@ title: "Pilot Report"
 author: "David Simons"
 date: "`r format(Sys.time(), '%A %d %B %Y')`"
 output:
-  word_document: default
   html_document: default
+  word_document: default
 always_allow_html: yes
 ---
 
