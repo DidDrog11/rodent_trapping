@@ -1,18 +1,19 @@
 ---
 title: "Trapping protocol"
-date: "`r Sys.Date()`"
-author: 
-  - first_name: "David"
-    last_name: "Simons"
-    url: https://www.dsimons.org
-    orcid_id: 0000-0001-9655-1656
-output: 
-  distill::distill_article
+author: "David Simons"
+date: "`r format(Sys.time(), '%A %d %B %Y')`"
+output:
+  html_document: default
+  word_document: default
 always_allow_html: yes
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(here)
+library(sf)
+library(tidyverse)
+library(mapview)
 ```
 
 ## Preparation for field work
@@ -25,5 +26,19 @@ Before going to the field it's important the following are checked
   4. Battery packs if possible for the electronic tablets
   5. Working portable freezer that can be stored at Panguma Hospital Lab
   6. Paper copies of the data entry form in case the pads stop working
+
+## Location of traps
+
+The traps will be set in grids at the same locations as previously. This means that for each grid we need to stake out the boundaries of the grid before setting the traps. We then set the traps in lines within the boundaries of the grid.
+
+The location of each of the grids for the study sites are below. The co-ordinates are given in the same format as on the GPS devices (degrees, minutes and seconds)
+
+``` {r map_lalehun}
+lalehun_traps <- read_rds(here("data", "lalehun_traps.rds")) %>%
+  st_as_sf() %>%
+  distinct(geometry, .keep_all = T)
+
+mapview(lalehun_traps)
+```
 
 
