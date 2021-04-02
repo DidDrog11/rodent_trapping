@@ -147,3 +147,6 @@ autoplot(lalehun_osm_1) +
               alpha = 0.2),
           inherit.aes = F) +
   coord_sf(crs = st_crs(4326))
+
+write_rds(lalehun_traps, here("data", "lalehun_traps.rds"))
+write_rds(seilama_traps, here("data", "seilama_traps.rds"))
