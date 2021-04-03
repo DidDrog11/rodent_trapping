@@ -1,13 +1,8 @@
 ---
 title: "Trapping protocol"
 date: "`r Sys.Date()`"
-author: 
-  - first_name: "David"
-    last_name: "Simons"
-    url: https://www.dsimons.org
-    orcid_id: 0000-0001-9655-1656
 output: 
-  distill::distill_article
+  pdf_document: default
 always_allow_html: yes
 ---
 
@@ -17,6 +12,7 @@ library("tidyverse")
 library("here")
 library("sf")
 library("tmap")
+library("tmaptools")
 ```
 
 ## Preparation for field work
@@ -30,6 +26,7 @@ Before going to the field it's important the following are checked
   5. Working portable freezer that can be stored at Panguma Hospital Lab
   6. Paper copies of the data entry form in case the pads stop working
 
+![For example this was the grid we set up for trap site 5 at Lalehun](figures/grid.png)
 
 ## Finding the trap sites
 
@@ -39,11 +36,54 @@ The coordinates of the corners of the study grids are below. To find them you ca
 
 First turn on the device and press the find button on the front above mark. Use the direction buttons to select Coordinates and press enter. This takes to a page that asks you to enter the location. The left and right arrows at the bottom of the screen move across the numbers you can control what is highlighted using the directional buttons and enter selects. This will then produce a purple line that will guide you to the coordinates. Tie some ribbon to a plant to identify this corner of the grid and then perform the same for the 3 other corners.
 
+``` {r traps, echo = F, layout = "markup"}
+lalehun_traps <- read_rds(here("data", "lalehun_traps.rds")) %>%
+  st_as_sf() %>%
+  distinct(geometry, .keep_all = T) %>%
+  mutate(grid_number = recode(grid_number,
+                              "3a" = "3",
+                              "3b" = "3"),
+         lon_DdM = paste(lon_DdM, "W"),
+         lat_DdM = paste(lat_DdM, "N"))
+
+osm_LAL <- read_osm(lalehun_traps, ext=1.6) 
+LAL_map <- tm_shape(osm_LAL) +
+  tm_rgb() +
+  tm_shape(lalehun_traps) +
+  tm_dots(col = "grid_number",
+          palette = viridisLite::plasma(6, begin = 0, end = 0.4),
+          popup.vars = c("lat_DdM", "lon_DdM"),
+          title = "Lalehun Grids") +
+  tm_layout(legend.outside = F)
+  
+
+seilama_traps <- read_rds(here("data", "seilama_traps.rds")) %>%
+  st_as_sf() %>%
+  distinct(geometry, .keep_all = T) %>%
+  mutate(grid_number = recode(grid_number,
+                              "3a" = "3",
+                              "3b" = "3"),
+         lon_DdM = paste(lon_DdM, "W"),
+         lat_DdM = paste(lat_DdM, "N")) %>%
+  arrange(grid_number)
+
+osm_SEIL <- read_osm(seilama_traps, ext=1.2)
+SEIL_map <- tm_shape(osm_SEIL) +
+  tm_rgb() +
+  tm_shape(seilama_traps) +
+  tm_dots(col = "grid_number",
+          palette = viridisLite::plasma(6, begin = 0, end = 0.4),
+          contrast = c(0, 0.65),
+          popup.vars = c("lat_DdM", "lon_DdM"),
+          title = "Seilama Grids") +
+  tm_layout(legend.outside = F)
+
+tmap_arrange(LAL_map, SEIL_map)
+```
+
 ### Lalehun
 
 We have set up **six** sites in Lalehun. Each site represents a grid that we set lines of traps in. Each line is 7 traps.
-
-![For example this was the grid we set up for trap site 5 at Lalehun](figures/grid.png)
 
 For each of the below grids there are coordinates for the corners of the grid. Try and set up lines of traps within the grids so it would be easier if you find the corners first
 
@@ -83,25 +123,9 @@ For each of the below grids there are coordinates for the corners of the grid. T
 
 We will add another "site" which will be traps within the houses. For the traps in the houses it is important to note what the room is used for, the type of material the house is made from and the type of roof.
 
-This is the map of the sites so far.
+For Lalehun we want to have traps in homes from across the village. Please try and make sure that traps are placed in homes from as many as the squares of **Figure 2** as possible. You will also need to record how many houses you asked to place traps in and how many said no. There is a separate **Indoor** sheet to record this on.
 
-``` {r lalehun_traps, echo = F, layout = "markup"}
-lalehun_traps <- read_rds(here("data", "lalehun_traps.rds")) %>%
-  st_as_sf() %>%
-  distinct(geometry, .keep_all = T) %>%
-  mutate(grid_number = recode(grid_number,
-                              "3a" = "3",
-                              "3b" = "3"),
-         lon_DdM = paste(lon_DdM, "W"),
-         lat_DdM = paste(lat_DdM, "N"))
-
-tmap_mode("view")
-tm_shape(lalehun_traps) +
-  tm_dots(col = "grid_number",
-          palette = "Dark2",
-          popup.vars = c("lat_DdM", "lon_DdM")) +
-  tm_basemap("OpenStreetMap")
-```
+![Grid of Lalehun village](figures/lalehun_grid.png)
 
 ### Seilama
 
@@ -140,21 +164,15 @@ We have set up **six** sites in Seilama.
     + Line 1 end = 8 7.357 N and 11 11.624 W
     + Line 2 beginning = 8 7.31 N and 11 11.6 W
     + Line 2 end = 8 7.362 N and 11 11.611 W
+    
+Seilama is a much smaller village so just try and make sure that you have good coverage of the different areas of the village when setting the traps in houses.
 
-``` {r seilama_traps, echo = F, layout = "markup"}
-seilama_traps <- read_rds(here("data", "seilama_traps.rds")) %>%
-  st_as_sf() %>%
-  distinct(geometry, .keep_all = T) %>%
-  mutate(grid_number = recode(grid_number,
-                              "3a" = "3",
-                              "3b" = "3"),
-         lon_DdM = paste(lon_DdM, "W"),
-         lat_DdM = paste(lat_DdM, "N"))
+## Data collection process
 
-tmap_mode("view")
-tm_shape(seilama_traps) +
-  tm_dots(col = "grid_number",
-          palette = "Dark2",
-          popup.vars = c("lat_DdM", "lon_DdM")) +
-  tm_basemap("OpenStreetMap")
-```
+The **Trap site setup** sheet needs to be completed once for each trap site (the grid of 49 traps) once during the study visit for all of the sites that are setup (so 7 including the indoor traps). I expect 7 completed forms from each village. Please try and be as accurate as possible with the GPS coordinates.
+
+The **Trap check** sheet needs to be completed for each trap site for each study night. 
+
+The **Rodent** sheet needs to be completed for each rodent that has been trapped.
+
+The **Indoor** sheet only needs to be completed once for each set of traps placed indoors, so once per village.

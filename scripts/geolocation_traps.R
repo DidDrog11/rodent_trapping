@@ -150,3 +150,11 @@ autoplot(lalehun_osm_1) +
 
 write_rds(lalehun_traps, here("data", "lalehun_traps.rds"))
 write_rds(seilama_traps, here("data", "seilama_traps.rds"))
+
+lalehun_18 <- get_googlemap(center = c(-11.0803, 8.197533), zoom = 18, maptype = "hybrid", color = "bw")
+ggmap(lalehun_18) +
+  scale_x_continuous(n.breaks = 8) +
+  scale_y_continuous(n.breaks = 8) +
+  theme(panel.grid.minor = element_line(colour = "white"),
+        panel.ontop=TRUE, panel.background = element_rect(fill = NA))
+ggsave(plot = last_plot(), path = here("reports", "figures"), filename = "lalehun_grid.png")
