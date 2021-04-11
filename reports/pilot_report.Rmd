@@ -1,11 +1,23 @@
 ---
 title: "Pilot Report"
-author: "David Simons"
-date: "`r format(Sys.time(), '%A %d %B %Y')`"
+description: |
+  A report generated from the initial rodent trapping pilot study performed in Lalehun and Seilama, Eastern Sierra Leone.
+author:
+  - name: "David Simons"
+    url: https://github.com/diddrog11/rodent_trapping
+    affiliation: The Royal Veterinary College, London, UK
+    affiliation_url: https://www.rvc.ac.uk
+    orcid_id: 0000-0001-9655-1656
+date: 04-11-2021
 output:
-  html_document: default
-  word_document: default
-always_allow_html: yes
+  distill::distill_article:
+    self_contained: false
+knit: (function(inputFile, encoding) {
+    rmarkdown::render(inputFile, encoding = encoding, output_dir = here::here())
+  })
+bibliography: citations.bib
+categories:
+  - Lassa
 ---
 
 ```{r setup, include=FALSE, quietly=TRUE}
@@ -13,39 +25,38 @@ knitr::opts_chunk$set(echo = TRUE, warning = F, message = F)
 source(here::here("scripts", "project_library.R"))
 source(here("scripts", "download_data.R"))
 ```
-This report is generated within an RMarkdown document. It uses data within my `rodent_trapping` repository on GitHub (available [here](https://github.com/DidDrog11/rodent_trapping), it is currently private but if you want access let me know) and data extracted from other publically available resources.
+This report uses data from the rodent trapping pilot study performed in November-December 2020. All data is available at the GithHub `rodent_trapping` repository [here](https://github.com/DidDrog11/rodent_trapping) and data extracted from other publicly available resources.
 
-## Thesis hypothesis
+## Hypothesis
 Increasing intensity of anthropogenic land use along a socio-ecological gradient affects rodent species richness and abundance within a Lassa fever endemic region of Sierra Leone, altering within rodent and rodent-to-human transmission dynamics of Lassa fever virus.
 
-### Thesis questions
+### Study questions
   * Is degree of anthropogenic habitat disturbance associated with a change in rodent assemblages favouring generalist species?
   * Does the structure of rodent species assemblages within a habitat alter Lassa fever virus incidence and prevalence in Mastomys natalensis?
   * Does habitat degradation and subsequent change in rodent species assemblages increase the risk of Lassa fever virus spillover events into local human populations?
 
-## Pilot study report
-An initial report for the trapping activity conducted November-December 2020
-
 ### Study site selection
-A recent review conducted by Rory Gibb et al. 2017 collated published and unpublished documented Lassa Fever cases (humans) and infections (PCR) or seroprevalence (Ab) (rodents) from countries reporting LASV presence. This data has been used to support study site selection.
+A recent review conducted by [@gibb_understanding_2017] collated published and unpublished documented Lassa Fever cases (humans) and infections (PCR) or seroprevalence (Ab) (rodents) from countries reporting LASV presence. This data has been used to support study site selection following production of Figure 1 and 2.
 
-```{r site_selection, include=F, quietly=T}
-file.copy(from = file.path(substr(here(), 1, nchar(here())-16), "miscellaneous", "cryptic_lassa", "figures", "lassa_SL.png"), to = here("reports", "figures"), overwrite = T) #copy image of lassa cases from miscellaneous repository to current report folder. 
-file.copy(from = file.path(substr(here(), 1, nchar(here())-16), "miscellaneous", "cryptic_lassa", "figures", "lassa_panguma.png"), to = here("reports", "figures"), overwrite = T)
+```{r site_selection, quietly=T, fig.cap="Location of Lassa cases and infections in Sierra Leone"}
+knitr::include_graphics("figures/lassa_SL.png")
 ```
-![Previously documented Lassa cases in Sierra Leone](figures/lassa_SL.png)
-This highlights that most of the documented cases of Lassa Fever in Sierra Leone are found in the East of the country. There is a particularly large cluster around Kenema, the location of the Lassa Fever treatment ward and reference laboratory. There is a slightly smaller cluster to the North and North East of the city around Panguma and Segbwema. recently cases have been detected near Freetown and Bo suggesting a wider distribution. Several projects over the last couple of years, PREDICTS and LAROCS have been conducting larger transect studies across the country which while not formally reported are suggestive of widespread serological evidence of infection in rodents.
 
-My work will be focussed primarily around Panguma, I will set up a "control" site in Kambia and I would also like to set up an additional semi-urban site on the outskirts of either Panguma or Kenema to complement the two rural sites I will describe below.
+This highlights that most of the documented cases of Lassa Fever in Sierra Leone are found in the East of the country. There is a particularly large cluster around Kenema, the location of the Lassa Fever treatment ward and reference laboratory. There is a smaller cluster to the North and North East of the city around Panguma and Segbwema. recently cases have been detected near Freetown and Bo suggesting a wider distribution. Several projects over the last couple of years, PREDICTS and LAROCS have been conducting larger transect studies across the country which while not formally reported are suggestive of widespread serological evidence of infection in rodents.
 
-![Previously documented Lassa cases near Panguma](figures/lassa_panguma.png)
+My work will be focussed primarily around Panguma. A control site will be set up in Kambia in the West of the country. The current pilot study aimed to initialise 2 village study sites in the Panguma region to refine the protocols and data collection methods.
+
+```{r lassa_panguma, uietly=T, fig.cap="Location of Lassa cases and infections in Eastern Sierra Leone"}
+knitr::include_graphics("figures/lassa_panguma.png")
+```
+
 The above map highlights human cases and positive rodents in and around Panguma. This in combination with land use maps was used to select the two rural sites. Lalehun lies to the East of Panguma. Seilama lies to the South West. Both are represented by a black diamond.
 
 ### Land use at the study sites
 
-To address the above questions it's important to sample rodents in several distinct habitats. If these habitats undergo changed use during the observed study period this would provide additional causal evidence for any changes in rodent assemblage species composition. However, this is not a specific requirement for this work. Observed differences between species composition across different land usages remains illustrative.
+To address the above questions it's important to sample rodents in several distinct habitats. If these habitats undergo changed use during the observed study period this would provide some evidence for a causal association of land use change on rodent assemblage species composition. However, this is not a specific requirement for this work. Observed differences between species composition across different land usages remains illustrative of a potential association.
 
-This land use classification is obtained from a recent paper by [Jung et al. 2020](https://www.nature.com/articles/s41597-020-00599-8). The colours represent different IUCN habitat classifications
+This land use classification is obtained from a recent paper by [@jung_global_2020] who produced a land use map of the globe classified according to the IUCN habitat classifications. The associated repository for their work is available [here](https://github.com/Martin-Jung/Habitatmapping)
 
   * Black = 14.5 Urban Areas
   * Orange = 3.6 Shrubland - Subtropical-tropical moist
