@@ -162,7 +162,7 @@ all_sle_landuse <- ggplot(landuse_sle %>%
   xlab(NULL) +
   ylab("Percentage land use") +
   labs(fill = "Land use")
-ggsave(all_sle_landuse, here("reports", "figures", "sle_proportional"))
+ggsave(all_sle_landuse, here("reports", "figures", "sle_proportional.png"))
 
 sl_raster <- landuse_sl %>%
   ungroup() %>%
