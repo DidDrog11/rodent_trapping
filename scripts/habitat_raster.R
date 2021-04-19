@@ -76,7 +76,6 @@ lassa_e_prov <- tm_shape(eprov_osm) +
 
 tmap_save(lassa_e_prov, here("reports", "figures", "lassa_panguma.png"))
 
-
 # Landuse -----------------------------------------------------------------
 
 # landuse <- raster(here("data", "satellite", "landuse.tif")) # this is the complete global 2.5Gb tiff
@@ -162,7 +161,7 @@ all_sle_landuse <- ggplot(landuse_sle %>%
   xlab(NULL) +
   ylab("Percentage land use") +
   labs(fill = "Land use")
-ggsave(all_sle_landuse, here("reports", "figures", "sle_proportional"))
+ggsave(all_sle_landuse, here("reports", "figures", "sle_proportional.png"))
 
 sl_raster <- landuse_sl %>%
   ungroup() %>%
