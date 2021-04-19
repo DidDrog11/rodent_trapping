@@ -1,16 +1,3 @@
-library("here")
-library("tidyverse")
-library("rgdal")
-library("sf")
-library("ggmap")
-library("ggspatial")
-library("OpenStreetMap")
-library("googledrive")
-library("rgeos")
-library("grid")
-library("magrittr")
-library("leaflet")
-=======
 if (!require("pacman")) install.packages("pacman")
 pkgs =
   c("here",
@@ -30,11 +17,18 @@ pkgs =
     "tmap",
     "maptools",
     "raster",
-    "mapview",
     "ggmap",
     "taxize",
     "distill",
     "magrittr",
-    "rvest"
+    "rvest",
+    "tmap",
+    "stars",
+    "leaflet",
+    "leaflet.opacity",
+    "vegan"
   )
 pacman::p_load(pkgs, character.only = T)
+
+lalehun_coords <- c(-11.0803, 8.197533)
+seilama_coords <- c(-11.193628469657279, 8.122285428353395)

@@ -38,7 +38,7 @@ Increasing intensity of anthropogenic land use along a socio-ecological gradient
 ### Study site selection
 A recent review conducted by [@gibb_understanding_2017] collated published and unpublished documented Lassa Fever cases (humans) and infections (PCR) or seroprevalence (Ab) (rodents) from countries reporting LASV presence. This data has been used to support study site selection following production of Figure 1 and 2.
 
-```{r site_selection, quietly=T, fig.cap="Location of Lassa cases and infections in Sierra Leone"}
+```{r site_selection, quietly=T, echo=F, fig.cap="Location of Lassa cases and infections in Sierra Leone"}
 knitr::include_graphics("figures/lassa_SL.png")
 ```
 
@@ -46,24 +46,24 @@ This highlights that most of the documented cases of Lassa Fever in Sierra Leone
 
 My work will be focussed primarily around Panguma. A control site will be set up in Kambia in the West of the country. The current pilot study aimed to initialise 2 village study sites in the Panguma region to refine the protocols and data collection methods.
 
-```{r lassa_panguma, uietly=T, fig.cap="Location of Lassa cases and infections in Eastern Sierra Leone"}
+```{r lassa_panguma, quietly=T, echo=F, fig.cap="Location of Lassa cases and infections in Eastern Sierra Leone"}
 knitr::include_graphics("figures/lassa_panguma.png")
 ```
 
-The above map highlights human cases and positive rodents in and around Panguma. This in combination with land use maps was used to select the two rural sites. Lalehun lies to the East of Panguma. Seilama lies to the South West. Both are represented by a black diamond.
+The above map highlights human cases and positive rodents in and around Panguma. This in combination with land use maps was used to select the two rural sites. Lalehun lies to the East of Panguma. Seilama lies to the South West. Both are represented by a black circle.
 
-### Land use at the study sites
+### Land use in Sierra Leone
 
-To address the above questions it's important to sample rodents in several distinct habitats. If these habitats undergo changed use during the observed study period this would provide some evidence for a causal association of land use change on rodent assemblage species composition. However, this is not a specific requirement for this work. Observed differences between species composition across different land usages remains illustrative of a potential association.
+Remote sensing through satellite imagery provides a powerful potential method of clasifying and monitoring land use. A recent paper [@jung_global_2020] used machine learning approaches to categorise global land use based on the International Union for Conservation of Nature and Natural Resources (IUCN) habitats classification scheme ([v3.1](https://www.iucnredlist.org/resources/habitat-classification-scheme)). The associated repository for their work is available [here](https://github.com/Martin-Jung/Habitatmapping). 
 
-This land use classification is obtained from a recent paper by [@jung_global_2020] who produced a land use map of the globe classified according to the IUCN habitat classifications. The associated repository for their work is available [here](https://github.com/Martin-Jung/Habitatmapping)
+Eastern Sierra Leone where the majority of Lasssa fever cases are reported from is more heavily forested and has less intense agricultural production than the Southern or Western regions of the country. The landuse for the Eastern Province is shown below.
 
-  * Black = 14.5 Urban Areas
-  * Orange = 3.6 Shrubland - Subtropical-tropical moist
-  * Red = 14.3 Plantations 
-  * Light green = 1.6 Forest - subtropical-tropical moist lowland
-  * Dark green = 1.9 Forest - subtropical-tropical moist montane
-  * Mauve = 3.7 Shrubland - subtropical-tropical high altitude
+```{r lassa_panguma, quietly=T, echo=F, fig.cap="Land use types in Eastern Sierra Leone based on satellite classification"}
+knitr::include_graphics("figures/sle_raster.png")
+```
+
+
+
 
 ![Lalehun land use map, classified by IUCN categories](figures/lalehun_IUCN.png)
 
@@ -237,9 +237,9 @@ The shrews (genera *Crocidura*) form the highest proportion of individuals. *Pra
 ``` {r rodent_trap_plot_2, echo=F}
 trapped_rodents %>%
   filter(family == "muridae") %>%
-  select(rodent_id, field_id, genus) %>%
+  dplyr::select(rodent_id, field_id, genus) %>%
   left_join(., trap_sites %>%
-              select(rodent_id, habitat, village),
+              dplyr::select(rodent_id, habitat, village),
             by = "rodent_id") %>%
   mutate(genus = as_factor(snakecase::to_sentence_case(as.character(genus))),
          village = recode_factor(village,
@@ -261,9 +261,8 @@ shrew <- OpenImageR::readImage(here("reports", "figures", "shrew_png.png"))
 
 trapped_rodents %>%
   filter(family == "soricidae") %>%
-  select(rodent_id, field_id, genus) %>%
   left_join(., trap_sites %>%
-              select(rodent_id, habitat, village),
+              dplyr::select(rodent_id, habitat, village),
             by = "rodent_id") %>%
   mutate(genus = as_factor(snakecase::to_sentence_case(as.character(genus))),
          village = recode_factor(village,
@@ -314,7 +313,7 @@ Richness was similar across all sites in Seilama, less so in Lalehun but likely 
 ``` {r individual_abundance, echo=F}
 trapped_rodents %>%
   left_join(., trap_sites %>%
-              select(rodent_id, habitat, village),
+              dplyr::select(rodent_id, habitat, village),
             by = "rodent_id") %>%
   mutate(village = substr(rodent_id, 1, 3),
          village = recode_factor(village, 

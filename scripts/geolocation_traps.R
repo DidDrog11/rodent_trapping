@@ -1,15 +1,14 @@
 library("here")
 source(here("scripts", "project_library.R"))
 source(here("scripts", "DdM_to_decimal_degrees.R"))
-source(here("scripts", "download_data.R"))
 
 trap_sites <- read_csv(here("data", "trap_sites.csv"))
+trapped_rodents <- read_csv(here("data", "rodents_trapped.csv"))
 location_rodents <- trapped_rodents %>%
-  select(rodent_id, trap_night, trap_id, initial_species_id) %>%
+  dplyr::select(rodent_id, trap_night, trap_id, initial_species_id) %>%
   left_join(., trap_sites, 
             by = c("rodent_id", "trap_night")) %>%
-  select(rodent_id, trap_night, initial_species_id, village, habitat)
-
+  dplyr::select(rodent_id, trap_night, initial_species_id, village, habitat)
 
 # lalehun -----------------------------------------------------------------
 
@@ -19,40 +18,33 @@ lalehun_traps <- trap_sites %>%
          lon = -1 * dg2dec(var = lon_DdM, Dg = "_", Min = "'"),
          lat = dg2dec(var = lat_DdM, Dg = "_", Min = "'")) %>%
   st_as_sf(coords = c("lon", "lat"), crs = 4326) %>%
-  filter(village == "lalehun")
+  filter(village == "lalehun",
+         visit == 1) %>%
+  mutate(rodent_trapped = recode(rodent_trapped,
+                                 "y" = "Yes",
+                                 "n" = "No"))
 
 lalehun_rodents <- location_rodents %>%
   filter(village == "lalehun") %>%
   ggplot() +
   geom_bar(aes(x = trap_night))
 
-lalehun_test <- trap_sites %>%
-  mutate(lon_DdM = paste(paste(lon_degree, lon_dec, sep = "_"), "'", sep = ""),
-         lat_DdM = paste(paste(lat_degree, lat_dec, sep = "_"), "'", sep = ""),
-         lon = dg2dec(var = lon_DdM, Dg = "_", Min = "'"),
-         lat = dg2dec(var = lat_DdM, Dg = "_", Min = "'")) 
-
-coordinates(lalehun_test) <- c("lat", "lon")
-proj4string(lalehun_test) <- CRS("+proj=longlat +datum=WGS84")  ## for example
-
-res <- spTransform(lalehun_test, CRS("+proj=utm +zone=29 ellps=WGS84"))
-res
-  
-pal <- colorFactor(c("red", "blue"), domain = c(1, 2))
+pal <- colorFactor(palette = c("#f1a340", "#998ec3"), domain = lalehun_traps$rodent_trapped)
 
 distinct_lal_traps <- lalehun_traps %>%
-  distinct(geometry, .keep_all = T)
+  distinct(grid_number, trap_number, rodent_id, .keep_all = T)
 
 leaflet(distinct_lal_traps) %>%
-  addProviderTiles(providers$CartoDB.Positron) %>%
-  addCircleMarkers(radius = ~ifelse(visit == 2, 3, 2),
-                   color = ~pal(visit),
+  addProviderTiles(providers$Esri.WorldImagery) %>%
+  addCircleMarkers(color = ~pal(rodent_trapped),
+                   radius = 3,
                    stroke = F,
-                   fillOpacity = 0.5,
+                   fillOpacity = 1,
                    popup = paste(distinct_lal_traps$trap_number),
                    popupOptions = popupOptions(closeOnClick = T))  %>%
-  addLegend("topright", pal = pal, values = ~visit,
-            title = "Study visit")
+  addLegend("topright", pal = pal, values = ~rodent_trapped,
+            title = "Successful capture") %>%
+  mapshot(file = here("reports", "figures", "lalehun_traps.png"), remove_controls = c("zoomControl"))
 
 
 # seilama -----------------------------------------------------------------
@@ -64,15 +56,35 @@ seilama_traps <- trap_sites %>%
          lat = dg2dec(var = lat_DdM, Dg = "_", Min = "'")) %>%
   st_as_sf(coords = c("lon", "lat"), crs = 4326) %>%
   filter(village == "seilama",
-         empty_morning != "na") %>%
-  drop_na(empty_morning)
+         visit == 1) %>%
+  mutate(rodent_trapped = recode(rodent_trapped,
+                                 "y" = "Yes",
+                                 "n" = "No"))
 
+seilama_rodents <- location_rodents %>%
+  filter(village == "seilama") %>%
+  ggplot() +
+  geom_bar(aes(x = trap_night))
+
+pal <- colorFactor(palette = c("#f1a340", "#998ec3"), domain = seilama_traps$rodent_trapped)
+
+distinct_sei_traps <- seilama_traps %>%
+  distinct(grid_number, trap_number, rodent_id, .keep_all = T)
+
+leaflet(distinct_sei_traps %>%
+          filter(visit == 1)) %>%
+  addProviderTiles(providers$Esri.WorldImagery) %>%
+  addCircleMarkers(color = ~pal(rodent_trapped),
+                   radius = 3,
+                   stroke = F,
+                   fillOpacity = 1,
+                   popup = paste(distinct_lal_traps$trap_number),
+                   popupOptions = popupOptions(closeOnClick = T))  %>%
+  addLegend("topright", pal = pal, values = ~rodent_trapped,
+            title = "Successful capture") %>%
+  mapshot(file = here("reports", "figures", "seilama_traps.png"), remove_controls = c("zoomControl"))
 # lalehun ggmap -------------------------------------------------------------------
 
-
-
-
-ggsave(plot = traps_lalehun_16, path = here("reports", "figures"), filename = "lalehun_traps.png")
 
 # seilama ggmap -------------------------------------------------------------------
 
@@ -138,11 +150,3 @@ autoplot(lalehun_osm_1) +
 
 write_rds(lalehun_traps, here("data", "lalehun_traps.rds"))
 write_rds(seilama_traps, here("data", "seilama_traps.rds"))
-
-lalehun_18 <- get_googlemap(center = c(-11.0803, 8.197533), zoom = 18, maptype = "hybrid", color = "bw")
-ggmap(lalehun_18) +
-  scale_x_continuous(n.breaks = 8) +
-  scale_y_continuous(n.breaks = 8) +
-  theme(panel.grid.minor = element_line(colour = "white"),
-        panel.ontop=TRUE, panel.background = element_rect(fill = NA))
-ggsave(plot = last_plot(), path = here("reports", "figures"), filename = "lalehun_grid.png")

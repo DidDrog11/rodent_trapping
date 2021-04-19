@@ -18,11 +18,11 @@ trap_sites <- read_csv(here("data", "trap_sites.csv")) %>%
   group_by(habitat)
 
 location_rodents <- trapped_rodents %>%
-  select(rodent_id, trap_night, trap_id, initial_species_id) %>%
+  dplyr::select(rodent_id, trap_night, trap_id, initial_species_id) %>%
   left_join(., trap_sites, 
             by = c("rodent_id")) %>%
   mutate(trap_night = ifelse(trap_night.x == trap_night.y, trap_night.x, "WARNING")) %>%
-  select(rodent_id, trap_night, initial_species_id, village, habitat)
+  dplyr::select(rodent_id, trap_night, initial_species_id, village, habitat)
 
 trapped_rodents %<>%
   mutate(initial_species_id = as_factor(initial_species_id))
