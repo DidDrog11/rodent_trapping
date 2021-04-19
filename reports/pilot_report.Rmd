@@ -196,11 +196,12 @@ trap_sites %>%
   * 22 in Lalehun for an overall trap success rate of 3% 
   * 43 from Seilama for a trap success rate of 3.8%
 
-No rodents were trapped in the distal agriculture or forested habitats at Lalehun, although it must be noted that only two nights of traps were set in those locations. 
+No rodents were trapped in the distal agriculture or forested habitats at Lalehun, although it should be noted that only two nights of traps were set in those locations. 
 
 #### Location of trapped rodents
 
 48 (74%) of the trapped species belong to the family Muridae, the remaining 17 (26%) were shrews (family Soricidae). 
+
 ``` {r rodent_trap_plots, echo=F}
 murid <- OpenImageR::readImage(here("reports", "figures", "murid_png.png"))
 
@@ -225,7 +226,8 @@ trapped_rodents %>%
   annotation_custom(rasterGrob(murid), ymin = 12.5, ymax = 17.5, xmin = 0, xmax = 5)
 ```
 
-The shrews (genera *Crocidura*) form the highest proportion of individuals. *Praomys* and *Lophuromys* were the most abundant Muridae genera. *Praomys* was not detected in Lalehun with *Lophuromys* being detected at both study sites. *Mus* and *Lemniscomys* were the only other Muridae caught in Lalehun. 6 additional genera of Muridae were trapped in Seilama above those caught in Lalehun.
+The shrews (genera *Crocidura*) form the highest proportion of individuals. *Praomys* and *Lophuromys* were the most abundant Muridae genera. *Praomys* was not detected in Lalehun with *Lophuromys* being detected at both study sites. *Mus* and *Lemniscomys* were the only other Muridae caught in Lalehun. 6 additional genera of Muridae were trapped in Seilama compared with those caught in Lalehun.
+
 ``` {r rodent_trap_plot_2, echo=F}
 trapped_rodents %>%
   filter(family == "muridae") %>%
@@ -247,7 +249,6 @@ trapped_rodents %>%
        fill = "Village")
 ```
 
-This shouldn't be over interpreted at the moment as more data will be needed but there is expected to be a difference in the habitat preferences of different species. This can also be looked at over time/seasonality.
 ``` {r location_shrews, echo=F}
 shrew <- OpenImageR::readImage(here("reports", "figures", "shrew_png.png"))
 
@@ -302,6 +303,7 @@ trapped_rodents %>%
 ```
 
 Richness was similar across all sites in Seilama, less so in Lalehun but likely related to the reduced trap nights obtained there.
+
 ``` {r individual_abundance, echo=F}
 trapped_rodents %>%
   left_join(., trap_sites %>%
@@ -327,12 +329,19 @@ trapped_rodents %>%
        x = "Trap site")
 ```
 
-There was some degree of increased abundance in the agricultural and fallow sites in Seilama compared to the village site. No rodents were trapped in site 4 and 5 in Lalehun so makes any comparisons slightly harder.
+There was some degree of increased abundance in the agricultural and fallow sites in Seilama compared to the village site.
 
-We will go on to calculate species diversity with for example the Shannon-Wiener index but I'd like to do some further work speciating the trapped rodents before this.
+A species accumulation curve was generated to understand the likely trapping effort required at both study site to adequately characterise the rodent assemblages. This should be performed on distinct species rather that as here genera. However, while we have not identified these rodents to species level currently, based on their taxonomy and morphometrics it is likely that each murid genera represents a single species from that genera. This is unlikely to hold true for the *Crocidura*.
+
+``` {r species_accumulation}
+
+```
+
+The species accumulation curve for Lalehun reaches an asymptote during before the end of the trapping period suggesting high likelihood of adequate sampling. The curve for Seilama continues to rise beyond the end of the trapping period suggesting unsampled species remain at the study site.
 
 ### Species ID
-I generated a taxanomic key for the small mammals likely to be trapped in the sites based on occurrence data from two sources. The first by [Ara Monadjem et al.](https://www.degruyter.com/view/title/126014) which had data on rodents and the second by [Kingdon and Happold](https://www.bloomsbury.com/uk/mammals-of-africa-9781408122570/). These resources provided data that has been extracted into `rodent_ids.R`. The local team also had expertise in identifying rodents to species which was invaluable.
+
+A taxanomic key for the small mammals likely to be trapped at the sites based on occurrence data was produced from two sources. The first by [Ara Monadjem et al.](https://www.degruyter.com/view/title/126014) which had data on rodents and the second by [Kingdon and Happold](https://www.bloomsbury.com/uk/mammals-of-africa-9781408122570/). These resources provided data that has been extracted into `rodent_ids.R`. The local team also had expertise in identifying rodents to species which was invaluable.
 
 The `field_id` is based on their initial classification. I have then compared the measurements obtained in the field with the published measurements to corroborate their classification or suggest potential misclassification. All rodents were photographed and tissue samples were taken for chromosomal ID if required.
 
