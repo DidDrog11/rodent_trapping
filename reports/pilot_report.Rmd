@@ -58,23 +58,32 @@ Remote sensing through satellite imagery provides a powerful potential method of
 
 Eastern Sierra Leone where the majority of Lasssa fever cases are reported from is more heavily forested and has less intense agricultural production than the Southern or Western regions of the country. The landuse for the Eastern Province is shown below.
 
-```{r lassa_panguma, quietly=T, echo=F, fig.cap="Land use types in Eastern Sierra Leone based on satellite classification"}
+```{r raster_sle, quietly=T, echo=F, fig.cap="Land use types in Eastern Sierra Leone based on satellite classification"}
 knitr::include_graphics("figures/sle_raster.png")
 ```
 
+Habitat classification has been produced at ~100m resolution, the proportion of each habitat type in Eastern Sierra Leone can be produced. The most common land types are Forest, Shrubland and Plantations with the urban landscape comprising <3% of habitats.
 
+To investigate habitat types around historic Lassa fever cases a buffer of 2km radius was placed around geolocated cases. The below figure compares this to the proportion of habitat types in Eastern Sierra Leone.
 
+```{r lalehun_raster, quietly=T, echo=F, fig.cap="Land use types in "}
+knitr::include_graphics("figures/sl_lassa_landuse.png")
+```
+
+Two villages were identified based on their proximity to historic lassa fever cases and suitability of access at different times of the year. The habitat types within 2km radius of the village centers are shown.
 
 ![Lalehun land use map, classified by IUCN categories](figures/lalehun_IUCN.png)
 
 ![Seilama land use map, classified by IUCN categories](figures/seilama_IUCN.png)
 
-Using the habitat map and discussions with locals we identified sites that would provide use with varied habitats and that would also be able to be repeatedly sampled irrespective of whether the visit was conducted during the rainy season.
+Using these habitat maps and discussions with the local residents we identified study sites that would provide us with varied habitats and that would also be able to be repeatedly sampled.
 
 ### Lalehun (Village 1) trap grid locations
 
+Lalehun is a village of around 1,000 inhabitants along the main road from Panguma to Tongo.
+
 ![](figures/lalehun_traps.png)
-The base map used here is from Google maps and so is unfortunately not entirely up-to-date. 
+
 ``` {r trap_data, include = F}
 source(here("scripts", "rodent_data_management.R"))
 ```
@@ -100,7 +109,10 @@ The specific location of each individual trap was also recorded (e.g. edge envir
 
 ### Seilama (Village 1) trap grid locations
 
+Seilama is a small village of around 200 inhabitants to the South-West of Panguma.
+
 ![](figures/seilama_traps.png)
+
 ```{r trap_site_classifications_seilama, include=F}
 trap_sites %>%
   filter(village == "seilama") %>%

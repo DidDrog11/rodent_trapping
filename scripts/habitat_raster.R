@@ -76,7 +76,6 @@ lassa_e_prov <- tm_shape(eprov_osm) +
 
 tmap_save(lassa_e_prov, here("reports", "figures", "lassa_panguma.png"))
 
-
 # Landuse -----------------------------------------------------------------
 
 # landuse <- raster(here("data", "satellite", "landuse.tif")) # this is the complete global 2.5Gb tiff
