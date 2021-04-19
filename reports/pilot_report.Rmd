@@ -76,11 +76,11 @@ Two villages were identified based on their proximity to historic lassa fever ca
 
 ![Seilama land use map, classified by IUCN categories](figures/seilama_IUCN.png)
 
-Using these habitat maps and discussions with the local residents we identified study sites that would provide us with varied habitats and that would also be able to be repeatedly sampled.
+The habitat maps and discussions with local residents allowed the study team to identify suitable study sites that would provide us with an adequate sample of different habitats that would remain amenable for trapping despite increased rainfall.
 
 ### Lalehun (Village 1) trap grid locations
 
-Lalehun is a village of around 1,000 inhabitants along the main road from Panguma to Tongo.
+Lalehun is a village of around 1,000 inhabitants along the main road from Panguma to Tongo. Traps were geolocated using Garmin GPSMAP 66 to an accuracy of up to 3 metres. No traps were placed in village homes during this visit. The location of each trap was marked with coloured ribbon at eye level to support identification on subsequent days.
 
 ![](figures/lalehun_traps.png)
 
@@ -105,11 +105,11 @@ The habitats of the trap grids are as follows:
  * 5 - Cassava plantation
  * 6 - Within the village, outside of houses
  
-The specific location of each individual trap was also recorded (e.g. edge environment, base of tree)
+The specific location of each individual trap was also recorded (e.g. edge environment, base of tree). 
 
-### Seilama (Village 1) trap grid locations
+### Seilama (Village 2) trap grid locations
 
-Seilama is a small village of around 200 inhabitants to the South-West of Panguma.
+Seilama is a small village of around 200 inhabitants to the South-West of Panguma. 
 
 ![](figures/seilama_traps.png)
 
@@ -130,13 +130,11 @@ The habitats of the trap grids are as follows:
 
 This effectively produces 1 trap site in the village, 3 proximal agricultural sites, 1 distal agriculture and 1 forest/fallow land site for each village site.
 
-The code to produce the maps of trap location is in `scripts/geolocation_traps.R` with the data available in `data/trap_sites.csv`
-
 ## Initial data
 
 ### Trap data
 
-Lalehun was visited first, it took a couple of days to get up and running properly there so less trap nights were completed. 726 from Lalehun compared to 1120 from Seilama.
+Lalehun was visited first, fewer trapnights were obtained from Lalehun (n = 726) than from Seilama (n = 1120).
 
 ```{r trap_nights, echo=F}
 ggplot(trap_sites) +
@@ -150,28 +148,9 @@ ggplot(trap_sites) +
        x = "Village",
        y = "Percentage")
 ```
-
-During this visit no traps were set in houses, this will change for future visits.
-
-``` {r trapping_efficiency, echo=F}
-trap_sites %>%
-  group_by(date_set, village) %>%
-  summarise(n = n()) %>%
-  ggplot() +
-  geom_col(aes(x = date_set, y = n, fill = village)) +
-  theme_minimal() +
-  scale_fill_discrete(labels = c("Lalehun N = 726", "Seilama N = 1120")) +
-  labs(title = "Number of traps set each night",
-       fill = "Village",
-       x = "Date",
-       y = "Number of traps set")
-```
-
-We arrived late in Lalehun on the first day and were only able to set up one site, two further sites were set the next day with the final two up by the 2nd of December. We were more efficient by the time we got to Seilama with all but the village site set up on the first day. We were thus able to complete 4 nights of trapping at each site in Seilama.
-
 ### Catch data
 
-We recorded the presence or absence of rodent bait the next morning, along with whether the trap was found to be sprung closed (i.e. it had been disturbed overnight or it had been triggered by a rodent but it had not successfully trapped it).
+We recorded the presence or absence of rodent bait the next morning, along with whether the trap was found to be sprung closed (i.e. it had been disturbed overnight or it had been triggered by a rodent but it had not successfully trapped it). This gives some evidence of activity by rodents or other animals in the trapping areas. 
 
 ``` {r bait_removed, echo=F}
 trap_sites %>%
@@ -191,7 +170,8 @@ trap_sites %>%
        y = "Percentage")
 ```
 
-There appears to be a decrease in removal of bait from the traps in subsequent nights
+There appears to be a decrease in removal of bait from the traps in subsequent nights, however, this may be an artifact of changing recording as the days continued.
+
 ``` {r trap_success, echo=F}
 trap_sites %>%
   filter(rodent_trapped != "na") %>%
