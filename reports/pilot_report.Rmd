@@ -76,11 +76,11 @@ Two villages were identified based on their proximity to historic lassa fever ca
 
 ![Seilama land use map, classified by IUCN categories](figures/seilama_IUCN.png)
 
-Using these habitat maps and discussions with the local residents we identified study sites that would provide us with varied habitats and that would also be able to be repeatedly sampled.
+The habitat maps and discussions with local residents allowed the study team to identify suitable study sites that would provide us with an adequate sample of different habitats that would remain amenable for trapping despite increased rainfall.
 
 ### Lalehun (Village 1) trap grid locations
 
-Lalehun is a village of around 1,000 inhabitants along the main road from Panguma to Tongo.
+Lalehun is a village of around 1,000 inhabitants along the main road from Panguma to Tongo. Traps were geolocated using Garmin GPSMAP 66 to an accuracy of up to 3 metres. No traps were placed in village homes during this visit. The location of each trap was marked with coloured ribbon at eye level to support identification on subsequent days.
 
 ![](figures/lalehun_traps.png)
 
@@ -105,11 +105,11 @@ The habitats of the trap grids are as follows:
  * 5 - Cassava plantation
  * 6 - Within the village, outside of houses
  
-The specific location of each individual trap was also recorded (e.g. edge environment, base of tree)
+The specific location of each individual trap was also recorded (e.g. edge environment, base of tree). 
 
-### Seilama (Village 1) trap grid locations
+### Seilama (Village 2) trap grid locations
 
-Seilama is a small village of around 200 inhabitants to the South-West of Panguma.
+Seilama is a small village of around 200 inhabitants to the South-West of Panguma. 
 
 ![](figures/seilama_traps.png)
 
@@ -130,13 +130,11 @@ The habitats of the trap grids are as follows:
 
 This effectively produces 1 trap site in the village, 3 proximal agricultural sites, 1 distal agriculture and 1 forest/fallow land site for each village site.
 
-The code to produce the maps of trap location is in `scripts/geolocation_traps.R` with the data available in `data/trap_sites.csv`
-
 ## Initial data
 
 ### Trap data
 
-Lalehun was visited first, it took a couple of days to get up and running properly there so less trap nights were completed. 726 from Lalehun compared to 1120 from Seilama.
+Lalehun was visited first, fewer trapnights were obtained from Lalehun (n = 726) than from Seilama (n = 1120).
 
 ```{r trap_nights, echo=F}
 ggplot(trap_sites) +
@@ -150,28 +148,9 @@ ggplot(trap_sites) +
        x = "Village",
        y = "Percentage")
 ```
-
-During this visit no traps were set in houses, this will change for future visits.
-
-``` {r trapping_efficiency, echo=F}
-trap_sites %>%
-  group_by(date_set, village) %>%
-  summarise(n = n()) %>%
-  ggplot() +
-  geom_col(aes(x = date_set, y = n, fill = village)) +
-  theme_minimal() +
-  scale_fill_discrete(labels = c("Lalehun N = 726", "Seilama N = 1120")) +
-  labs(title = "Number of traps set each night",
-       fill = "Village",
-       x = "Date",
-       y = "Number of traps set")
-```
-
-We arrived late in Lalehun on the first day and were only able to set up one site, two further sites were set the next day with the final two up by the 2nd of December. We were more efficient by the time we got to Seilama with all but the village site set up on the first day. We were thus able to complete 4 nights of trapping at each site in Seilama.
-
 ### Catch data
 
-We recorded the presence or absence of rodent bait the next morning, along with whether the trap was found to be sprung closed (i.e. it had been disturbed overnight or it had been triggered by a rodent but it had not successfully trapped it).
+We recorded the presence or absence of rodent bait the next morning, along with whether the trap was found to be sprung closed (i.e. it had been disturbed overnight or it had been triggered by a rodent but it had not successfully trapped it). This gives some evidence of activity by rodents or other animals in the trapping areas. 
 
 ``` {r bait_removed, echo=F}
 trap_sites %>%
@@ -191,7 +170,8 @@ trap_sites %>%
        y = "Percentage")
 ```
 
-There appears to be a decrease in removal of bait from the traps in subsequent nights
+There appears to be a decrease in removal of bait from the traps in subsequent nights, however, this may be an artifact of changing recording as the days continued.
+
 ``` {r trap_success, echo=F}
 trap_sites %>%
   filter(rodent_trapped != "na") %>%
@@ -216,11 +196,12 @@ trap_sites %>%
   * 22 in Lalehun for an overall trap success rate of 3% 
   * 43 from Seilama for a trap success rate of 3.8%
 
-No rodents were trapped in the distal agriculture or forested habitats at Lalehun, although it must be noted that only two nights of traps were set in those locations. 
+No rodents were trapped in the distal agriculture or forested habitats at Lalehun, although it should be noted that only two nights of traps were set in those locations. 
 
 #### Location of trapped rodents
 
 48 (74%) of the trapped species belong to the family Muridae, the remaining 17 (26%) were shrews (family Soricidae). 
+
 ``` {r rodent_trap_plots, echo=F}
 murid <- OpenImageR::readImage(here("reports", "figures", "murid_png.png"))
 
@@ -245,7 +226,8 @@ trapped_rodents %>%
   annotation_custom(rasterGrob(murid), ymin = 12.5, ymax = 17.5, xmin = 0, xmax = 5)
 ```
 
-The shrews (genera *Crocidura*) form the highest proportion of individuals. *Praomys* and *Lophuromys* were the most abundant Muridae genera. *Praomys* was not detected in Lalehun with *Lophuromys* being detected at both study sites. *Mus* and *Lemniscomys* were the only other Muridae caught in Lalehun. 6 additional genera of Muridae were trapped in Seilama above those caught in Lalehun.
+The shrews (genera *Crocidura*) form the highest proportion of individuals. *Praomys* and *Lophuromys* were the most abundant Muridae genera. *Praomys* was not detected in Lalehun with *Lophuromys* being detected at both study sites. *Mus* and *Lemniscomys* were the only other Muridae caught in Lalehun. 6 additional genera of Muridae were trapped in Seilama compared with those caught in Lalehun.
+
 ``` {r rodent_trap_plot_2, echo=F}
 trapped_rodents %>%
   filter(family == "muridae") %>%
@@ -267,7 +249,6 @@ trapped_rodents %>%
        fill = "Village")
 ```
 
-This shouldn't be over interpreted at the moment as more data will be needed but there is expected to be a difference in the habitat preferences of different species. This can also be looked at over time/seasonality.
 ``` {r location_shrews, echo=F}
 shrew <- OpenImageR::readImage(here("reports", "figures", "shrew_png.png"))
 
@@ -322,6 +303,7 @@ trapped_rodents %>%
 ```
 
 Richness was similar across all sites in Seilama, less so in Lalehun but likely related to the reduced trap nights obtained there.
+
 ``` {r individual_abundance, echo=F}
 trapped_rodents %>%
   left_join(., trap_sites %>%
@@ -347,12 +329,19 @@ trapped_rodents %>%
        x = "Trap site")
 ```
 
-There was some degree of increased abundance in the agricultural and fallow sites in Seilama compared to the village site. No rodents were trapped in site 4 and 5 in Lalehun so makes any comparisons slightly harder.
+There was some degree of increased abundance in the agricultural and fallow sites in Seilama compared to the village site.
 
-We will go on to calculate species diversity with for example the Shannon-Wiener index but I'd like to do some further work speciating the trapped rodents before this.
+A species accumulation curve was generated to understand the likely trapping effort required at both study site to adequately characterise the rodent assemblages. This should be performed on distinct species rather that as here genera. However, while we have not identified these rodents to species level currently, based on their taxonomy and morphometrics it is likely that each murid genera represents a single species from that genera. This is unlikely to hold true for the *Crocidura*.
+
+``` {r species_accumulation}
+
+```
+
+The species accumulation curve for Lalehun reaches an asymptote during before the end of the trapping period suggesting high likelihood of adequate sampling. The curve for Seilama continues to rise beyond the end of the trapping period suggesting unsampled species remain at the study site.
 
 ### Species ID
-I generated a taxanomic key for the small mammals likely to be trapped in the sites based on occurrence data from two sources. The first by [Ara Monadjem et al.](https://www.degruyter.com/view/title/126014) which had data on rodents and the second by [Kingdon and Happold](https://www.bloomsbury.com/uk/mammals-of-africa-9781408122570/). These resources provided data that has been extracted into `rodent_ids.R`. The local team also had expertise in identifying rodents to species which was invaluable.
+
+A taxanomic key for the small mammals likely to be trapped at the sites based on occurrence data was produced from two sources. The first by [Ara Monadjem et al.](https://www.degruyter.com/view/title/126014) which had data on rodents and the second by [Kingdon and Happold](https://www.bloomsbury.com/uk/mammals-of-africa-9781408122570/). These resources provided data that has been extracted into `rodent_ids.R`. The local team also had expertise in identifying rodents to species which was invaluable.
 
 The `field_id` is based on their initial classification. I have then compared the measurements obtained in the field with the published measurements to corroborate their classification or suggest potential misclassification. All rodents were photographed and tissue samples were taken for chromosomal ID if required.
 
