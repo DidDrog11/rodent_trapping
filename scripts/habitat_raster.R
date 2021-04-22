@@ -52,9 +52,13 @@ lassa_sl <- tm_shape(sle_osm) +
 tmap_save(lassa_sl, here("reports", "figures", "lassa_SL.png"))
 
 e_prov <-  SLE_2 %>%
-  filter(NAME_1 == "Eastern" & GID_2 != "SLE.1.3_1")
+  filter(GID_2 == "SLE.1.2_1")
 
-eprov_lassa <- st_intersection(sierra_leone, e_prov)
+eprov_lassa <- st_intersection(sierra_leone %>%
+                                 filter(Town != "Joru"),
+                               e_prov)
+eprov_lassa$Rodent_or_human <- droplevels(eprov_lassa$Rodent_or_human)
+
 eprov_osm <- tmaptools::read_osm(st_bbox(eprov_lassa), ext = 1.1, type = c("osm"))
 
 lassa_e_prov <- tm_shape(eprov_osm) +
@@ -72,7 +76,9 @@ lassa_e_prov <- tm_shape(eprov_osm) +
              col = "black") +
   tm_legend(legend.format = list(fun=function(x) formatC(x, digits=0, format="d")),
             legend.outside = F,
-            legend.position = c("right", "bottom"))
+            legend.position = c("right", "bottom")) +
+  tm_scale_bar(position = c("left", "top")) +
+  tm_compass(position = c("left", "top"))
 
 tmap_save(lassa_e_prov, here("reports", "figures", "lassa_panguma.png"))
 
@@ -100,6 +106,7 @@ labels_raster <- xml2::read_xml(here("data", "satellite", "lvl2_style.qml")) %>%
   {data.frame(value = rvest::html_attr(.,'value'),
               label = rvest::html_attr(.,'label'))} %>%
   dplyr::mutate(value = readr::parse_number(as.character(value)))
+write_rds(labels_raster, here("data", "satellite", "labels_raster.rds"))
 
 # This binds those values to labels
 landuse_sl <- raster_dataframe %>%
@@ -135,9 +142,11 @@ names(ras_landuse_sl) <- case_when(names(ras_landuse_sl) == "Forest - lowland" ~
                                    names(ras_landuse_sl) == "Shrubland - high altitude" ~ "Shrubland",
                                    TRUE ~ names(ras_landuse_sl))
 ras_landuse_sle <- setNames(as.character(ras_landuse_e$landuse), ras_landuse_e$label)
+write_rds(ras_landuse_sle, here("data", "satellite", "raster_landuse.rds"))
 
 ras_palette_sl <- c("#d9d9d9", "#00441b", "#006d2c", "#238b45", "#99d8c9", "#ccece6", "#045a8d", "#a6bddb", "#fee391", "#fec44f", "#ec7014", "#662506", "#7a0177")
 ras_palette_sle <- c("#d9d9d9", "#00441b", "#006d2c", "#238b45", "#99d8c9", "#ccece6", "#045a8d", "#a6bddb", "#fee391", "#fec44f", "#ec7014", "#662506", "#7a0177")
+write_rds(ras_palette_sle, here("data", "satellite", "raster_palette.rds"))
 
 plot_palette_a <- c("#ec7014", "#00441b", "#a6d96a", "#2166ac", "#fee08b", "#99d8c9", "#7a0177", "#92c5de")
 plot_palette_e <- c("#ec7014", "#00441b", "#99d8c9", "#7a0177", "#045a8d")
@@ -161,7 +170,8 @@ all_sle_landuse <- ggplot(landuse_sle %>%
   xlab(NULL) +
   ylab("Percentage land use") +
   labs(fill = "Land use")
-ggsave(all_sle_landuse, here("reports", "figures", "sle_proportional.png"))
+
+#ggsave(all_sle_landuse, here("reports", "figures", "sle_proportional.png"))
 
 sl_raster <- landuse_sl %>%
   ungroup() %>%
@@ -233,7 +243,7 @@ sle_landuse <- landuse_lassa_df %>%
   
 ggplot(sle_landuse) +
   geom_col(aes(x = reorder(label, group_n), y = pct*100, fill = group)) +
-  scale_fill_manual(values = plot_palette) +
+  scale_fill_manual(values = plot_palette_a) +
   coord_flip() +
   theme_minimal() +
   xlab(NULL) +

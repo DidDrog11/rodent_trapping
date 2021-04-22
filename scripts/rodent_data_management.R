@@ -1,5 +1,6 @@
 library("here")
 source(here("scripts", "project_library.R"))
+trapped_rodents <- readxl::read_xlsx(path = here("data", "trap_sites_all.xlsx"), sheet = 3)
 
 habitat_names <- c("Forest/fallow land", "Distal agriculture", "Proximal agriculture", "Village")
 names(habitat_names) = c("forest/fallow", "distal_agriculture", "proximal_agriculture", "village")

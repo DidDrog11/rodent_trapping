@@ -23,22 +23,11 @@ lalehun <- village_poly %>%
   filter(village == "lalehun")
 lalehun_bbox <- st_bbox(lalehun)
 
-landuse_lalehun <- st_crop(geo_sle_raster, lalehun) %>%
+landuse_lalehun <- st_crop(geo_sle_raster, lalehun, crop = T) %>%
   st_transform(4326)
 
-lalehun_raster <- tm_shape(landuse_lalehun,
-                           bbox = lalehun_bbox,
-                           raster.warp = F) +
-  tm_raster(col = "landuse",
-            breaks = c(0, as.numeric(ras_landuse)[1:12], 1600),
-            labels = c("Missing", names(ras_landuse)[1:12]),
-            palette = ras_palette,
-            title = "Lalehun Land use",
-            drop.levels = T) +
-  tm_layout(legend.outside = T) +
-  tm_basemap()
-
 landuse_lalehun_df <- as.data.frame(landuse_lalehun, xy = T) %>%
+  drop_na(landuse) %>%
   left_join(., labels_raster %>%
               rename("landuse" = "value"),
             by = "landuse") %>%
@@ -62,6 +51,20 @@ ggplot(lalehun_landuse_plot) +
   ylab("Percentage land use") +
   labs(fill = "Land use")
 
+lalehun_raster_plot <- tm_shape(landuse_lalehun,
+         bbox = lalehun_bbox,
+         raster.warp = F) +
+  tm_raster(col = "landuse",
+            breaks = c(0, as.numeric(ras_landuse)[1:12], 1600),
+            labels = c("Missing", names(ras_landuse)[1:12]),
+            palette = ras_palette,
+            title = "Lalehun Land use",
+            drop.levels = T) +
+  tm_layout(legend.outside = T) +
+  tm_basemap() 
+
+tmap_save(lalehun_raster_plot, here("reports", "figures", "lalehun_habitats.png"))
+
 seilama <- village_poly %>%
   filter(village == "seilama")
 seilama_bbox <- st_bbox(seilama)
@@ -80,6 +83,8 @@ seilama_raster <- tm_shape(landuse_seilama,
             drop.levels = T) +
   tm_layout(legend.outside = T) +
   tm_basemap()
+
+tmap_save(seilama_raster, here("reports", "figures", "seilama_habitats.png"))
 
 landuse_seilama_df <- as.data.frame(landuse_seilama, xy = T) %>%
   left_join(., labels_raster %>%

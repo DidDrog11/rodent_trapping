@@ -23,7 +23,6 @@ categories:
 ```{r setup, include=FALSE, quietly=TRUE}
 knitr::opts_chunk$set(echo = TRUE, warning = F, message = F)
 source(here::here("scripts", "project_library.R"))
-source(here("scripts", "download_data.R"))
 ```
 This report uses data from the rodent trapping pilot study performed in November-December 2020. All data is available at the GithHub `rodent_trapping` repository [here](https://github.com/DidDrog11/rodent_trapping) and data extracted from other publicly available resources.
 
@@ -36,9 +35,9 @@ Increasing intensity of anthropogenic land use along a socio-ecological gradient
   * Does habitat degradation and subsequent change in rodent species assemblages increase the risk of Lassa fever virus spillover events into local human populations?
 
 ### Study site selection
-A recent review conducted by [@gibb_understanding_2017] collated published and unpublished documented Lassa Fever cases (humans) and infections (PCR) or seroprevalence (Ab) (rodents) from countries reporting LASV presence. This data has been used to support study site selection following production of Figure 1 and 2.
+A recent review conducted by [@gibb_understanding_2017] collated published and unpublished documented Lassa Fever cases (humans) and infections (PCR) or seroprevalence (Ab) (rodents) from countries reporting LASV presence. This data has been used to support study site selection following production of Figure \@ref(fig:site_selection) and \@ref(fig:lassa_panguma).
 
-```{r site_selection, quietly=T, echo=F, fig.cap="Location of Lassa cases and infections in Sierra Leone"}
+```{r site_selection, quietly=T, echo=F, fig.cap = "Location of Lassa cases and infections in Sierra Leone"}
 knitr::include_graphics("figures/lassa_SL.png")
 ```
 
@@ -56,7 +55,7 @@ The above map highlights human cases and positive rodents in and around Panguma.
 
 Remote sensing through satellite imagery provides a powerful potential method of clasifying and monitoring land use. A recent paper [@jung_global_2020] used machine learning approaches to categorise global land use based on the International Union for Conservation of Nature and Natural Resources (IUCN) habitats classification scheme ([v3.1](https://www.iucnredlist.org/resources/habitat-classification-scheme)). The associated repository for their work is available [here](https://github.com/Martin-Jung/Habitatmapping). 
 
-Eastern Sierra Leone where the majority of Lasssa fever cases are reported from is more heavily forested and has less intense agricultural production than the Southern or Western regions of the country. The landuse for the Eastern Province is shown below.
+Eastern Sierra Leone where the majority of Lasssa fever cases are reported from is more heavily forested and has less intense agricultural production than the Southern or Western regions of the country. The landuse for the Eastern Province is shown in Figure \@ref(fig:raster_sle).
 
 ```{r raster_sle, quietly=T, echo=F, fig.cap="Land use types in Eastern Sierra Leone based on satellite classification"}
 knitr::include_graphics("figures/sle_raster.png")
@@ -64,17 +63,20 @@ knitr::include_graphics("figures/sle_raster.png")
 
 Habitat classification has been produced at ~100m resolution, the proportion of each habitat type in Eastern Sierra Leone can be produced. The most common land types are Forest, Shrubland and Plantations with the urban landscape comprising <3% of habitats.
 
-To investigate habitat types around historic Lassa fever cases a buffer of 2km radius was placed around geolocated cases. The below figure compares this to the proportion of habitat types in Eastern Sierra Leone.
+To investigate habitat types around historic Lassa fever cases a buffer of 2km radius was placed around geolocated cases. Figure \@ref(fig:lassa_landuse) compares this to the proportion of habitat types in Eastern Sierra Leone.
 
-```{r lalehun_raster, quietly=T, echo=F, fig.cap="Land use types in "}
+```{r lassa_landuse, quietly=T, echo=F, fig.cap="Land use types in Eastern Sierra Leone (L) and land use surrounding Lassa fever cases (2km radius) (R)."}
 knitr::include_graphics("figures/sl_lassa_landuse.png")
 ```
 
 Two villages were identified based on their proximity to historic lassa fever cases and suitability of access at different times of the year. The habitat types within 2km radius of the village centers are shown.
 
-![Lalehun land use map, classified by IUCN categories](figures/lalehun_IUCN.png)
+``` {r village_landuse, quietly = T, echo = F, fig.cap = "Land use at 100m resolution in a 2km radius from the centre of each village study site."}
+lalehun <- read_rds(here("data", "satellite", "lalehun_landuse_tmap.rds"))
+seilama <- read_rds(here("data", "satellite", "seilama_landuse_tmap.rds"))
 
-![Seilama land use map, classified by IUCN categories](figures/seilama_IUCN.png)
+
+```
 
 The habitat maps and discussions with local residents allowed the study team to identify suitable study sites that would provide us with an adequate sample of different habitats that would remain amenable for trapping despite increased rainfall.
 
@@ -347,6 +349,7 @@ The `field_id` is based on their initial classification. I have then compared th
 
 The below table captures the mean and range of the metrics we have recorded in the field. Some species are missing catalogue data. This produces the reference species list.
 ``` {r, rodent_id, echo=F}
+rodent_ids <- readxl::read_xlsx(path = here("data", "trap_sites_all.xlsx"), sheet = 4)
 DT::datatable(rodent_ids)
 ```
 
