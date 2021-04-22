@@ -219,7 +219,6 @@ hist_lassa <- st_transform(hist_lassa, 2162)
 eastern_prov <- st_transform(e_prov, 2162)
 
 lassa_circles <- st_buffer(hist_lassa, dist = 2000) # buffer around the points 5km
-
 landuse_lassa <- st_crop(geo_sle_raster, lassa_circles) # crop the landuse raster to the buffered points
 
 landuse_lassa_df <- as.data.frame(landuse_lassa, xy = T) %>%
@@ -235,6 +234,8 @@ sle_landuse <- landuse_lassa_df %>%
   mutate(plot = "Lassa - 2km") %>%
   bind_rows(landuse_sl %>%
               mutate(plot = "All SL")) %>%
+  bind_rows(landuse_sle %>%
+              mutate(plot = "Eastern SL")) %>%
   drop_na() %>%
   group_by(label, group, group_n, plot) %>%
   tally %>%

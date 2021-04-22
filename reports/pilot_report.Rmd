@@ -65,15 +65,15 @@ Habitat classification has been produced at ~100m resolution, the proportion of 
 
 To investigate habitat types around historic Lassa fever cases a buffer of 2km radius was placed around geolocated cases. Figure \@ref(fig:lassa_landuse) compares this to the proportion of habitat types in Eastern Sierra Leone.
 
-```{r lassa_landuse, quietly=T, echo=F, fig.cap="Land use types in Eastern Sierra Leone (L) and land use surrounding Lassa fever cases (2km radius) (R)."}
+```{r lassa_landuse, quietly=T, echo=F, fig.cap="Land use types in Sierra Leone, Eastern Sierra Leone (Middle) and land use in the buffer area of Lassa fever cases in Eastern Sierra Leone (2km radius) (R)."}
 knitr::include_graphics("figures/sl_lassa_landuse.png")
 ```
 
 Two villages were identified based on their proximity to historic lassa fever cases and suitability of access at different times of the year. The habitat types within 2km radius of the village centers are shown.
 
 ``` {r village_landuse, quietly = T, echo = F, fig.cap = "Land use at 100m resolution in a 2km radius from the centre of each village study site."}
-lalehun <- read_rds(here("data", "satellite", "lalehun_landuse_tmap.rds"))
-seilama <- read_rds(here("data", "satellite", "seilama_landuse_tmap.rds"))
+# lalehun <- read_rds(here("data", "satellite", "lalehun_landuse_tmap.rds"))
+# seilama <- read_rds(here("data", "satellite", "seilama_landuse_tmap.rds"))
 
 
 ```

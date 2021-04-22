@@ -23,7 +23,7 @@ lalehun <- village_poly %>%
   filter(village == "lalehun")
 lalehun_bbox <- st_bbox(lalehun)
 
-landuse_lalehun <- st_crop(geo_sle_raster, lalehun, crop = T) %>%
+landuse_lalehun <- st_crop(new, lalehun, crop = T) %>%
   st_transform(4326)
 
 landuse_lalehun_df <- as.data.frame(landuse_lalehun, xy = T) %>%
