@@ -26,7 +26,11 @@ pkgs =
     "stars",
     "leaflet",
     "leaflet.opacity",
-    "vegan"
+    "vegan",
+    "knitr",
+    "waffle",
+    "cowplot",
+    "iNEXT"
   )
 pacman::p_load(pkgs, character.only = T)
 

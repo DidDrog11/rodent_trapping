@@ -1,5 +1,4 @@
 source(here::here("scripts", "project_library.R"))
-source(here("scripts", "DdM_to_decimal_degrees.R"))
 source(here("scripts", "label_raster.R"))
 
 geo_sle_raster <- read_rds(here("data", "satellite", "eastern_province.rds"))
@@ -7,6 +6,7 @@ ras_landuse <- read_rds(here("data", "satellite", "raster_landuse.rds"))
 ras_palette <- read_rds(here("data", "satellite", "raster_palette.rds"))
 labels_raster <- read_rds(here("data", "satellite", "labels_raster.rds"))
 plot_palette <- c("#ec7014", "#00441b", "#99d8c9", "#7a0177", "#045a8d")
+ras_palette_sl <- read_rds(here("data", "satellite", "raster_palette_sl.rds"))
 
 villages <- tibble(village = c("lalehun", "seilama"),
                    x  = c(lalehun_coords[1],
@@ -19,11 +19,14 @@ villages <- tibble(village = c("lalehun", "seilama"),
 village_poly <- st_transform(villages, 2162) %>%
   st_buffer(dist = 2000)
 
+
+# Lalehun landuse ---------------------------------------------------------
+
 lalehun <- village_poly %>%
   filter(village == "lalehun")
 lalehun_bbox <- st_bbox(lalehun)
 
-landuse_lalehun <- st_crop(new, lalehun, crop = T) %>%
+landuse_lalehun <- st_crop(geo_sle_raster, lalehun, crop = T) %>%
   st_transform(4326)
 
 landuse_lalehun_df <- as.data.frame(landuse_lalehun, xy = T) %>%
@@ -40,16 +43,15 @@ lalehun_landuse_plot <- landuse_lalehun_df %>%
   group_by(label, group, group_n) %>%
   tally %>%
   ungroup() %>%
-  mutate(pct = n/sum(n))
+  mutate(pct = n/sum(n)*100)
 
-ggplot(lalehun_landuse_plot) +
-  geom_col(aes(x = reorder(label, group_n), y = pct*100, fill = group)) +
-  scale_fill_manual(values = plot_palette) +
+lalehun_landuse_waffle <- ggplot(lalehun_landuse_plot, aes(fill = label, values = n)) +
+  geom_waffle(color = "white", make_proportional = TRUE, size = 1.2) +
+  scale_fill_manual(values = ras_palette_sl) +
   coord_flip() +
   theme_minimal() +
-  xlab(NULL) +
-  ylab("Percentage land use") +
-  labs(fill = "Land use")
+  labs(fill = "Land use") +
+  theme_enhance_waffle()
 
 lalehun_raster_plot <- tm_shape(landuse_lalehun,
          bbox = lalehun_bbox,
@@ -58,35 +60,23 @@ lalehun_raster_plot <- tm_shape(landuse_lalehun,
             breaks = c(0, as.numeric(ras_landuse)[1:12], 1600),
             labels = c("Missing", names(ras_landuse)[1:12]),
             palette = ras_palette,
-            title = "Lalehun Land use",
-            drop.levels = T) +
-  tm_layout(legend.outside = T) +
-  tm_basemap() 
+            legend.show = F)
 
-tmap_save(lalehun_raster_plot, here("reports", "figures", "lalehun_habitats.png"))
+lalehun_plots <- plot_grid(tmap_grob(lalehun_raster_plot), lalehun_landuse_waffle)
+save_plot(here("reports", "figures", "lalehun_plots.png"), lalehun_plots, ncol = 2)
+
+
+# Seilama landuse ---------------------------------------------------------
 
 seilama <- village_poly %>%
   filter(village == "seilama")
 seilama_bbox <- st_bbox(seilama)
 
-landuse_seilama <- st_crop(geo_sle_raster, seilama) %>%
+landuse_seilama <- st_crop(geo_sle_raster, seilama, crop = T) %>%
   st_transform(4326)
 
-seilama_raster <- tm_shape(landuse_seilama,
-                           bbox = seilama_bbox,
-                           raster.warp = F) +
-  tm_raster(col = "landuse",
-            breaks = c(0, as.numeric(ras_landuse)[1:12], 1600),
-            labels = c("Missing", names(ras_landuse)[1:12]),
-            palette = ras_palette,
-            title = "Seilama Land use",
-            drop.levels = T) +
-  tm_layout(legend.outside = T) +
-  tm_basemap()
-
-tmap_save(seilama_raster, here("reports", "figures", "seilama_habitats.png"))
-
 landuse_seilama_df <- as.data.frame(landuse_seilama, xy = T) %>%
+  drop_na(landuse) %>%
   left_join(., labels_raster %>%
               rename("landuse" = "value"),
             by = "landuse") %>%
@@ -99,49 +89,60 @@ seilama_landuse_plot <- landuse_seilama_df %>%
   group_by(label, group, group_n) %>%
   tally %>%
   ungroup() %>%
-  mutate(pct = n/sum(n))
+  mutate(pct = n/sum(n)*100)
 
-ggplot(seilama_landuse_plot) +
-  geom_col(aes(x = reorder(label, group_n), y = pct*100, fill = group)) +
-  scale_fill_manual(values = plot_palette) +
+seilama_landuse_waffle <- ggplot(seilama_landuse_plot, aes(fill = label, values = n)) +
+  geom_waffle(color = "white", make_proportional = TRUE, show.legend = F, size = 1.2) +
+  scale_fill_manual(values = ras_palette_sl) +
   coord_flip() +
   theme_minimal() +
-  xlab(NULL) +
-  ylab("Percentage land use") +
-  labs(fill = "Land use")
+  labs(caption = "Each rectangle represents ~1% of land area") +
+  theme_enhance_waffle()
 
-combined_landuse <- bind_rows(lalehun_landuse_plot %>%
-                                mutate(village = "Lalehun"),
-                              seilama_landuse_plot %>%
-                                mutate(village = "Seilama")) %>%
-  ggplot() +
-  geom_col(aes(x = reorder(label, group_n), y = pct*100, fill = group)) +
-  scale_fill_manual(values = plot_palette) +
+seilama_raster_plot <- tm_shape(landuse_seilama,
+                                bbox = seilama_bbox,
+                                raster.warp = F) +
+  tm_raster(col = "landuse",
+            breaks = c(0, as.numeric(ras_landuse)[1:12], 1600),
+            labels = c("Missing", names(ras_landuse)[1:12]),
+            palette = ras_palette,
+            legend.show = F)
+
+seilama_plots <- plot_grid(tmap_grob(seilama_raster_plot), seilama_landuse_waffle)
+save_plot(here("reports", "figures", "seilama_plots.png"), seilama_plots, ncol = 2)
+
+village_landuse_waffle <- rbind(lalehun_landuse_plot %>%
+                                  mutate(village = "Lalehun"),
+                                seilama_landuse_plot %>%
+                                  mutate(village = "Seilama")) %>%
+  ggplot(aes(fill = label, values = n)) +
+  geom_waffle(color = "white", make_proportional = TRUE, size = 1.2) +
+  facet_wrap(~ village, ncol = 1) +
+  scale_fill_manual(values = ras_palette_sl) +
   coord_flip() +
   theme_minimal() +
-  xlab(NULL) +
-  ylab("Percentage land use") +
-  facet_wrap(~ village) +
   labs(fill = "Land use") +
-  ggsave(here("reports", "figures", "village_landuse.png"))
+  theme_enhance_waffle()
+
+tmap_plots <- plot_grid(tmap_grob(lalehun_raster_plot), tmap_grob(seilama_raster_plot),
+                        nrow = 2,
+                        labels = c("Lalehun", "Seilama"))
+villages_plots <- plot_grid(tmap_plots, village_landuse_waffle, nrow = 1)
+save_plot(here("reports", "figures", "villages_plots.png"), villages_plots, ncol = 2)
 
 # Locations of traps ------------------------------------------------------
 
 trap_sites <- read_csv(here("data", "trap_sites.csv")) 
 
 trap_habitat <- trap_sites %>%
-  mutate(lon_DdM = paste(paste(lon_degree, lon_dec, sep = "_"), "'", sep = ""),
-         lat_DdM = paste(paste(lat_degree, lat_dec, sep = "_"), "'", sep = ""),
-         lon = -1 * dg2dec(var = lon_DdM, Dg = "_", Min = "'"),
-         lat = dg2dec(var = lat_DdM, Dg = "_", Min = "'")) %>%
   st_as_sf(coords = c("lon", "lat"), crs = 4326) %>%
-  dplyr::select(village, trap_uid) %>%
-  distinct(geometry, .keep_all = T) %>%
+  dplyr::select(village, visit, grid_number, trap_number, trap_uid) %>%
+  distinct(visit, grid_number, trap_number, .keep_all = T) %>%
   st_transform(2162) %>%
   st_buffer(dist = 100)
 
 trap_lalehun <- trap_habitat %>%
-  filter(village == "lalehun")
+  filter(village == "lalehun" & visit == 1)
 
 lalehun_trap_habitat <- st_crop(geo_sle_raster, trap_lalehun)
 
@@ -169,7 +170,7 @@ lalehun_landuse_traps_plot <- landuse_traps_lalehun_df %>%
   labs(fill = "Land use")
 
 trap_seilama <- trap_habitat %>%
-  filter(village == "seilama")
+  filter(village == "seilama" & visit == 1)
 
 seilama_trap_habitat <- st_crop(geo_sle_raster, trap_seilama)
 

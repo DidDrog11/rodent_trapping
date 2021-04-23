@@ -1,7 +1,10 @@
-library("here")
-source(here("scripts", "project_library.R"))
-trapped_rodents <- readxl::read_xlsx(path = here("data", "trap_sites_all.xlsx"), sheet = 3)
+source(here::here("scripts", "project_library.R"))
 
+## For pilot study only
+
+trapped_rodents <- readxl::read_xlsx(path = here("data", "trap_sites_all.xlsx"), sheet = 3) %>%
+  mutate(date = as.Date(date, format = "%Y- %m-%d")) %>%
+  filter(date <=	"2020-12-09")
 habitat_names <- c("Forest/fallow land", "Distal agriculture", "Proximal agriculture", "Village")
 names(habitat_names) = c("forest/fallow", "distal_agriculture", "proximal_agriculture", "village")
 
@@ -15,8 +18,11 @@ trap_sites <- read_csv(here("data", "trap_sites.csv")) %>%
          "disturbed_forest, fallow_5y" = "forest/fallow",
          "forest_fallow" = "forest/fallow",
          "village_periphery" = "village"),
-         habitat = recode_factor(habitat, !!!habitat_names)) %>%
-  group_by(habitat)
+         habitat = recode_factor(habitat, !!!habitat_names),
+         village = case_when(village == "lalehun" ~ "Lalehun",
+                             village == "seilama" ~ "Seilama")) %>%
+  group_by(habitat) %>%
+  filter(visit == 1)
 
 location_rodents <- trapped_rodents %>%
   dplyr::select(rodent_id, trap_night, trap_id, initial_species_id) %>%

@@ -80,7 +80,7 @@ lassa_e_prov <- tm_shape(eprov_osm) +
   tm_scale_bar(position = c("left", "top")) +
   tm_compass(position = c("left", "top"))
 
-tmap_save(lassa_e_prov, here("reports", "figures", "lassa_panguma.png"))
+tmap_save(lassa_e_prov, here("reports", "figures", "lassa_panguma.png"), height = 15, units = "cm")
 
 # Landuse -----------------------------------------------------------------
 
@@ -144,8 +144,16 @@ names(ras_landuse_sl) <- case_when(names(ras_landuse_sl) == "Forest - lowland" ~
 ras_landuse_sle <- setNames(as.character(ras_landuse_e$landuse), ras_landuse_e$label)
 write_rds(ras_landuse_sle, here("data", "satellite", "raster_landuse.rds"))
 
-ras_palette_sl <- c("#d9d9d9", "#00441b", "#006d2c", "#238b45", "#99d8c9", "#ccece6", "#045a8d", "#a6bddb", "#fee391", "#fec44f", "#ec7014", "#662506", "#7a0177")
+ras_palette_sl <- c("#d9d9d9", "#00441b", "#006d2c", "#238b45", "#a1d99b", 
+                    "#253494", "#ffffcc", "#99d8c9", "#ccece6", "#045a8d", "#a6bddb",
+                    "#fee391", "#fec44f", "#ec7014", "#662506", "#7a0177")
+names(ras_palette_sl) <- c("Missing", "Forest - lowland", "Forest", "Forest - montane", "Grassland",
+                           "Marine", "Savanna - Dry", "Shrubland", "Shrubland - high altitude", "Wetlands", "Wetlands - seasonal",
+                           "Arable land", "Pastureland", "Plantations", "Rural Gardens", "Urban Areas")
+write_rds(ras_palette_sl, here("data", "satellite", "raster_palette_sl.rds"))
 ras_palette_sle <- c("#d9d9d9", "#00441b", "#006d2c", "#238b45", "#99d8c9", "#ccece6", "#045a8d", "#a6bddb", "#fee391", "#fec44f", "#ec7014", "#662506", "#7a0177")
+names(ras_palette_sle) <- c("Missing", "Forest - lowland", "Forest", "Forest - montane", "Shrubland", "Shrubland - high altitude", "Wetlands", "Wetlands - seasonal",
+                            "Arable land", "Pastureland", "Plantations", "Rural Gardens", "Urban Areas")
 write_rds(ras_palette_sle, here("data", "satellite", "raster_palette.rds"))
 
 plot_palette_a <- c("#ec7014", "#00441b", "#a6d96a", "#2166ac", "#fee08b", "#99d8c9", "#7a0177", "#92c5de")
@@ -240,15 +248,16 @@ sle_landuse <- landuse_lassa_df %>%
   group_by(label, group, group_n, plot) %>%
   tally %>%
   group_by(plot) %>%
-  mutate(pct = n/sum(n))
-  
-ggplot(sle_landuse) +
-  geom_col(aes(x = reorder(label, group_n), y = pct*100, fill = group)) +
-  scale_fill_manual(values = plot_palette_a) +
+  mutate(waffle = round(n/sum(n)*1000, 0)) %>%
+  arrange(-group_n, .by_group = T)
+
+ggplot(sle_landuse, aes(fill = label, values = waffle)) +
+  geom_waffle(color = "white", make_proportional = TRUE, size = 1.2)  +
+  facet_wrap(~ plot, ncol = 1) +
+  scale_fill_manual(values = ras_palette_sl) +
   coord_flip() +
   theme_minimal() +
-  xlab(NULL) +
-  ylab("Percentage land use") +
-  facet_wrap(~ plot) +
-  labs(fill = "Land use") +
+  labs(fill = "Land use",
+       caption = "Each rectangle represents ~1% of land area") +
+  theme_enhance_waffle() +
   ggsave(here("reports", "figures", "sl_lassa_landuse.png"))

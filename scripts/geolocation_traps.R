@@ -1,6 +1,4 @@
-library("here")
-source(here("scripts", "project_library.R"))
-source(here("scripts", "DdM_to_decimal_degrees.R"))
+source(here::here("scripts", "project_library.R"))
 
 trap_sites <- read_csv(here("data", "trap_sites.csv"))
 trapped_rodents <- read_csv(here("data", "rodents_trapped.csv"))
@@ -13,10 +11,6 @@ location_rodents <- trapped_rodents %>%
 # lalehun -----------------------------------------------------------------
 
 lalehun_traps <- trap_sites %>%
-  mutate(lon_DdM = paste(paste(lon_degree, lon_dec, sep = "_"), "'", sep = ""),
-         lat_DdM = paste(paste(lat_degree, lat_dec, sep = "_"), "'", sep = ""),
-         lon = -1 * dg2dec(var = lon_DdM, Dg = "_", Min = "'"),
-         lat = dg2dec(var = lat_DdM, Dg = "_", Min = "'")) %>%
   st_as_sf(coords = c("lon", "lat"), crs = 4326) %>%
   filter(village == "lalehun",
          visit == 1) %>%
