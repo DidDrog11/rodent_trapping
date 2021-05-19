@@ -3,6 +3,6 @@
 .RData
 .Ruserdata
 
-reports/figures
+reports/figures/
 
-data/satellite
+data/satellite/
