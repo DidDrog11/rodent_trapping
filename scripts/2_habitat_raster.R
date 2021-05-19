@@ -1,86 +1,5 @@
-source(here::here("scripts", "project_library.R"))
-source(here("scripts", "label_raster.R"))
-
-SLE_0 <- getData("GADM", country = "SL", level = 0, path = here("data", "spatial")) %>%
-  st_as_sf()
-SLE_1 <- getData("GADM", country = "SL", level = 1, path = here("data", "spatial")) %>%
-  st_as_sf()
-SLE_2 <- getData("GADM", country = "SL", level = 2, path = here("data", "spatial")) %>%
-  st_as_sf()
-
-
-# Lassa cases -------------------------------------------------------------
-
-data <- read_csv(here("data", "lassa", "lassa_seroprevalence.csv")) %>%
-  mutate(Rodent_or_human = ifelse(is.na(Rodent_or_human), "Missing", Rodent_or_human),
-         Rodent_or_human = case_when(Rodent_or_human == "human" ~ "Human",
-                                     Rodent_or_human == "Rodents" ~ "Rodent",
-                                     TRUE ~ Rodent_or_human),
-         Rodent_or_human = factor(Rodent_or_human))
-
-sierra_leone <- data %>%
-  filter(Country == "Sierra Leone") %>%
-  drop_na(c("Longitude", "Latitude", "Number_acutecases")) %>%
-  mutate(Number_acutecases = as.numeric(Number_acutecases)) %>%
-  st_as_sf(coords = c("Longitude", "Latitude"), crs = 4326)
-
-villages <- tibble(village = c("lalehun", "seilama"),
-                   x  = c(lalehun_coords[1],
-                          seilama_coords[1]),
-                   y = c(lalehun_coords[2],
-                         seilama_coords[2])) %>%
-  st_as_sf(coords = c("x", "y")) %>%
-  st_set_crs(4326)
-
-sle_osm <- tmaptools::read_osm(SLE_0, ext = 1.1)
-
-provinces_lassa <- st_join(SLE_2, sierra_leone, left = F)
-
-lassa_sl <- tm_shape(sle_osm) +
-  tm_rgb() +
-  tm_shape(sierra_leone) +
-  tm_bubbles(size = 0.2,
-             title.size = "Lassa infections",
-             legend.size.is.portrait = T,
-             col = "Year_end",
-             title.col = "Year",
-             jitter = 0.2,
-             alpha = 0.7) +
-  tm_legend(legend.format = list(fun=function(x) formatC(x, digits=0, format="d")),
-            legend.outside = F)
-  
-tmap_save(lassa_sl, here("reports", "figures", "lassa_SL.png"))
-
-e_prov <-  SLE_2 %>%
-  filter(GID_2 == "SLE.1.2_1")
-
-eprov_lassa <- st_intersection(sierra_leone %>%
-                                 filter(Town != "Joru"),
-                               e_prov)
-eprov_lassa$Rodent_or_human <- droplevels(eprov_lassa$Rodent_or_human)
-
-eprov_osm <- tmaptools::read_osm(st_bbox(eprov_lassa), ext = 1.1, type = c("osm"))
-
-lassa_e_prov <- tm_shape(eprov_osm) +
-  tm_rgb() +
-  tm_shape(eprov_lassa) +
-  tm_bubbles(size = 0.2,
-             col = "Year_end",
-             title.col = "Year",
-             shape = "Rodent_or_human",
-             title.shape = "Species",
-             jitter = 0.01,
-             alpha = 0.7) +
-  tm_shape(villages) +
-  tm_bubbles(size = 0.2,
-             col = "black") +
-  tm_legend(legend.format = list(fun=function(x) formatC(x, digits=0, format="d")),
-            legend.outside = F,
-            legend.position = c("right", "bottom")) +
-  tm_scale_bar(position = c("left", "top")) +
-  tm_compass(position = c("left", "top"))
-
-tmap_save(lassa_e_prov, here("reports", "figures", "lassa_panguma.png"), height = 15, units = "cm")
+source(here::here("scripts", "0_project_library.R"))
+source(here("scripts", "0_label_raster.R"))
 
 # Landuse -----------------------------------------------------------------
 
@@ -115,7 +34,11 @@ landuse_sl <- raster_dataframe %>%
             by = "landuse") %>%
   label_raster() %>%
   group_by(group) %>%
-  mutate(group_n = n())
+  mutate(group_n = n(),
+         label = recode(label,
+                        "Wetlands - seasonal" = "Wetlands"),
+         group = recode(group,
+                        "Wetlands - seasonal" = "Wetlands"))
 
 landuse_sle <- raster_dataframe_east %>%
   left_join(., labels_raster %>%
@@ -123,7 +46,11 @@ landuse_sle <- raster_dataframe_east %>%
             by = "landuse") %>%
   label_raster() %>%
   group_by(group) %>%
-  mutate(group_n = n())
+  mutate(group_n = n(),
+         label = recode(label,
+                        "Wetlands - seasonal" = "Wetlands"),
+         group = recode(group,
+                        "Wetlands - seasonal" = "Wetlands"))
 
 # This section supports the labelling and colours of the categories
 ras_landuse <- landuse_sl %>%
@@ -136,23 +63,31 @@ ras_landuse_e <- landuse_sle %>%
   distinct(label, landuse) %>%
   arrange(landuse)
 
-ras_landuse_sl <- setNames(as.character(ras_landuse$landuse), ras_landuse$label)
+ras_landuse_sl <- setNames(as.numeric(ras_landuse$landuse), ras_landuse$label)
 names(ras_landuse_sl) <- case_when(names(ras_landuse_sl) == "Forest - lowland" ~ "Forest",
-                                   names(ras_landuse_sl) == "Forest - montane" ~ "Forest",
-                                   names(ras_landuse_sl) == "Shrubland - high altitude" ~ "Shrubland",
                                    TRUE ~ names(ras_landuse_sl))
 ras_landuse_sle <- setNames(as.character(ras_landuse_e$landuse), ras_landuse_e$label)
 write_rds(ras_landuse_sle, here("data", "satellite", "raster_landuse.rds"))
 
-ras_palette_sl <- c("#d9d9d9", "#00441b", "#006d2c", "#238b45", "#a1d99b", 
-                    "#253494", "#ffffcc", "#99d8c9", "#ccece6", "#045a8d", "#a6bddb",
-                    "#fee391", "#fec44f", "#ec7014", "#662506", "#7a0177")
-names(ras_palette_sl) <- c("Missing", "Forest - lowland", "Forest", "Forest - montane", "Grassland",
-                           "Marine", "Savanna - Dry", "Shrubland", "Shrubland - high altitude", "Wetlands", "Wetlands - seasonal",
-                           "Arable land", "Pastureland", "Plantations", "Rural Gardens", "Urban Areas")
+ras_palette_sl <- c("Missing" = "#d9d9d9",
+                    "Forest" = "#00441b",
+                    "Forest - montane" = "#238b45",
+                    "Savanna - Dry" = "#e8e88e", 
+                    "Shrubland" =  "#a1d99b",
+                    "Shrubland - high altitude" = "#ffffcc",
+                    "Grassland" = "#68b85f",
+                    "Wetlands" = "#99d8c9",
+                    "Marine" =  "#253494",
+                    "Arable land" = "#fee391",
+                    "Pastureland" = "#fec44f",
+                    "Plantations" = "#ec7014",
+                    "Rural gardens" = "#662506",
+                    "Urban areas" = "#7a0177")
+
 write_rds(ras_palette_sl, here("data", "satellite", "raster_palette_sl.rds"))
+
 ras_palette_sle <- c("#d9d9d9", "#00441b", "#006d2c", "#238b45", "#99d8c9", "#ccece6", "#045a8d", "#a6bddb", "#fee391", "#fec44f", "#ec7014", "#662506", "#7a0177")
-names(ras_palette_sle) <- c("Missing", "Forest - lowland", "Forest", "Forest - montane", "Shrubland", "Shrubland - high altitude", "Wetlands", "Wetlands - seasonal",
+names(ras_palette_sle) <- c("Missing", "Forest - lowland", "Forest", "Forest - montane", "Shrubland", "Shrubland - high altitude", "Wetlands",
                             "Arable land", "Pastureland", "Plantations", "Rural Gardens", "Urban Areas")
 write_rds(ras_palette_sle, here("data", "satellite", "raster_palette.rds"))
 
@@ -167,7 +102,10 @@ all_sl_landuse <- ggplot(landuse_sl %>%
   theme_minimal() +
   xlab(NULL) +
   ylab("Percentage land use") +
-  labs(fill = "Land use")
+  labs(fill = element_blank(),
+       title = "Sierra Leone landuse")
+
+all_sl_landuse
 
 all_sle_landuse <- ggplot(landuse_sle %>%
                            drop_na()) +
@@ -177,7 +115,10 @@ all_sle_landuse <- ggplot(landuse_sle %>%
   theme_minimal() +
   xlab(NULL) +
   ylab("Percentage land use") +
-  labs(fill = "Land use")
+  labs(title = "Eastern Sierra Leone landuse",
+       fill = element_blank())
+
+all_sle_landuse
 
 #ggsave(all_sle_landuse, here("reports", "figures", "sle_proportional.png"))
 
@@ -190,13 +131,19 @@ sl_raster <- landuse_sl %>%
 st_crs(sl_raster) <- 4326 # mercator version
 geo_sl_raster <- st_transform(sl_raster, 2162) # convert to geocentric
 
+ras_landuse_sl
+breaks_sl_plot <- c(0, 99, 109, 200, 299, 307, 405, 500, 900, 1401, 1402, 1403, 1404, 1405, 1600)
+
 sl_raster_plot <- tm_shape(sl_raster) +
   tm_raster(col = "landuse",
-            breaks = c(0,100, 109, 201, 307, 407, 515, 1207, 1401, 1402, 1403, 1404, 1405),
-            labels = c("Missing", unique(names(ras_landuse_sl))[1:11]),
+            breaks = breaks_sl_plot,
+            labels = c(names(ras_palette_sl)),
             palette = ras_palette_sl,
             title = "Land use") +
   tm_layout(legend.outside = T)
+
+sl_raster_plot
+
 tmap_save(sl_raster_plot, here("reports", "figures", "sl_raster.png"))
 
 sle_raster <- landuse_sle %>%
@@ -215,6 +162,9 @@ eastern_raster <- tm_shape(sle_raster) +
             palette = ras_palette_sle,
             title = "Land use") +
   tm_layout(legend.outside = T)
+
+eastern_raster
+
 tmap_save(eastern_raster, here("reports", "figures", "sle_raster.png"))
 
 tmap_leaflet(eastern_raster)
@@ -248,7 +198,9 @@ sle_landuse <- landuse_lassa_df %>%
   group_by(label, group, group_n, plot) %>%
   tally %>%
   group_by(plot) %>%
-  mutate(waffle = round(n/sum(n)*1000, 0)) %>%
+  mutate(waffle = round(n/sum(n)*1000, 0),
+         label = recode(label, 
+                        "Urban Areas" = "Urban areas")) %>%
   arrange(-group_n, .by_group = T)
 
 ggplot(sle_landuse, aes(fill = label, values = waffle)) +

@@ -2,5 +2,7 @@
 .Rhistory
 .RData
 .Ruserdata
-data/satellite/lvl1_style.qml
-data/satellite/sle_landuse.tif
+
+reports/figures
+
+data/satellite

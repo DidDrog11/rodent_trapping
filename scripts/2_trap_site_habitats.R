@@ -1,5 +1,5 @@
-source(here::here("scripts", "project_library.R"))
-source(here("scripts", "label_raster.R"))
+source(here::here("scripts", "0_project_library.R"))
+source(here("scripts", "0_label_raster.R"))
 
 geo_sle_raster <- read_rds(here("data", "satellite", "eastern_province.rds"))
 ras_landuse <- read_rds(here("data", "satellite", "raster_landuse.rds"))

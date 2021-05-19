@@ -1,0 +1,96 @@
+source(here::here("scripts", "0_project_library.R"))
+
+trap_sites <- read_csv(here("data", "trap_sites.csv"))
+trapped_rodents <- read_csv(here("data", "rodents_trapped.csv"))
+location_rodents <- trapped_rodents %>%
+  dplyr::select(rodent_id, trap_night, trap_id, initial_species_id) %>%
+  left_join(., trap_sites, 
+            by = c("rodent_id", "trap_night")) %>%
+  dplyr::select(rodent_id, visit, grid_number, trap_night, initial_species_id, village, habitat) %>%
+  mutate(across(.cols = everything(), .fns = factor))
+
+site_palette <- c("#e41a1c", "#377eb8", "#4daf4a",
+                  "#984ea3", "#ff7f00", "#ffff33",
+                  "#a65628")
+
+# lalehun -----------------------------------------------------------------
+
+lalehun_traps <- trap_sites %>%
+  st_as_sf(coords = c("lon", "lat"), crs = 4326) %>%
+  filter(village == "lalehun") %>%
+  mutate(rodent_trapped = recode(rodent_trapped,
+                                 "y" = "Yes",
+                                 "n" = "No"))
+
+location_rodents %>%
+  filter(village == "lalehun") %>%
+  ggplot() +
+  geom_bar(aes(x = trap_night, fill = grid_number)) +
+  facet_grid(~ visit) +
+  scale_y_continuous(breaks = scales::pretty_breaks()) +
+  scale_fill_manual(values = site_palette) +
+  labs(title = "Lalehun",
+       x = "Trap night",
+       y = "Number of captures",
+       fill = "Grid") +
+  theme_minimal()
+
+pal <- colorFactor(palette = c("#f1a340", "#998ec3"), domain = lalehun_traps$rodent_trapped)
+
+distinct_lal_traps <- lalehun_traps %>%
+  distinct(grid_number, trap_number, rodent_id, .keep_all = T)
+
+leaflet(distinct_lal_traps) %>%
+  addProviderTiles(providers$Esri.WorldImagery) %>%
+  addCircleMarkers(color = ~pal(rodent_trapped),
+                   radius = 3,
+                   stroke = F,
+                   fillOpacity = 1,
+                   popup = paste(distinct_lal_traps$trap_number),
+                   popupOptions = popupOptions(closeOnClick = T))  %>%
+  addLegend("topright", pal = pal, values = ~rodent_trapped,
+            title = "Successful capture")
+
+# mapshot(file = here("reports", "figures", "lalehun_traps.png"), remove_controls = c("zoomControl"))
+
+
+# seilama -----------------------------------------------------------------
+
+seilama_traps <- trap_sites %>%
+  st_as_sf(coords = c("lon", "lat"), crs = 4326) %>%
+  filter(village == "seilama") %>%
+  mutate(rodent_trapped = recode(rodent_trapped,
+                                 "y" = "Yes",
+                                 "n" = "No"))
+
+location_rodents %>%
+  filter(village == "seilama") %>%
+  ggplot() +
+  geom_bar(aes(x = trap_night, fill = grid_number)) +
+  facet_grid(~ visit) +
+  scale_y_continuous(breaks = scales::pretty_breaks()) +
+  scale_fill_manual(values = site_palette) +
+  labs(title = "Seilama",
+       x = "Trap night",
+       y = "Number of captures",
+       fill = "Grid") +
+  theme_minimal()
+
+distinct_sei_traps <- seilama_traps %>%
+  distinct(grid_number, trap_number, geometry, rodent_id, .keep_all = T)
+
+leaflet(distinct_sei_traps) %>%
+  addProviderTiles(providers$Esri.WorldImagery) %>%
+  addCircleMarkers(color = ~pal(rodent_trapped),
+                   radius = 3,
+                   stroke = F,
+                   fillOpacity = 1,
+                   popup = paste(distinct_lal_traps$trap_number),
+                   popupOptions = popupOptions(closeOnClick = T))  %>%
+  addLegend("topright", pal = pal, values = ~rodent_trapped,
+            title = "Successful capture")
+
+# mapshot(file = here("reports", "figures", "seilama_traps.png"), remove_controls = c("zoomControl"))
+
+write_rds(lalehun_traps, here("data", "lalehun_traps.rds"))
+write_rds(seilama_traps, here("data", "seilama_traps.rds"))

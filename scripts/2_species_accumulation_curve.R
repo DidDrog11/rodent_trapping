@@ -1,4 +1,4 @@
-source(here::here("scripts", "project_library.R"))
+source(here::here("scripts", "0_project_library.R"))
 
 village_palette <- c("#7a0177", "#fec44f")
 names(village_palette) <-  c("Lalehun", "Seilama")
