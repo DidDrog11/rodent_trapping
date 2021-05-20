@@ -28,16 +28,17 @@ lalehun_traps <- traps %>%
   st_as_sf(coords = c("lon", "lat")) %>%
   distinct(visit, grid_number, trap_number, rodent_id, geometry)
 
-tm_shape(lalehun_landuse,
+lalehun_trap_locations <- tm_shape(lalehun_landuse,
            bbox = lalehun_bbox,
            raster.warp = F) +
   tm_raster(col = "landuse",
             breaks = c(0, as.numeric(ras_landuse)[1:12], 1600),
             labels = c("Missing", names(ras_landuse)[1:12]),
-            palette = ras_palette) +
+            palette = ras_palette,
+            legend.show = F) +
   tm_shape(lalehun_traps) +
-  tm_dots(col = "black") +
-  tm_layout(legend.outside = T) %>%
+  tm_dots(col = "white") +
+  tm_layout(legend.outside = T) +
   tmap_save(filename = here("reports", "figures", "lalehun_trap_habitats.png"))
 
 
@@ -46,14 +47,18 @@ seilama_traps <- traps %>%
   st_as_sf(coords = c("lon", "lat")) %>%
   distinct(visit, grid_number, trap_number, rodent_id, geometry)
 
-tm_shape(seilama_landuse,
+seilama_trap_locations <- tm_shape(seilama_landuse,
          bbox = seilama_bbox,
          raster.warp = F) +
-  tm_raster(col = "landuse"),
+  tm_raster(col = "landuse",
             breaks = c(0, as.numeric(ras_landuse)[1:12], 1600),
             labels = c("Missing", names(ras_landuse)[1:12]),
-            palette = ras_palette) +
+            palette = ras_palette,
+            legend.show = F) +
   tm_shape(seilama_traps) +
-  tm_dots(col = "black") +
-  tm_layout(legend.outside = T) %>%
+  tm_dots(col = "white") +
   tmap_save(filename = here("reports", "figures", "lalehun_trap_habitats.png"))
+
+save_plot(here("reports","figures", "sites_in_habitats_c.png"), plot_grid(tmap_grob(lalehun_trap_locations), tmap_grob(seilama_trap_locations),
+          nrow = 1,
+          labels = c("Lalehun", "Seilama")))

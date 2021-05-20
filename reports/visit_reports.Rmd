@@ -41,4 +41,10 @@ The land use around the selected villages guided the selection of the trapping s
 include_graphics("figures/villages_plots.png")
 ```
 
-The trap locations are shown overlayed on these habitat maps below
+The trap locations are shown overlayed on these habitat maps below. 
+
+```{r}
+include_graphics("figures/sites_in_habitats_c.png")
+```
+
+The number of nights trapped in each 

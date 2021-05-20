@@ -1,9 +1,7 @@
 source(here::here("scripts", "0_project_library.R"))
 source(here("scripts", "0_label_raster.R"))
 
-geo_sle_raster <- read_rds(here("data", "satellite", "east_sierra_leone_landuse.rds")) %>%
-  st_as_stars() %>%
-  st_transform(2162)
+geo_sle_raster <- read_rds(here("data", "satellite", "east_sierra_leone_landuse.rds"))
 
 ras_landuse <- read_rds(here("data", "satellite", "raster_landuse.rds"))
 ras_palette <- read_rds(here("data", "satellite", "raster_palette.rds"))
@@ -22,16 +20,16 @@ villages <- tibble(village = c("lalehun", "seilama"),
 village_poly <- st_transform(villages, 2162) %>%
   st_buffer(dist = 2000)
 
+village_poly <- st_transform(village_poly, 4326)
 
 # Lalehun landuse ---------------------------------------------------------
 
 lalehun <- village_poly %>%
   filter(village == "lalehun")
-lalehun_bbox <- st_bbox(lalehun)
 
-landuse_lalehun <- st_crop(geo_sle_raster, lalehun, crop = T) %>%
-  st_transform(4326)
-landuse_lalehun <- 
+crop_raster <- st_as_stars(geo_sle_raster)
+
+landuse_lalehun <- st_crop(crop_raster, lalehun)
 
 write_rds(landuse_lalehun, here("data", "satellite", "lalehun_landuse.rds"))
 
@@ -62,7 +60,6 @@ lalehun_landuse_waffle <- ggplot(lalehun_landuse_plot, aes(fill = label, values 
   theme_enhance_waffle()
 
 lalehun_raster_plot <- tm_shape(landuse_lalehun,
-         bbox = lalehun_bbox,
          raster.warp = F) +
   tm_raster(col = "landuse",
             breaks = c(0, as.numeric(ras_landuse)[1:12], 1600),
@@ -78,10 +75,12 @@ save_plot(here("reports", "figures", "lalehun_plots.png"), lalehun_plots, ncol =
 
 seilama <- village_poly %>%
   filter(village == "seilama")
-seilama_bbox <- st_bbox(seilama)
 
-landuse_seilama <- st_crop(geo_sle_raster, seilama, crop = T) %>%
-  st_transform(4326)
+landuse_seilama <- st_crop(crop_raster, seilama)
+
+#Change raster values to match ground truth
+landuse_seilama[[1]][20, 21] = 106 #Urban to Forest
+landuse_seilama[[1]][21, 21] = 1405 #Plantation to Urban
 
 write_rds(landuse_seilama, here("data", "satellite", "seilama_landuse.rds"))
 
@@ -112,7 +111,6 @@ seilama_landuse_waffle <- ggplot(seilama_landuse_plot, aes(fill = label, values 
   theme_enhance_waffle()
 
 seilama_raster_plot <- tm_shape(landuse_seilama,
-                                bbox = seilama_bbox,
                                 raster.warp = F) +
   tm_raster(col = "landuse",
             breaks = c(0, as.numeric(ras_landuse)[1:12], 1600),
@@ -154,9 +152,10 @@ trap_habitat <- trap_sites %>%
   st_buffer(dist = 100)
 
 trap_lalehun <- trap_habitat %>%
-  filter(village == "lalehun" & visit == 1)
+  filter(village == "lalehun" & visit == 1) %>%
+  st_transform(4326)
 
-lalehun_trap_habitat <- st_crop(geo_sle_raster, trap_lalehun)
+lalehun_trap_habitat <- st_crop(crop_raster, trap_lalehun)
 
 landuse_traps_lalehun_df <- as.data.frame(lalehun_trap_habitat, xy = T) %>%
   left_join(., labels_raster %>%
@@ -182,9 +181,10 @@ lalehun_landuse_traps_plot <- landuse_traps_lalehun_df %>%
   labs(fill = "Land use")
 
 trap_seilama <- trap_habitat %>%
-  filter(village == "seilama" & visit == 1)
+  filter(village == "seilama" & visit == 1) %>%
+  st_transform(4326)
 
-seilama_trap_habitat <- st_crop(geo_sle_raster, trap_seilama)
+seilama_trap_habitat <- st_crop(crop_raster, trap_seilama)
 
 landuse_traps_seilama_df <- as.data.frame(seilama_trap_habitat, xy = T) %>%
   left_join(., labels_raster %>%
