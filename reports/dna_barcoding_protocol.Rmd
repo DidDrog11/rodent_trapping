@@ -1,0 +1,107 @@
+---
+title: "DNA Barcoding protocol"
+description: |
+  Protocol to be used to speciate trapped rodents from frozen samples. Protocol developed from DNA Barcoding in Mammals (Ivanova, Clare and Borisenko) from DNA Barcodes: Methods and Protocols.
+author:
+  - name: "David Simons"
+    url: https://github.com/diddrog11/rodent_trapping
+    affiliation: The Royal Veterinary College, London, UK
+    affiliation_url: https://www.rvc.ac.uk
+    orcid_id: 0000-0001-9655-1656
+date: 04-11-2021
+output:
+  distill::distill_article:
+    self_contained: false
+    toc: true
+knit: (function(inputFile, encoding) {
+    rmarkdown::render(inputFile, encoding = encoding, output_dir = here::here())
+  })
+#bibliography:
+categories:
+  - Lassa
+---
+
+## Rationale
+
+"Express barcoding", a suitable method for ecological surveys and rapid taxonomic assessments will be used. The DNA extracts obtained from this method are not of archival quality and will generally be unidirectional short length (420 bp) which are sufficient for reliable species-level identification in mammals.
+
+## Materials
+
+  + Tissue preservation
+    1. FTA Elute blotting cards
+  + Tissue subsampling and lysis
+    1. Ethanol 96%
+    2. Harris micropunch
+    3. Microplate (Eppendorf twin-tec PCR plate, Fisher Scientific)
+  + DNA extraction
+    1. Swinging bucket centrifuge with microplate rotor
+  + PCR
+    1. 10% Trehalose: 5g of D-(+)-Trehalose dihydrate, molecular grade water to 50ml. Storage in 1-2ml aliquots at -20$^\circ$C
+    2. 10x PCR Buffer, Minus Mg, -20$^\circ$C
+    3. 50mM Magnesium Chloride, -20$^\circ$C
+    4. 10mM Deoxynucleotide solution mix, store in 100$\mu$l aliquots at -20$^\circ$C
+    5. 100$\mu$M primer stock: Dissolve desiccated primer in the amount of water indicated by the manufacturer to produce the final solution of 100$\mu$M
+    6. 10$\mu$M primer stock (i.e. 20$\mu$l of 100$\mu$M stock diluted in 180$\mu$l of water)
+    7. Platinum Taq DNA Polymerase, store at -20$^\circ$C
+    8. Eppendorf Mastercycler ep gradient S Thermocycler
+    9. Heat sealer
+    10. Aluminium sealing gilm
+    11. Clear sealing film
+    12. Heat sealing film
+    13. Hard-shell skirted microplate
+    14. Swinging bucked centrifuge with microplate rotor
+  + PCR product check
+    1. Gel documentation system
+    2. Pre-cast agarose gels
+    3. E-base integrated power supply
+  + Cycle sequencing reaction
+    1. 10% Trehalose: 5g of D-(+)-Trehalose dihydrate, molecular grade water to 50ml. Storage in 1-2ml aliquots at -20C
+    2. 5x Sequencing Buffer (400mM Tris-HCl pH 9 + 10 mM MgCl~2~).
+    3. 100$\mu$M primer stock: Dissolve desiccated primer in the amount of water indicated by the manufacturer to produce the final solution of 100$\mu$M
+    4. 10$\mu$M primer stock (i.e. 20$\mu$l of 100$\mu$M stock diluted in 180$\mu$l of water)
+    5. BigDye Terminator v3.1 Cycle Sequencing Kit
+    6. Microplate
+    7. PCR Workstation
+  + Sequencing reaction cleanup
+    1. Sephadex G50
+    2. Acroprep 96 filter plate, 0.45$\mu$ml GHP
+    3. Pop-7 Polymer for 3730xl DNA Analyzers
+    4. 3730xl DNA Analyzer Capillary Array, 50cm
+    5. 10x Running Buffer for 3730xl DNA Analyzers
+    6. Collection plate: MicroAmp 96-well reaction plate
+    7. Hydroclave MC8 Steam Sterilizer
+    8. PCR Workstation
+    9. 3730xl DNA Anlyzer
+    10. 8-Channel Matrix multichannel pipette
+    
+## Protocol
+
+  + Tissue digestion [Boneparte et al.](https://journals.sagepub.com/doi/suppl/10.1177/0023677212473918/suppl_file/suppl-appendix.pdf)
+    1. Proteinase K lysis in Sodium Dodecyl Sulphate containing buffer
+      + Tissue biopsies are digested at 56$^\circ$C overnight in between 50 and 700$\mu$L of 10 mmol/L Tris-Cl pH 7.5, 100 mmol/L NaCl, 1mmol/L EDTA, 1% SDS, containing proteinase K (0.5mg/mL) and incubated for 15 min at 70$^\circ$C. Dilute between 1/20-1/50 in water as SDS disturbs the PCR and use 2$\mu$l for PCR reaction
+    2. Place volume on FTA elute card.
+    3. Use disposable tools to transfer the DNA from the samples to the card to prevent contamination
+    4. Note the sample position on the card
+    5. Leave card to air dry with the blotting portion opened
+    6. Store the card away from direct light
+  + Tissue lysis 
+    1. Open FTA elute card and slide mat under blotting surface
+    2. Punch FTA elute card using a 1.2mm micropunch
+    3. Place one punch into each well of a 96 well microplatwe
+    4. Clean micropunch between samples
+  + DNA extraction
+    1. Add 100$\mu$l of water to each well. Seal with aluminium film. Vortex for 10-15s and centrifuge for 1 min at 1,000*g*
+    2. Aspirate and discard water from each well not disturbing the disks. Incubate open plate with disks at 56$^\circ$C for 5 min to evaporate residual water. After drying, disks can be used directly in PCR
+  + PCR
+    1. Select primer cocktails for express barcoding [R6036R](https://onlinelibrary.wiley.com/doi/10.1111/j.1471-8286.2007.01752.x)
+    2. Prepare PCR reagent mix, per well(12.5$\mu$l):
+      + 6.25$\mu$l 10% Trehalose
+      + 4$\mu$l ddH~2~O)
+      + 1.25$\mu$l 10x buffer
+      + 0.625 10mM MgCl~2~
+      + 0.125$\mu$l 10$\mu$M primerA
+      + 0.125$\mu$l 10$\mu$M primerB
+      + 0.0625$\mu$l of 10mM dNTPs
+      + 0.06$\mu$l of Platinum Taq (5U/$\mu$l)
+    3. Keep Taq at -20$^\circ$C for as long as possible prior to use. Spin the tube with Taq by vortexing or pipetting.
+    4. Dispence 12.5$\mu$l of PCR mix into each well of plate containing pre-washed FTA disks. Change pipette tips after each well.
