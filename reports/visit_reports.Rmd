@@ -1,0 +1,44 @@
+---
+title: "Visit Reports"
+description: |
+  This report will clean and perform initial descriptives for the repeat longitudinal study visits.
+author:
+  - name: "David Simons"
+    url: https://github.com/diddrog11/rodent_trapping
+    affiliation: The Royal Veterinary College, London, UK
+    affiliation_url: https://www.rvc.ac.uk
+    orcid_id: 0000-0001-9655-1656
+date: 04-11-2021
+output:
+  distill::distill_article:
+    self_contained: false
+    toc: true
+bibliography: citations.bib
+categories:
+  - Lassa
+---
+
+```{r setup, include=FALSE, quietly=TRUE}
+knitr::opts_chunk$set(echo = F, warning = F, message = F)
+source(here::here("scripts", "0_report_library.R"))
+trap_sites <- read_csv(here("data", "trap_sites.csv"))
+```
+
+The villages currently being sampled are Lalehun (coordinates  8.1975 N, -11.0803 E) and Seilama (coordinates 8.1222 N, -11.1936 E). Rodents are trapped at up to 6 distinct trap sites per village with up to 49 traps per site. Data is collected on this group of [data collection forms](https://drive.google.com/drive/folders/1yE_JAThq-DM9y5yvtSPMgM2ezMcZ_zyO?usp=sharing) or on the digitised versions using electronic pads in the field through the [ODK](https://opendatakit.lshtm.ac.uk/lshtm-odk-servers/) server based at LSHTM.
+
+Currently two visits to each village study site have occurred:
+  + Lalehun
+    + Visit 1 - 2020-11-30 to 2020-12-03
+    + Visit 2 - 2021-04-01 to 2021-04-04
+  + Seilama
+    + Visit 1 - 2020-12-05 to 2020-12-09
+    + Visit 2 - 2021-04-12 to 2021-04-15
+There will ideally be study visits 4 times per year (roughly every 3 months)
+
+The land use around the selected villages guided the selection of the trapping sites. 
+
+```{r village-landuse}
+include_graphics("figures/villages_plots.png")
+```
+
+The trap locations are shown overlayed on these habitat maps below

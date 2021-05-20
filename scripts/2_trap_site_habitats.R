@@ -1,7 +1,10 @@
 source(here::here("scripts", "0_project_library.R"))
 source(here("scripts", "0_label_raster.R"))
 
-geo_sle_raster <- read_rds(here("data", "satellite", "eastern_province.rds"))
+geo_sle_raster <- read_rds(here("data", "satellite", "east_sierra_leone_landuse.rds")) %>%
+  st_as_stars() %>%
+  st_transform(2162)
+
 ras_landuse <- read_rds(here("data", "satellite", "raster_landuse.rds"))
 ras_palette <- read_rds(here("data", "satellite", "raster_palette.rds"))
 labels_raster <- read_rds(here("data", "satellite", "labels_raster.rds"))
@@ -28,6 +31,9 @@ lalehun_bbox <- st_bbox(lalehun)
 
 landuse_lalehun <- st_crop(geo_sle_raster, lalehun, crop = T) %>%
   st_transform(4326)
+landuse_lalehun <- 
+
+write_rds(landuse_lalehun, here("data", "satellite", "lalehun_landuse.rds"))
 
 landuse_lalehun_df <- as.data.frame(landuse_lalehun, xy = T) %>%
   drop_na(landuse) %>%
@@ -36,7 +42,9 @@ landuse_lalehun_df <- as.data.frame(landuse_lalehun, xy = T) %>%
             by = "landuse") %>%
   label_raster() %>%
   group_by(group) %>%
-  mutate(group_n = n()) # convert to a dataframe to allow plotting
+  mutate(group_n = n(),
+         label = recode(label,
+                        "Urban Areas" = "Urban areas")) # convert to a dataframe to allow plotting
 
 lalehun_landuse_plot <- landuse_lalehun_df %>%
   drop_na() %>%
@@ -75,6 +83,8 @@ seilama_bbox <- st_bbox(seilama)
 landuse_seilama <- st_crop(geo_sle_raster, seilama, crop = T) %>%
   st_transform(4326)
 
+write_rds(landuse_seilama, here("data", "satellite", "seilama_landuse.rds"))
+
 landuse_seilama_df <- as.data.frame(landuse_seilama, xy = T) %>%
   drop_na(landuse) %>%
   left_join(., labels_raster %>%
@@ -82,7 +92,9 @@ landuse_seilama_df <- as.data.frame(landuse_seilama, xy = T) %>%
             by = "landuse") %>%
   label_raster() %>%
   group_by(group) %>%
-  mutate(group_n = n()) # convert to a dataframe to allow plotting
+  mutate(group_n = n(),
+         label = recode(label,
+                        "Urban Areas" = "Urban areas")) # convert to a dataframe to allow plotting
 
 seilama_landuse_plot <- landuse_seilama_df %>%
   drop_na() %>%

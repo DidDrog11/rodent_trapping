@@ -30,7 +30,8 @@ pkgs =
     "knitr",
     "waffle",
     "cowplot",
-    "iNEXT"
+    "iNEXT",
+    "cubelyr"
   )
 pacman::p_load(pkgs, character.only = T)
 

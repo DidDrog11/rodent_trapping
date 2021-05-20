@@ -6,6 +6,8 @@ source(here("scripts", "0_label_raster.R"))
 # landuse <- raster(here("data", "satellite", "landuse.tif")) # this is the complete global 2.5Gb tiff
 
 # The following crops and masks the global raster to SL and Eastern SL respectively
+# SLE_0 <- read_rds(here("data", "spatial", "gadm36_SLE_0_sp.rds"))
+# e_prov <- read_rds(here("data", "spatial", "gadm36_SLE_1_sp.rds")) %>% st_as_sf() %>% filter(NAME_1 == "Eastern")
 # landuse_sl <- crop(landuse, SLE_0)
 # landuse_sl <- mask(landuse_sl, SLE_0)
 # write_rds(landuse_sl, here("data", "satellite", "sierra_leone_landuse.rds"))
@@ -120,7 +122,7 @@ all_sle_landuse <- ggplot(landuse_sle %>%
 
 all_sle_landuse
 
-#ggsave(all_sle_landuse, here("reports", "figures", "sle_proportional.png"))
+#ggsave(filename = "sle_proportional.png", plot = all_sle_landuse, path = here("reports", "figures"), dpi = 300)
 
 sl_raster <- landuse_sl %>%
   ungroup() %>%
@@ -167,14 +169,16 @@ eastern_raster
 
 tmap_save(eastern_raster, here("reports", "figures", "sle_raster.png"))
 
-tmap_leaflet(eastern_raster)
-
 # Land use around previous cases ------------------------------------------
 
 hist_lassa <- st_intersection(sierra_leone, e_prov) # only keep reported cases from eastern Sierra Leone
 
 hist_lassa <- st_transform(hist_lassa, 2162)
 eastern_prov <- st_transform(e_prov, 2162)
+
+geo_sle_raster %<>%
+  st_as_stars() %>%
+  st_transform(2162)
 
 lassa_circles <- st_buffer(hist_lassa, dist = 2000) # buffer around the points 5km
 landuse_lassa <- st_crop(geo_sle_raster, lassa_circles) # crop the landuse raster to the buffered points

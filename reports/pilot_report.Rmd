@@ -23,7 +23,7 @@ categories:
 
 ```{r setup, include=FALSE, quietly=TRUE}
 knitr::opts_chunk$set(echo = TRUE, warning = F, message = F)
-source(here::here("scripts", "report_library.R"))
+source(here::here("scripts", "0_report_library.R"))
 ```
 This report uses data from the rodent trapping pilot study performed in November-December 2020. All data is available at the GithHub `rodent_trapping` repository [here](https://github.com/DidDrog11/rodent_trapping) and data extracted from other publicly available resources.
 
