@@ -24,15 +24,19 @@ source(here::here("scripts", "0_report_library.R"))
 trap_sites <- read_csv(here("data", "trap_sites.csv"))
 ```
 
-The villages currently being sampled are Lalehun (coordinates  8.1975 N, -11.0803 E) and Seilama (coordinates 8.1222 N, -11.1936 E). Rodents are trapped at up to 6 distinct trap sites per village with up to 49 traps per site. Data is collected on this group of [data collection forms](https://drive.google.com/drive/folders/1yE_JAThq-DM9y5yvtSPMgM2ezMcZ_zyO?usp=sharing) or on the digitised versions using electronic pads in the field through the [ODK](https://opendatakit.lshtm.ac.uk/lshtm-odk-servers/) server based at LSHTM.
+The villages currently being sampled are Lalehun (coordinates  8.1975 N, -11.0803 E) and Seilama (coordinates 8.1222 N, -11.1936 E). Two new villages are being set up during this visit (Visit 3), they are Bambawo (coordinates 8.009 N; -11.1303 E) and Lambeyama (coordinates 7.8544 N; -11.1897 E). 
 
-Currently two visits to each village study site have occurred:
+Rodents are trapped at up to 6 distinct trap sites per village with up to 49 traps per site. Data is collected on this group of [data collection forms](https://drive.google.com/drive/folders/1yE_JAThq-DM9y5yvtSPMgM2ezMcZ_zyO?usp=sharing) or on the digitised versions using electronic pads in the field using [ODK](https://opendatakit.lshtm.ac.uk/lshtm-odk-servers/) all digital forms are encrypted locally on the device and sent to a server based at LSHTM.
+
+Currently two visits to each village study site have occurred with the third occuring in July:
   + Lalehun
     + Visit 1 - 2020-11-30 to 2020-12-03
     + Visit 2 - 2021-04-01 to 2021-04-04
+    + Visit 3 - July
   + Seilama
     + Visit 1 - 2020-12-05 to 2020-12-09
     + Visit 2 - 2021-04-12 to 2021-04-15
+    + Visit 3 - July
 There will ideally be study visits 4 times per year (roughly every 3 months)
 
 The land use around the selected villages guided the selection of the trapping sites. 

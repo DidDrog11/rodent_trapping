@@ -1,6 +1,7 @@
 source(here::here("scripts", "0_project_library.R"))
 
-trap_sites <- read_csv(here("data", "trap_sites.csv"))
+trap_sites <- read_csv(here("data", "trap_sites.csv")) %>%
+  st_as_sf(coords = c("lon", "lat"), crs = 4326)
 trapped_rodents <- read_csv(here("data", "rodents_trapped.csv"))
 location_rodents <- trapped_rodents %>%
   dplyr::select(rodent_id, trap_night, trap_id, initial_species_id) %>%
@@ -15,8 +16,7 @@ site_palette <- c("#e41a1c", "#377eb8", "#4daf4a",
 
 # lalehun -----------------------------------------------------------------
 
-lalehun_traps <- trap_sites %>%
-  st_as_sf(coords = c("lon", "lat"), crs = 4326) %>%
+lalehun_traps <- trap_sites  %>%
   filter(village == "lalehun") %>%
   mutate(rodent_trapped = recode(rodent_trapped,
                                  "y" = "Yes",
@@ -57,7 +57,6 @@ leaflet(distinct_lal_traps) %>%
 # seilama -----------------------------------------------------------------
 
 seilama_traps <- trap_sites %>%
-  st_as_sf(coords = c("lon", "lat"), crs = 4326) %>%
   filter(village == "seilama") %>%
   mutate(rodent_trapped = recode(rodent_trapped,
                                  "y" = "Yes",
@@ -85,12 +84,50 @@ leaflet(distinct_sei_traps) %>%
                    radius = 3,
                    stroke = F,
                    fillOpacity = 1,
-                   popup = paste(distinct_lal_traps$trap_number),
+                   popup = paste(distinct_sei_traps$trap_number),
                    popupOptions = popupOptions(closeOnClick = T))  %>%
   addLegend("topright", pal = pal, values = ~rodent_trapped,
             title = "Successful capture")
 
-# mapshot(file = here("reports", "figures", "seilama_traps.png"), remove_controls = c("zoomControl"))
+# bambawo -----------------------------------------------------------------
+
+bambawo_traps <- trap_sites %>%
+  filter(village == "bambawo") %>%
+  mutate(rodent_trapped = recode(rodent_trapped,
+                                 "y" = "Yes",
+                                 "n" = "No"))
+
+# location_rodents %>%
+#   filter(village == "bambawo") %>%
+#   ggplot() +
+#   geom_bar(aes(x = trap_night, fill = grid_number)) +
+#   facet_grid(~ visit) +
+#   scale_y_continuous(breaks = scales::pretty_breaks()) +
+#   scale_fill_manual(values = site_palette) +
+#   labs(title = "bambawo",
+#        x = "Trap night",
+#        y = "Number of captures",
+#        fill = "Grid") +
+#   theme_minimal()
+
+distinct_bambawo_traps <- bambawo_traps %>%
+  distinct(grid_number, trap_number, geometry, rodent_id, .keep_all = T)
+
+grid_pal <- colorFactor(palette = "Oranges", domain = distinct_bambawo_traps$grid_number)
+
+leaflet(distinct_bambawo_traps) %>%
+  addProviderTiles(providers$Esri.WorldImagery) %>%
+  addCircleMarkers(color = ~grid_pal(grid_number),
+                   radius = 3,
+                   stroke = F,
+                   fillOpacity = 1,
+                   popup = paste(distinct_bambawo_traps$trap_number),
+                   popupOptions = popupOptions(closeOnClick = T)) # %>%
+  # addLegend("topright", pal = pal, values = ~rodent_trapped,
+  #           title = "Successful capture")
+
+# mapshot(file = here("reports", "figures", "bambawo_traps.png"), remove_controls = c("zoomControl"))
 
 write_rds(lalehun_traps, here("data", "lalehun_traps.rds"))
 write_rds(seilama_traps, here("data", "seilama_traps.rds"))
+write_rds(bambawo_traps, here("data", "bambawo_traps.rds"))

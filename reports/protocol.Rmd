@@ -42,9 +42,7 @@ lalehun_traps <- read_rds(here("data", "lalehun_traps.rds")) %>%
   distinct(geometry, .keep_all = T) %>%
   mutate(grid_number = recode(grid_number,
                               "3a" = "3",
-                              "3b" = "3"),
-         lon_DdM = paste(lon_DdM, "W"),
-         lat_DdM = paste(lat_DdM, "N"))
+                              "3b" = "3"))
 
 osm_LAL <- read_osm(lalehun_traps, ext=1.6) 
 LAL_map <- tm_shape(osm_LAL) +
@@ -52,7 +50,7 @@ LAL_map <- tm_shape(osm_LAL) +
   tm_shape(lalehun_traps) +
   tm_dots(col = "grid_number",
           palette = viridisLite::plasma(6, begin = 0, end = 0.4),
-          popup.vars = c("lat_DdM", "lon_DdM"),
+          popup.vars = c("trap_number"),
           title = "Lalehun Grids") +
   tm_layout(legend.outside = F)
   
@@ -62,9 +60,7 @@ seilama_traps <- read_rds(here("data", "seilama_traps.rds")) %>%
   distinct(geometry, .keep_all = T) %>%
   mutate(grid_number = recode(grid_number,
                               "3a" = "3",
-                              "3b" = "3"),
-         lon_DdM = paste(lon_DdM, "W"),
-         lat_DdM = paste(lat_DdM, "N")) %>%
+                              "3b" = "3")) %>%
   arrange(grid_number)
 
 osm_SEIL <- read_osm(seilama_traps, ext=1.2)
@@ -74,7 +70,7 @@ SEIL_map <- tm_shape(osm_SEIL) +
   tm_dots(col = "grid_number",
           palette = viridisLite::plasma(6, begin = 0, end = 0.4),
           contrast = c(0, 0.65),
-          popup.vars = c("lat_DdM", "lon_DdM"),
+          popup.vars = c("trap_number"),
           title = "Seilama Grids") +
   tm_layout(legend.outside = F)
 
@@ -119,7 +115,8 @@ For each of the below grids there are coordinates for the corners of the grid. T
       + Line 2 end = 8 11.82 N and 11 4.802 W
       + Line 3 beginning = 8 11.872 N and 11 4.828 W
       + Line 3 end = 8 11.809 N and 11 4.818 W
-  
+  7. **Within houses**
+      + 4 traps per home
 
 We will add another "site" which will be traps within the houses. For the traps in the houses it is important to note what the room is used for, the type of material the house is made from and the type of roof.
 
@@ -128,6 +125,8 @@ For Lalehun we want to have traps in homes from across the village. Please try a
 ![Grid of Lalehun village](figures/lalehun_grid.png)
 
 ### Seilama
+
+Is positioned in a relatively forested area South West of Panguma. There is significant agricultural activity with fallow, clearance and burning practices used.
 
 We have set up **six** sites in Seilama.
 
@@ -164,11 +163,35 @@ We have set up **six** sites in Seilama.
     + Line 1 end = 8 7.357 N and 11 11.624 W
     + Line 2 beginning = 8 7.31 N and 11 11.6 W
     + Line 2 end = 8 7.362 N and 11 11.611 W
+  7. **Within home**
     
 Seilama is a much smaller village so just try and make sure that you have good coverage of the different areas of the village when setting the traps in houses.
 
+### Bambawo
+
+Bambawo was selected due to its proximity to the national park and relatively heavily forested areas of Eastern Province while being on the outskirts of Kenema. 
+
+Four sites have been established in the village. We were missing traps for the first visit so two further trap sites will be established on the the next visit. Traps across the village and within the houses will be placed starting at visit 2.
+
+  1. **Grid 1**: Far forest site. Previously used by mining company. Remains of accomodation houses for miners in the area. Forest currently used for animal trapping, nil significant disturbance.
+    + 
+  2. **Grid 2**: Rice farm on hillside recently cleared and burned. 
+  3. **Grid 3**: Old quarry site. Open mining now not significantly used. Low lying shrub surrounds
+  4. **Grid 4**: Mixed used agricultural land near the village. Currently grain and banana.
+
 ## Data collection process
 
+### Direct ODK entry **(Preferred)**
+
+There are three forms you can access through ODK connect on your mobile phone or the study team tablets. The forms once saved will automatically be sent to the ODK server once they can connect to the internet. There is a sim card in the tablet that can be loaded with credit. 
+
+  1. site_setup_v2: This sheet is completed for each site on the first day of trapping. It is important to ensure you correctly write the trap number and it's coordinates. If you make any errors you can edit the file or notify Dianah/David and they can amend it. You will describe each site, the habitat and surroundings of each trap and the coordinates for each trap. Photos can be taken if you are having difficulty completing the questions.
+  2. trap_check_v1: This sheet is used to collect information about the number of traps missing **bait**, **have been sprung shut** or contain **rodents** the next morning. It may be easier to note the traps on a piece of paper first and then to enter the data into ODK.
+  3. rodent_v1: This sheet is used to collect information about the trapped rodent. The most important parts of this are to ensure that the trap number and rodent number are correct. The trap number is important to know where the rodent came from. The rodent number should be made by putting the number of the visit, then the 3 letters of the village and then the number this rodent is for this visit. For example:
+    + The 12th rodent trapped in the 2nd visit in Seilama would be 2SEI-012
+    + The 3rd rodent trapped on the 1st visit in Bambawo would be 1BAM-003
+
+### Data entry sheets
 The **Trap site setup** sheet needs to be completed once for each trap site (the grid of 49 traps) once during the study visit for all of the sites that are setup (so 7 including the indoor traps). I expect 7 completed forms from each village. Please try and be as accurate as possible with the GPS coordinates.
 
 The **Trap check** sheet needs to be completed for each trap site for each study night. 

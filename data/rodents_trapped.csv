@@ -113,7 +113,7 @@ date,rodent_id,trap_id,site_id,trap_night,initial_species_id,group,weight,head_b
 2021-04-15T00:00:00Z,2-SEI-7031,86,7,3,mastomys_spp,rodent,40,114,115,25,18,32,male,outside,developed,NA,NA,NA,NA,y,NA,y,y,y,y,y,NA,2
 2021-04-15T00:00:00Z,2-SEI-7032,87,7,3,mastomys_spp,rodent,80,140,139,25,20,34,male,outside,developed,NA,NA,NA,NA,y,NA,y,y,y,y,y,NA,2
 2021-04-15T00:00:00Z,2-SEI-3033,126,3,3,mastomys_spp,rodent,33,99,102,24,15,27,female,NA,NA,not_open,visible,0,0,y,NA,y,y,y,y,y,NA,2
-2021-04-15T00:00:00Z,2-SEI-4034,139,4,3,lemnisomys_spp,rodent,45,117,120,25,15,29,female,NA,NA,open,visible,4,0,y,NA,y,y,y,y,y,NA,2
+2021-04-15T00:00:00Z,2-SEI-4034,139,4,3,lemniscomys_spp,rodent,45,117,120,25,15,29,female,NA,NA,open,visible,4,0,y,NA,y,y,y,y,y,NA,2
 2021-04-15T00:00:00Z,2-SEI-4035,140,4,3,mastomys_spp,rodent,27,98,100,24,15,25,female,NA,NA,open,visible,10,0,y,NA,y,y,y,y,y,NA,2
 2021-04-15T00:00:00Z,2-SEI-2036,153,2,3,crocidura_spp,shrew,12,94,60,14,6,19,female,NA,NA,not_open,not_noted,not_counted,0,y,NA,y,y,y,y,y,NA,2
 2021-04-15T00:00:00Z,2-SEI-2037,193,2,3,praomys_spp,rodent,48,125,142,22,20,32,female,NA,NA,open,visible,3,0,y,NA,y,y,y,y,y,NA,2

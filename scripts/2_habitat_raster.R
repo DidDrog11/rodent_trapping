@@ -191,6 +191,23 @@ landuse_lassa_df <- as.data.frame(landuse_lassa, xy = T) %>%
   group_by(group) %>%
   mutate(group_n = n()) # convert to a dataframe to allow plotting
 
+landuse_lassa <- landuse_lassa_df %>%
+  ungroup() %>%
+  dplyr::select(x, y, landuse) %>%
+  st_as_sf(coords = c("x", "y")) %>%
+  st_rasterize() %>%
+  st_set_crs(value = st_crs(lassa_circles))
+
+lassa_case_raster <- tm_shape(eastern_prov) +
+  tm_polygons(lwd = 0.2) +
+  tm_shape(landuse_lassa) +
+  tm_raster(col = "landuse",
+            breaks = c(0, as.numeric(ras_landuse_sle)[1:12], 1600),
+            labels = c("Missing", names(ras_landuse_sle)[1:12]),
+            palette = ras_palette_sle,
+            title = "Land use") +
+  tm_layout(legend.outside = T) # Map showing locations of cases and habitat type in 5km boundaery
+
 sle_landuse <- landuse_lassa_df %>%
   drop_na() %>%
   mutate(plot = "Lassa - 2km") %>%
@@ -215,5 +232,6 @@ ggplot(sle_landuse, aes(fill = label, values = waffle)) +
   theme_minimal() +
   labs(fill = "Land use",
        caption = "Each rectangle represents ~1% of land area") +
-  theme_enhance_waffle() +
-  ggsave(here("reports", "figures", "sl_lassa_landuse.png"))
+  theme_enhance_waffle()
+
+ggsave(plot = last_plot(), filename = here("reports", "figures", "sl_lassa_landuse.png"))
