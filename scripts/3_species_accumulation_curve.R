@@ -1,14 +1,12 @@
 source(here::here("scripts", "0_project_library.R"))
+source(here("scripts", "import_latest_data_function.R"))
 
-village_palette <- c("#7a0177", "#fec44f", "#ec7014")
-names(village_palette) <-  c("Lalehun", "Seilama", "Bambawo")
-
-trap_data <- read_csv(here("data","trap_sites.csv"))
-rodent_data <- read_csv(here("data", "rodents_trapped.csv")) %>%
+latest_rodent<- latest_data("clean_rodents_trapped")  %>%
   dplyr::select(rodent_id, initial_species_id)
+latest_trapsite <- latest_data("trap_sites")
 
-species_acc <- trap_data %>%
-  left_join(., rodent_data, by = "rodent_id")
+species_acc <- latest_trapsite %>%
+  left_join(., latest_rodent, by = "rodent_id")
 
 number_trapnights <- species_acc %>%
   group_by(visit, village) %>%
@@ -45,14 +43,20 @@ village_acc <- list(Lalehun_1 = c(number_trapnights %>%
                                     pull(n_trapnights), 
                                   species %>%
                                     filter(village == "seilama" & visit == 2) %>%
+                                    pull(n)),
+                    Bambawo_1 = c(number_trapnights %>%
+                                    filter(village == "bambawo" & visit == 1) %>%
+                                    pull(n_trapnights),
+                                  species %>%
+                                    filter(village == "bambawo" & visit == 1) %>%
                                     pull(n)) #,
-                    # Bambawo_1 = c(number_trapnights %>%
-                    #                 filter(village == "bambawo" & visit == 1) %>%
+                    # Lambayama_1 = c(number_trapnights %>%
+                    #                 filter(village == "lambayama" & visit == 1) %>%
                     #                 pull(n_trapnights), 
                     #               species %>%
-                    #                 filter(village == "bambawo" & visit == 1) %>%
+                    #                 filter(village == "lambayama" & visit == 1) %>%
                     #                 summarise(n = sum(n)) %>%
-                    #                 pull(n))
+                    #                 pull(n)))
 )
 
 x_axis <- seq(1, 1300, by = 10)
@@ -74,7 +78,7 @@ plot_acc %>%
                   fill = site, colour = NULL), alpha=0.2) +
   scale_fill_manual(values = village_palette) +
   scale_colour_manual(values = village_palette) +
-  labs(x = "Number of trapnights", y = "Species diversity", colour = "Site", fill = "Site") +
+  labs(x = "Number of trapnights", y = "Genus diversity", colour = "Site", fill = "Site") +
   facet_wrap(~ visit) +
   theme_minimal()
 

@@ -3,73 +3,92 @@ source(here("scripts", "0_label_raster.R"))
 
 # Landuse -----------------------------------------------------------------
 
-# landuse <- raster(here("data", "satellite", "landuse.tif")) # this is the complete global 2.5Gb tiff
+#The if statement below checks if the rasters have been converted to dataframes and correctly labelled.
+#If not it will read in the global raster and crop it to the study area before labelling
 
-# The following crops and masks the global raster to SL and Eastern SL respectively
-# SLE_0 <- read_rds(here("data", "spatial", "gadm36_SLE_0_sp.rds"))
-# e_prov <- read_rds(here("data", "spatial", "gadm36_SLE_1_sp.rds")) %>% st_as_sf() %>% filter(NAME_1 == "Eastern")
-# landuse_sl <- crop(landuse, SLE_0)
-# landuse_sl <- mask(landuse_sl, SLE_0)
-# write_rds(landuse_sl, here("data", "satellite", "sierra_leone_landuse.rds"))
-# landuse_sle <- crop(landuse, e_prov)
-# landuse_sle <- mask(landuse_sle, e_prov)
-# write_rds(landuse_sle, here("data", "satellite", "east_sierra_leone_landuse.rds"))
-
-landuse_sl <- read_rds(here("data", "satellite", "sierra_leone_landuse.rds"))
-landuse_sle <- read_rds(here("data", "satellite", "east_sierra_leone_landuse.rds"))
-
-raster_dataframe <- as.data.frame(landuse_sl, xy = T) 
-raster_dataframe_east <- as.data.frame(landuse_sle, xy = T) 
-
-# These are the associated category labels for the raster RGB values
-labels_raster <- xml2::read_xml(here("data", "satellite", "lvl2_style.qml")) %>%
-  rvest::html_nodes('paletteEntry') %>%
-  {data.frame(value = rvest::html_attr(.,'value'),
-              label = rvest::html_attr(.,'label'))} %>%
-  dplyr::mutate(value = readr::parse_number(as.character(value)))
-write_rds(labels_raster, here("data", "satellite", "labels_raster.rds"))
-
-# This binds those values to labels
-landuse_sl <- raster_dataframe %>%
-  left_join(., labels_raster %>%
-              rename("landuse" = "value"),
-            by = "landuse") %>%
-  label_raster() %>%
-  group_by(group) %>%
-  mutate(group_n = n(),
-         label = recode(label,
-                        "Wetlands - seasonal" = "Wetlands"),
-         group = recode(group,
-                        "Wetlands - seasonal" = "Wetlands"))
-
-landuse_sle <- raster_dataframe_east %>%
-  left_join(., labels_raster %>%
-              rename("landuse" = "value"),
-            by = "landuse") %>%
-  label_raster() %>%
-  group_by(group) %>%
-  mutate(group_n = n(),
-         label = recode(label,
-                        "Wetlands - seasonal" = "Wetlands"),
-         group = recode(group,
-                        "Wetlands - seasonal" = "Wetlands"))
-
-# This section supports the labelling and colours of the categories
-ras_landuse <- landuse_sl %>%
-  ungroup() %>%
-  distinct(label, landuse) %>%
-  arrange(landuse)
-
-ras_landuse_e <- landuse_sle %>%
-  ungroup() %>%
-  distinct(label, landuse) %>%
-  arrange(landuse)
-
-ras_landuse_sl <- setNames(as.numeric(ras_landuse$landuse), ras_landuse$label)
-names(ras_landuse_sl) <- case_when(names(ras_landuse_sl) == "Forest - lowland" ~ "Forest",
-                                   TRUE ~ names(ras_landuse_sl))
-ras_landuse_sle <- setNames(as.character(ras_landuse_e$landuse), ras_landuse_e$label)
-write_rds(ras_landuse_sle, here("data", "satellite", "raster_landuse.rds"))
+if(!file.exists(here("data", "satellite", "landuse_sl.rds"))) {
+  landuse <- raster(here("data", "satellite", "landuse.tif")) # this is the complete global 2.5Gb tiff
+  
+  #The following crops and masks the global raster to SL and Eastern SL respectively
+  
+  SLE_0 <- read_rds(here("data", "spatial", "gadm36_SLE_0_sp.rds"))
+  e_prov <- read_rds(here("data", "spatial", "gadm36_SLE_1_sp.rds")) %>% st_as_sf() %>% filter(NAME_1 == "Eastern")
+  landuse_sl <- crop(landuse, SLE_0)
+  landuse_sl <- mask(landuse_sl, SLE_0)
+  write_rds(landuse_sl, here("data", "satellite", "sierra_leone_landuse.rds"))
+  landuse_sle <- crop(landuse, e_prov)
+  landuse_sle <- mask(landuse_sle, e_prov)
+  write_rds(landuse_sle, here("data", "satellite", "east_sierra_leone_landuse.rds"))
+  
+  landuse_sl <- read_rds(here("data", "satellite", "sierra_leone_landuse.rds"))
+  landuse_sle <- read_rds(here("data", "satellite", "east_sierra_leone_landuse.rds"))
+  
+  raster_dataframe <- as.data.frame(landuse_sl, xy = T) 
+  raster_dataframe_east <- as.data.frame(landuse_sle, xy = T) 
+  
+  # These are the associated category labels for the raster RGB values
+  labels_raster <- xml2::read_xml(here("data", "satellite", "lvl2_style.qml")) %>%
+    rvest::html_nodes('paletteEntry') %>%
+    {data.frame(value = rvest::html_attr(.,'value'),
+                label = rvest::html_attr(.,'label'))} %>%
+    dplyr::mutate(value = readr::parse_number(as.character(value)))
+  write_rds(labels_raster, here("data", "satellite", "labels_raster.rds"))
+  
+  # This binds those values to labels
+  landuse_sl <- raster_dataframe %>%
+    left_join(., labels_raster %>%
+                rename("landuse" = "value"),
+              by = "landuse") %>%
+    label_raster() %>%
+    group_by(group) %>%
+    mutate(group_n = n(),
+           label = recode(label,
+                          "Wetlands - seasonal" = "Wetlands"),
+           group = recode(group,
+                          "Wetlands - seasonal" = "Wetlands"))
+  
+  landuse_sle <- raster_dataframe_east %>%
+    left_join(., labels_raster %>%
+                rename("landuse" = "value"),
+              by = "landuse") %>%
+    label_raster() %>%
+    group_by(group) %>%
+    mutate(group_n = n(),
+           label = recode(label,
+                          "Wetlands - seasonal" = "Wetlands"),
+           group = recode(group,
+                          "Wetlands - seasonal" = "Wetlands"))
+  
+  # This section supports the labelling and colours of the categories
+  ras_landuse <- landuse_sl %>%
+    ungroup() %>%
+    distinct(label, landuse) %>%
+    arrange(landuse)
+  
+  ras_landuse_e <- landuse_sle %>%
+    ungroup() %>%
+    distinct(label, landuse) %>%
+    arrange(landuse)
+  
+  ras_landuse_sl <- setNames(as.numeric(ras_landuse$landuse), ras_landuse$label)
+  names(ras_landuse_sl) <- case_when(names(ras_landuse_sl) == "Forest - lowland" ~ "Forest",
+                                     TRUE ~ names(ras_landuse_sl))
+  ras_landuse_sle <- setNames(as.character(ras_landuse_e$landuse), ras_landuse_e$label)
+  
+  write_rds(ras_landuse_sl, here("data", "satellite", "ras_landuse_sl.rds"))
+  write_rds(ras_landuse_sle, here("data", "satellite", "las_landuse_sle.rds"))
+  
+  write_rds(landuse_sl, here("data", "satellite", "landuse_sl.rds"))
+  write_rds(landuse_sle, here("data", "satellite", "landuse_sle.rds"))
+  
+} else {
+  
+  landuse_sle <- read_rds(here("data", "satellite", "landuse_sl.rds"))
+  landuse_sle <- read_rds(here("data", "satellite", "landuse_sle.rds"))
+  
+  ras_landuse_sle <- read_rds(here("data", "satellite", "landuse_sl.rds"))
+  ras_landuse_sl <- read_rds( here("data", "satellite", "landuse_sle.rds"))
+}
 
 ras_palette_sl <- c("Missing" = "#d9d9d9",
                     "Forest" = "#00441b",
@@ -120,7 +139,7 @@ all_sle_landuse <- ggplot(landuse_sle %>%
   labs(title = "Eastern Sierra Leone landuse",
        fill = element_blank())
 
-all_sle_landuse
+write_rds(all_sle_landuse, here("data", "plots", "sle_proportional.rds"))
 
 #ggsave(filename = "sle_proportional.png", plot = all_sle_landuse, path = here("reports", "figures"), dpi = 300)
 

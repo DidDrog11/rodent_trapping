@@ -28,5 +28,6 @@ plot_landuse_trap <- function(vil_name) {
     xlab(NULL) +
     ylab("Percentage land use (100m buffer around trap)") +
     labs(fill = "Land use",
-         title = snakecase::to_sentence_case(vil_name))
+         title = snakecase::to_sentence_case(vil_name)) +
+    theme(legend.position = "none")
 }
