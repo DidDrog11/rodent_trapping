@@ -194,4 +194,3 @@ write_rds(seilama_traps, here("data", "clean_data", "site_specific", "seilama_tr
 write_rds(bambawo_traps, here("data", "clean_data", "site_specific", "bambawo_traps.rds"))
 write_rds(lambayama_traps, here("data", "clean_data", "site_specific", "lambayama_traps.rds"))
 write_rds(baiama_traps, here("data", "clean_data", "site_specific", "baiama_traps.rds"))
-

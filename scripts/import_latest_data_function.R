@@ -1,10 +1,31 @@
-latest_data <- function(start_of_filename = c("rodents", "trap_sites")) {
-  filename <- tibble(files = list.files(path = here("data", "clean_data", start_of_filename)[1], full.names = T)) %>%
-    arrange(files) %>%
-    tail(., n=1) %>%
-    pull()
+latest_data <- function(start_of_filename = c("rodents", "trap_sites"), clean = FALSE) {
+  if(clean == FALSE) { 
+    filename <- tibble(files = list.files(path = here("data", "clean_data", start_of_filename)[1], full.names = F)) %>%
+      arrange(files) %>%
+      filter(!str_starts(files, "clean_")) %>%
+      tail(., n=1) %>%
+      pull() %>%
+      paste0(here("data", "clean_data", start_of_filename), "/", .)
   
+    message(cat(
+      paste0("Read in file: ", filename)
+    ))
+    
   return(read_csv(filename, col_types = cols()))
+  } else {
+    filename <- tibble(files = list.files(path = here("data", "clean_data", start_of_filename)[1], full.names = F)) %>%
+      arrange(files) %>%
+      filter(str_starts(files, "clean_")) %>%
+      tail(., n=1) %>%
+      pull() %>%
+      paste0(here("data", "clean_data", start_of_filename), "/", .)
+    
+    message(cat(
+      paste0("Read in file: ", filename)
+    ))
+    
+    return(read_csv(filename, col_types = cols()))
+  }
 }
 
 save_data <- function(data = "object_name", start_of_filename = c("rodents", "trap_sites")) {

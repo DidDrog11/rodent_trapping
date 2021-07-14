@@ -202,8 +202,8 @@ village_landuse_waffle <- rbind(landuse_lalehun_df %>%
                                   mutate(village = "Seilama"),
                                 landuse_bambawo_df %>%
                                   mutate(village = "Bambawo"),
-                                landuse_lambeyama_df %>%
-                                  mutate(village = "Lambeyama"),
+                                landuse_lambayama_df %>%
+                                  mutate(village = "Lambayama"),
                                 landuse_baiama_df %>%
                                   mutate(village = "Baiama")) %>%
   group_by(village, label) %>%
@@ -219,27 +219,24 @@ village_landuse_waffle <- rbind(landuse_lalehun_df %>%
 
 tmap_plots <- plot_grid(tmap_grob(bambawo_raster_plot), 
                         tmap_grob(lalehun_raster_plot),
-                        tmap_grob(lambeyama_raster_plot),
+                        tmap_grob(lambayama_raster_plot),
                         tmap_grob(seilama_raster_plot),
                         tmap_grob(baiama_raster_plot),
                         ncol = 2,
                         labels = c("Bambawo", "Lalehun",
-                                   "Lambeyama", "Seilama", 
+                                   "Lambayama", "Seilama", 
                                    "Baiama"))
 villages_plots <- plot_grid(tmap_plots, village_landuse_waffle, nrow = 1)
 save_plot(here("reports", "figures", "villages_plots.png"), villages_plots, ncol = 2, base_height = 8, base_width = 12)
 
 # Locations of traps ------------------------------------------------------
 
-trap_sites <- list.files(path = here("data"), pattern = "trap_sites", full.names = T) %>% 
-  sort() %>%
-  tail(n = 1) %>%
-  read_csv()
+trap_sites <- latest_data("trap_sites")
 
 trap_habitat <- trap_sites %>%
   st_as_sf(coords = c("lon", "lat"), crs = 4326) %>%
   dplyr::select(village, visit, grid_number, trap_number, trap_uid) %>%
-  distinct(visit, grid_number, trap_number, .keep_all = T) %>%
+  distinct(village, visit, grid_number, trap_number, .keep_all = T) %>%
   st_transform(2162) %>%
   st_buffer(dist = 100) # Create buffer areas around individual trap locations
 
@@ -247,13 +244,13 @@ bambawo_trap <- plot_landuse_trap("bambawo")
 lalehun_trap <- plot_landuse_trap("lalehun")
 lambayama_trap <- plot_landuse_trap("lambayama")
 seilama_trap <- plot_landuse_trap("seilama")
-#baiama_trap <- plot_landuse_trap("baiaa")
+baiama_trap <- plot_landuse_trap("baiama")
 
 trap_habitats <- plot_grid(bambawo_trap,
                           lalehun_trap,
                           lambayama_trap,
                           seilama_trap,
-                          #baiama_trap,
+                          baiama_trap,
                           sle_plot,
                           nrow = 2)
 save_plot(here("reports", "figures", "trap_plots.png"), trap_habitats, base_width = 12, base_height = 8)

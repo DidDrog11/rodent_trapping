@@ -1,7 +1,6 @@
 source(here::here("scripts", "0_project_library.R"))
-source(here("scripts", "import_latest_data_function.R"))
 
-latest_rodent<- latest_data("clean_rodents_trapped")
+latest_rodent<- latest_data("rodents", clean = T)
 latest_trapsite <- latest_data("trap_sites")
 
 current_status <- latest_trapsite %>%
@@ -29,7 +28,15 @@ current_status <- latest_trapsite %>%
                                 "open_land fallow_land" = "forest/fallow",
                                 "open_land" = "forest/fallow",
                                 "village_inside" = "village",
-                                "open_land village_inside" = "village"),
+                                "open_land village_inside" = "village",
+                                "village_outside" = "village",
+                                "open_land agricultural" = "proximal_agriculture",
+                                "agricultural forested" = "distal_agriculture",
+                                "agricultural open_land" = "proximal_agriculture",
+                                "forested fallow_land" = "forest/fallow",
+                                "forested fallow_land open_land" = "forest/fallow",
+                                "fallow_land forested" = "forest/fallow",
+                                "forested open_land" = "forest/fallow"),
          habitat_group = recode_factor(habitat_group, !!!habitat_names),
          village = str_to_sentence(village)) %>%
   group_by(habitat_group)
@@ -41,11 +48,12 @@ trap_nights <- current_status %>%
 
 ggplot(current_status %>%
          left_join(., trap_nights,
-                   by = "village")) +
+                   by = "village") %>%
+         drop_na(habitat_group)) +
   geom_bar(aes(x = label, fill = habitat_group), position = "fill") +
   scale_y_continuous(labels = scales::percent) +
   theme_minimal() +
-  scale_fill_manual(values = c("#7a0177","#fee391", "#fec44f",  "#00441b")) +
+  scale_fill_manual(values = trap_palette) +
   labs(title = "Proportion of trap-nights obtained from each habitat",
        fill = "Habitat",
        x = "Village",
@@ -54,18 +62,18 @@ ggplot(current_status %>%
 
 trap_success <- current_status %>%
   filter(rodent_trapped != "na") %>%
-  drop_na(rodent_trapped) %>%
+  drop_na(rodent_trapped, habitat_group) %>%
   mutate(village = snakecase::to_sentence_case(village)) %>%
-  group_by(trap_night, village, habitat, rodent_trapped) %>%
+  group_by(trap_night, village, habitat_group, rodent_trapped) %>%
   summarise(n = n()) %>%
   mutate(proportion = n/sum(n)) %>%
   ggplot() +
   geom_col(aes(x = trap_night, y = proportion, fill = village, alpha = rodent_trapped), position = "dodge") +
-  facet_wrap(habitat ~ ., scales = "free") +
+  facet_wrap(habitat_group ~ ., scales = "free") +
   theme_minimal() +
   scale_fill_manual(values = village_palette) +
-  scale_alpha_discrete(labels = c("Trap empty", "Rodent trapped"),
-                       range = c(0.2,1)) +
+  scale_alpha_discrete(labels = c("Trap empty", "Rodent trapped", "NA"),
+                       range = c(0.05,1, 0.05)) +
   labs(fill = "Village",
        alpha = "Trap status",
        x = "Trap night",
@@ -74,7 +82,10 @@ trap_success <- current_status %>%
 ggsave2(here("reports", "figures", "trap_success_rate.png"), trap_success)  
 
 latest_rodent %>%
-  mutate(initial_species_id = snakecase::to_sentence_case(as.character(initial_species_id))) %>%
+  mutate(initial_species_id = snakecase::to_sentence_case(as.character(initial_species_id)),
+         initial_species_id = case_when(initial_species_id == "Proamys spp" ~ "Praomys spp",
+                                        initial_species_id == "Shrew spp" ~ "Crocidura spp",
+                                        TRUE ~ initial_species_id)) %>%
   ggplot() +
   geom_bar(aes(x = fct_rev(fct_infreq(initial_species_id)), fill = str_to_sentence(village))) +
   theme_minimal() +
@@ -87,8 +98,13 @@ latest_rodent %>%
 ggsave2(here("reports", "figures", "species_caught.png"), last_plot())
 
 latest_rodent %>%
-  filter(family == "muridae") %>%
-  mutate(genus = as_factor(snakecase::to_sentence_case(as.character(genus)))) %>%
+  mutate(genus = snakecase::to_sentence_case(as.character(genus)),
+         genus = fct_infreq(as_factor(case_when(genus == "Proamys spp" ~ "Praomys",
+                                                genus == "Dasymys spp" ~ "Dasymys",
+                                                genus == "Lophuromys sikapusi" ~ "Lophuromys",
+                                                genus == "Mastomys natalensis" ~ "Mastomys",
+                                                genus == "Shrew spp" ~ "Crocidura",
+                                                TRUE ~ genus)))) %>%
   group_by(genus, habitat_group, village) %>%
   summarise(n = n()) %>%
   group_by(genus) %>%

@@ -1,7 +1,7 @@
 source(here::here("scripts", "0_project_library.R"))
 
-trapped_rodents <-latest_data("rodents")
-latest_trapsite <- latest_data("trap_sites")
+trapped_rodents <-latest_data("rodents", clean = F)
+latest_trapsite <- latest_data("trap_sites", clean = F)
 
 habitat_names <- c("Forest/fallow land", "Distal agriculture", "Proximal agriculture", "Village")
 names(habitat_names) = c("forest/fallow", "distal_agriculture", "proximal_agriculture", "village")

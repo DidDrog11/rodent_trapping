@@ -4,7 +4,14 @@ source(here("scripts", "0_ODK_API.R"))
 drive_download("https://drive.google.com/file/d/1kxpH6RvWgAMwhpqZ4yoH_6SYso06uuDa/view?usp=sharing",
                path = here("data", "trap_sites_all.xlsx"), overwrite = T) # Download data that was captured initially on paper forms
 
-odk_trap <- clean_odk_sites()
+trap_site_odk <- clean_odk_sites()
+odk_trap <- trap_site_odk$odk_data
+coord_errors <- trap_site_odk$coord_error
+
+# Map of likely errors and likely correctly placed traps fix before continuing with analysis
+mapview::mapview(coord_errors, zcol = "coord")
+
+
 odk_trap_checks <- clean_odk_trap_check()
 odk_rodent <- clean_odk_rodent()
 

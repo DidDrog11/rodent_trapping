@@ -26,7 +26,6 @@ Before going to the field it's important the following are checked
   5. Working portable freezer that can be stored at Panguma Hospital Lab
   6. Paper copies of the data entry form in case the pads stop working
 
-![For example this was the grid we set up for trap site 5 at Lalehun](figures/grid.png)
 
 ## Finding the trap sites
 
@@ -122,8 +121,6 @@ We will add another "site" which will be traps within the houses. For the traps 
 
 For Lalehun we want to have traps in homes from across the village. Please try and make sure that traps are placed in homes from as many as the squares of **Figure 2** as possible. You will also need to record how many houses you asked to place traps in and how many said no. There is a separate **Indoor** sheet to record this on.
 
-![Grid of Lalehun village](figures/lalehun_grid.png)
-
 ### Seilama
 
 Is positioned in a relatively forested area South West of Panguma. There is significant agricultural activity with fallow, clearance and burning practices used.
@@ -178,6 +175,10 @@ Four sites have been established in the village. We were missing traps for the f
   2. **Grid 2**: Rice farm on hillside recently cleared and burned. 
   3. **Grid 3**: Old quarry site. Open mining now not significantly used. Low lying shrub surrounds
   4. **Grid 4**: Mixed used agricultural land near the village. Currently grain and banana.
+
+### Lambayama
+
+### Baiama
 
 ## Data collection process
 

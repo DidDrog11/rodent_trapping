@@ -4,10 +4,10 @@ pkgs =
     "tidyverse",
     "magrittr",
     "bib2df",
-    "knitr"
+    "knitr",
+    "sf"
   )
 pacman::p_load(pkgs, character.only = T)
-
 
 lalehun_coords <- c(-11.0803, 8.197533)
 seilama_coords <- c(-11.193628469657279, 8.122285428353395)
@@ -29,6 +29,12 @@ villages <- tibble(village = c("lalehun", "seilama", "lambayama", "bambawo", "ba
   st_as_sf(coords = c("x", "y")) %>%
   st_set_crs(4326)
 
+village_bbox <- list("lalehun" = read_rds(here("data", "spatial", "lal_bbox.rds")),
+                     "seilama" = read_rds(here("data", "spatial", "sei_bbox.rds")),
+                     "lambayama" = read_rds(here("data", "spatial", "lam_bbox.rds")),
+                     "bambawo" = read_rds(here("data", "spatial", "bam_bbox.rds")),
+                     "baiama" = read_rds(here("data", "spatial", "bai_bbox.rds")))
+
 village_palette <- c("#7a0177", "#fec44f", "#ec7014", "#005120", "#253494")
 names(village_palette) <-  c("Lalehun", "Seilama", "Bambawo", "Lambayama", "Baiama")
 trap_palette <- c("#7a0177","#fee391", "#fec44f",  "#00441b")
@@ -39,3 +45,5 @@ factor_vars <- c("village", "visit", "trap_night", "grid_number", "line_number",
                  "rodent_id", "weather", "initial_species_id", "group", "sex", "testes", "seminal_vesicles",
                  "vagina_perforate", "teats_visible", "photos_taken", "visit", "all_samples", "cut_tail", "genus",
                  "habitat_group")
+
+sapply(list.files(path = here("scripts"), pattern = "function", full.names = T), source)

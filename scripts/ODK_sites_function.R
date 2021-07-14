@@ -65,6 +65,7 @@ clean_odk_sites <- function(type = "trap") {
            swapped_lon = lon_dec,
            lat_dec = case_when(lat_dec >= 811000 & lat_dec <= 990000 ~ lat_dec/100000, # Correcting multiple miscoded
                                village == "lalehun" & visit == 3 & grid_number %in% c(2, 4, 5) ~ (lat_dec - 8) * 100,
+                               village == "seilama" & visit == 3 & grid_number == 4 ~ (lat_dec-8) * 100,
                                str_starts(lat_dec, "15") ~ swapped_lon,
                                TRUE ~ lat_dec),
            lat_dec = case_when(lat_dec == 5458.0000 ~ 0.5458, # fixing individual misrecorded coord
@@ -73,10 +74,13 @@ clean_odk_sites <- function(type = "trap") {
                                village == "lalehun" & visit == 3 & trap_number == 159 ~ 11.925,
                                village == "lalehun" & visit == 3 & trap_number == 188 ~ 11.915,
                                village == "lalehun" & visit == 3 & trap_number == 239 ~ 11.633,
-                               village == "lalehun" & visit == 3 & trap_number == 218 ~ 8.193133,
+                               village == "seilama" & visit == 3 & trap_number == 208 ~ 7.424,
+                               village == "seilama" & visit == 3 & trap_number == 203 ~ 7.412,
+                               village == "lalehun" & visit == 3 & trap_number == 218 ~ 11.628,
                                TRUE ~ lat_dec),
            lon_dec = case_when(lon_dec >= -1000000 & lon_dec <= -180 ~ lon_dec/100000,
                                village == "lalehun" & visit == 3 & grid_number %in% c(2, 4, 5) ~ (lon_dec - 11) * 100,
+                               village == "seilama" & visit == 3 & grid_number == 4 ~ (lon_dec-11) * 100,
                                str_starts(lon_dec, "49") ~ swapped_lat,
                                TRUE ~ lon_dec),
            lon_dec = case_when(lon_dec == 8.85905 ~ 8.5905, # fixing individual misrecorded coord
@@ -84,6 +88,7 @@ clean_odk_sites <- function(type = "trap") {
                                village == "lalehun" & grid_number == "5" & visit == 3 & trap_number == 204 ~ 4.810,
                                village == "baiama" & grid_number == "4" & visit == 1 & trap_number == 195 ~ 15.9879,
                                village == "lambayama" & grid_number == "2" & visit == 1 & trap_number == 50 ~ 11.6820,
+                               village == "seilama" & grid_number == "4" & visit == 3 & trap_number == 228 ~ 11.866,
                                TRUE ~ lon_dec),
            lon_degree = 11,
            lat_degree = case_when(village == "lambayama" ~ 7,
@@ -131,5 +136,50 @@ clean_odk_sites <- function(type = "trap") {
            date_set = date_set + (as.numeric(trap_night)-1),
            trap_uid = paste0(village, "_", visit, "_", trap_night, "_", grid_number, "_", trap_number))
   
-  return(full_trap_locations)
+  coord_check <- full_trap_locations %>%
+    distinct(village, visit, trap_number, .keep_all = T) %>%
+    st_as_sf(coords = c("lon", "lat")) %>%
+    st_set_crs(., value = 4326)
+  
+  coord_error <- bind_rows(coord_check %>%
+                             filter(village == "lalehun") %>%
+                             .[st_as_sf(village_bbox[["lalehun"]]), , op = st_disjoint],
+                           coord_check %>%
+                             filter(village == "seilama") %>%
+                             .[st_as_sf(village_bbox[["seilama"]]), , op = st_disjoint],
+                           coord_check %>%
+                             filter(village == "bambawo") %>%
+                             .[st_as_sf(village_bbox[["bambawo"]]), , op = st_disjoint],
+                           coord_check %>%
+                             filter(village == "baiama") %>%
+                             .[st_as_sf(village_bbox[["baiama"]]), , op = st_disjoint],
+                           coord_check %>%
+                             filter(village == "lambayama") %>%
+                             .[st_as_sf(village_bbox[["lambayama"]]), , op = st_disjoint])
+  
+  message(
+    cat(
+    paste(
+      paste0("Using the study site bounding coordinates from the first visit there are potentially ", nrow(coord_error), " misspecified trap locations:"),
+      paste0("These locations are contained in the coord_error dataframe"),
+      paste0("The unique ID of the trap for the first trap night are ", knitr::combine_words(coord_error$trap_uid)),
+      sep = "\n"))
+  )
+  
+  coord_error <- full_trap_locations %>%
+    distinct(village, visit, grid_number, trap_number, .keep_all = T) %>%
+    mutate(coord ="Likely correct") %>%
+    filter(!trap_uid %in% coord_error$trap_uid)  %>%
+    st_as_sf(coords = c("lon", "lat")) %>%
+    st_set_crs(., value = 4326) %>%
+    bind_rows(coord_error %>%
+                mutate(coord = "Likely incorrect")) %>%
+    mutate(lon = st_coordinates(.)[,1],
+           lat = st_coordinates(.)[,2])
+  
+  return_list <- list("odk_data" = full_trap_locations,
+                      "coord_error" = coord_error)
+                           
+  
+  return(return_list)
 }

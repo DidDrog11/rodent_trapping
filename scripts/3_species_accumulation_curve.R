@@ -1,7 +1,7 @@
 source(here::here("scripts", "0_project_library.R"))
 source(here("scripts", "import_latest_data_function.R"))
 
-latest_rodent<- latest_data("clean_rodents_trapped")  %>%
+latest_rodent<- latest_data("rodents", clean = T)  %>%
   dplyr::select(rodent_id, initial_species_id)
 latest_trapsite <- latest_data("trap_sites")
 
@@ -49,14 +49,21 @@ village_acc <- list(Lalehun_1 = c(number_trapnights %>%
                                     pull(n_trapnights),
                                   species %>%
                                     filter(village == "bambawo" & visit == 1) %>%
-                                    pull(n)) #,
+                                    pull(n))#,
                     # Lambayama_1 = c(number_trapnights %>%
-                    #                 filter(village == "lambayama" & visit == 1) %>%
-                    #                 pull(n_trapnights), 
-                    #               species %>%
-                    #                 filter(village == "lambayama" & visit == 1) %>%
-                    #                 summarise(n = sum(n)) %>%
-                    #                 pull(n)))
+                    #                   filter(village == "lambayama" & visit == 1) %>%
+                    #                   pull(n_trapnights),
+                    #                 species %>%
+                    #                   filter(village == "lambayama" & visit == 1) %>%
+                    #                   summarise(n = sum(n)) %>%
+                    #                   pull(n)),
+                    # Baiama_1 = c(number_trapnights %>%
+                    #                   filter(village == "baiama" & visit == 1) %>%
+                    #                   pull(n_trapnights),
+                    #                 species %>%
+                    #                   filter(village == "baiama" & visit == 1) %>%
+                    #                   summarise(n = sum(n)) %>%
+                    #                   pull(n))
 )
 
 x_axis <- seq(1, 1300, by = 10)

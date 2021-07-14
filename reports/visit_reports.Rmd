@@ -8,7 +8,7 @@ author:
     affiliation: The Royal Veterinary College, London, UK
     affiliation_url: https://www.rvc.ac.uk
     orcid_id: 0000-0001-9655-1656
-date: 04-11-2021
+date: "`r Sys.Date()`"
 output:
   distill::distill_article:
     self_contained: false
@@ -21,34 +21,74 @@ categories:
 ```{r setup, include=FALSE, quietly=TRUE}
 knitr::opts_chunk$set(echo = F, warning = F, message = F)
 source(here::here("scripts", "0_report_library.R"))
-trap_sites <- read_csv(here("data", "trap_sites.csv"))
+trap_sites <- latest_data("trap_sites")
+rodent_data <- latest_data("rodents", clean = T)
 ```
 
-The villages currently being sampled are Lalehun (coordinates  8.1975 N, -11.0803 E) and Seilama (coordinates 8.1222 N, -11.1936 E). Two new villages are being set up during this visit (Visit 3), they are Bambawo (coordinates 8.009 N; -11.1303 E) and Lambeyama (coordinates 7.8544 N; -11.1897 E). 
+Five villages have been enrolled, one will not be carried forward due to concerns from the local team. The village are:
+
+  + Bambawo (coordinates 8.009 N, -11.1303 E)
+    + Visit 1 - 2021-06-23 to 2021-06-27
+  + Lalehun (coordinates  8.1975 N, -11.0803 E) 
+    + Visit 1 - 2020-11-30 to 2020-12-03
+    + Visit 2 - 2021-04-01 to 2021-04-04
+    + Visit 3 - 2021-07-08 to 2021-07-12
+  + Lambayama (coordinates 7.8544 N, -11.1897 E)
+    + Visit 1 - 2021-06-28 to 2021-07-02
+  + Seilama (coordinates 8.1222 N, -11.1936 E)
+    + Visit 1 - 2020-12-05 to 2020-12-09
+    + Visit 2 - 2021-04-12 to 2021-04-15
+    + Visit 3 - 2021-07-13 to 2021-07-17
+  + Baiama (coordinates 7.83708 N, -11.26845 E)
+    + Visit 1 - 2021-07-03 to 2021-07-07
 
 Rodents are trapped at up to 6 distinct trap sites per village with up to 49 traps per site. Data is collected on this group of [data collection forms](https://drive.google.com/drive/folders/1yE_JAThq-DM9y5yvtSPMgM2ezMcZ_zyO?usp=sharing) or on the digitised versions using electronic pads in the field using [ODK](https://opendatakit.lshtm.ac.uk/lshtm-odk-servers/) all digital forms are encrypted locally on the device and sent to a server based at LSHTM.
 
-Currently two visits to each village study site have occurred with the third occuring in July:
-  + Lalehun
-    + Visit 1 - 2020-11-30 to 2020-12-03
-    + Visit 2 - 2021-04-01 to 2021-04-04
-    + Visit 3 - July
-  + Seilama
-    + Visit 1 - 2020-12-05 to 2020-12-09
-    + Visit 2 - 2021-04-12 to 2021-04-15
-    + Visit 3 - July
-There will ideally be study visits 4 times per year (roughly every 3 months)
+We have currently obtained 7,270 trap nights across 3 visits (including the pilot).
 
-The land use around the selected villages guided the selection of the trapping sites. 
+There will ideally be study visits 4 times per year (roughly every 3 months), dates will be confirmed with the study team.
 
-```{r village-landuse}
+The land use predominantly obtained from Jung et al. and ground truthed through discussion with local communities guided the selection of the trapping sites at study villages. 
+
+```{r village-landuse, layout = "l-page"}
 include_graphics("figures/villages_plots.png")
 ```
 
 The trap locations are shown overlayed on these habitat maps below. 
 
-```{r}
+```{r, layout = "l-page"}
 include_graphics("figures/sites_in_habitats_c.png")
 ```
 
-The number of nights trapped in each 
+The proportion of nights trapping in each habitat gave good coverage of land use types in Eastern Sierra Leone.
+
+```{r, layout = "l-page"}
+include_graphics("figures/trap_plots.png")
+```
+
+The trap success rate is around 4% this is fairly acceptable based on the review I did. We have trapped 137 rodents from at least 13 species. The majority of trapped individuals have been shrews (crocidura), mastomys sp., praomys sp., mus minutoides and lophyomys sp. Data from the most recent trapping activities from this visit during the rainy season have so far shown a dramatic drop in trap success.
+
+```{r, layout = "l-page"}
+include_graphics("figures/species_caught.png")
+```
+
+Species accumulation curves have been produced for the first two visits from Lalehun and Seilama. It has not been possible to produce equivalent plots for Baiama and Lambayama due to the low number of individuals/species trapped in those locations. 
+
+```{r, layout = "l-page"}
+include_graphics("figures/species_accumulation.png")
+```
+
+As we catch an increasing number of individuals we are seeing them clustering within expected habitats.
+
+```{r, layout = "l-page"}
+include_graphics("figures/species_locations.png")
+```
+
+### Next steps
+
+  + Will be obtaining further traps
+  + Obtain lens weights (Visit 3)
+  + Begin sample processing for rodent speciation, delayed until next visit
+  + Ensure equipment needs for sequencing documented [started here](https://docs.google.com/document/d/12AqkKgvIWBj86V_P2sByx5eSmKwhzQ8b/edit)
+  + Budget for lab costs [started here](https://docs.google.com/spreadsheets/d/1zqm_UTWt5ovTRDNyiqvbj90seLRCEXVf/edit#gid=989773294) but around £15,000
+  + Begin process of costing samples for lassa assay.
