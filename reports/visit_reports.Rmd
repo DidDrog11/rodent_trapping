@@ -10,10 +10,10 @@ author:
     orcid_id: 0000-0001-9655-1656
 date: "`r Sys.Date()`"
 output:
-  # distill::distill_article:
-  #   self_contained: false
-  #   toc: true
-  html_document
+  distill::distill_article:
+    self_contained: false
+    toc: true
+  # html_document
 bibliography: citations.bib
 categories:
   - Lassa
