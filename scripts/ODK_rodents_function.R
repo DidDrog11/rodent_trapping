@@ -23,7 +23,7 @@ clean_odk_rodent <- function(type = "rodent") {
   names(correct_species_error) <- c("unclear_dasymysrus", "unclear_lemniscrus", 
                             "unclear_lophurorus", "unclear_proamysrus")
   
-  rodents <- read_csv(all_files[1]) %>%
+  rodents <- read_csv(all_files[1], show_col_types = FALSE) %>%
     filter(ReviewState != "rejected" | is.na(ReviewState)) %>%
     mutate(date_entered = as.Date(ymd_hms(form_entry)),
            village_abbreviation = toupper(str_sub(village_name, end = 3)),
@@ -73,6 +73,20 @@ clean_odk_rodent <- function(type = "rodent") {
          study_site = case_when(rodent_number == 10 & village == "bambawo" & visit == 1 ~ 3,
                                 rodent_number == 3 & village == "bambawo" & visit == 1 ~ 3,
                                 rodent_number == 11 & village == "bambawo" & visit == 1 ~ 1,
+                                rodent_number == 21 & village == "seilama" & visit == 3 ~ 4,
+                                rodent_number == 20 & village == "seilama" & visit == 3 ~ 3,
+                                rodent_number == 17 & village == "seilama" & visit == 3 ~ 3,
+                                rodent_number == 14 & village == "seilama" & visit == 3 ~ 5,
+                                rodent_number == 13 & village == "seilama" & visit == 3 ~ 3,
+                                rodent_number == 12 & village == "seilama" & visit == 3 ~ 3,
+                                rodent_number == 11 & village == "seilama" & visit == 3 ~ 4,
+                                rodent_number == 24 & village == "seilama" & visit == 3 ~ 4,
+                                rodent_number == 12 & village == "lalehun" & visit == 3 ~ 2,
+                                rodent_number == 6 & village == "lalehun" & visit == 3 ~ 1,
+                                rodent_number == 4 & village == "lalehun" & visit == 3 ~ 2,
+                                rodent_number == 7 & village == "lalehun" & visit == 3 ~ 3,
+                                rodent_number == 3 & village == "lalehun" & visit == 3 ~ 3,
+                                rodent_number == 5 & village == "lambayama" & visit == 1 ~ 4,
                                 TRUE ~ study_site),
          study_site = as_factor(study_site),
          trap_uid = paste0(village, "_", visit, "_", trap_night, "_", study_site, "_", trap_number),

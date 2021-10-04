@@ -1,1 +1,11 @@
-number_of_adults,job,job_other,number_of_children,roof,walls,floor,containers,sleeping,number_of_traps_in_house,longitude,latitude,elevation,trap_image,PARENT_KEY,KEY
+number_of_adults,job,job_other,number_of_children,roof,walls,floor,containers,sleeping,number_of_traps_in_house,traps_houses_count,longitude,latitude,elevation,trap_image,PARENT_KEY,KEY
+2,farmer,,0,metal_roof,mud_walls,concrete_floor,no,yes,4,,11.614,7.3644,270.0,,uuid:4a70051b-ea72-4c83-a6bf-6c531e7c389d,uuid:4a70051b-ea72-4c83-a6bf-6c531e7c389d/within_houses/house[1]
+1,farmer,,5,metal_roof,mud_walls,mud_walls,no,yes,4,,11.617,7.3671,270.0,,uuid:4a70051b-ea72-4c83-a6bf-6c531e7c389d,uuid:4a70051b-ea72-4c83-a6bf-6c531e7c389d/within_houses/house[2]
+4,farmer,,8,metal_roof,mud_walls,mud_walls,no,no,4,,11.6255,7.3715,267.0,,uuid:4a70051b-ea72-4c83-a6bf-6c531e7c389d,uuid:4a70051b-ea72-4c83-a6bf-6c531e7c389d/within_houses/house[3]
+5,farmer,,4,metal_roof,concrete_walls,concrete_floor,no,yes,4,,11.6244,7.3525,265.0,,uuid:4a70051b-ea72-4c83-a6bf-6c531e7c389d,uuid:4a70051b-ea72-4c83-a6bf-6c531e7c389d/within_houses/house[4]
+4,farmer,,6,metal_roof,mud_walls,mud_walls,no,yes,4,,11.6293,7.3381,265.0,,uuid:4a70051b-ea72-4c83-a6bf-6c531e7c389d,uuid:4a70051b-ea72-4c83-a6bf-6c531e7c389d/within_houses/house[5]
+14,farmer miner carpenter builder,,7,metal_roof,concrete_walls,concrete_floor,yes,yes,4,,4.7881,11.8015,182.0,1626077331679.jpg,uuid:c2826228-a27f-48fa-81db-88b69a295773,uuid:c2826228-a27f-48fa-81db-88b69a295773/within_houses/house[1]
+3,farmer,,3,metal_roof,concrete_walls,concrete_floor,yes,yes,4,,4.7872,11.8123,232.0,1626077465983.jpg,uuid:c2826228-a27f-48fa-81db-88b69a295773,uuid:c2826228-a27f-48fa-81db-88b69a295773/within_houses/house[2]
+3,other,Health,1,metal_roof,mud_walls,mud_walls,no,yes,4,,4.7915,118702.0,232.0,1626077792039.jpg,uuid:c2826228-a27f-48fa-81db-88b69a295773,uuid:c2826228-a27f-48fa-81db-88b69a295773/within_houses/house[3]
+3,farmer,,2,metal_roof,mud_walls,mud_walls,yes,yes,4,,4.8161,11.8714,238.0,1626078030566.jpg,uuid:c2826228-a27f-48fa-81db-88b69a295773,uuid:c2826228-a27f-48fa-81db-88b69a295773/within_houses/house[4]
+6,farmer,,1,metal_roof,mud_walls,concrete_floor,no,yes,4,,4.8402,11.8859,233.0,1626078402390.jpg,uuid:c2826228-a27f-48fa-81db-88b69a295773,uuid:c2826228-a27f-48fa-81db-88b69a295773/within_houses/house[5]

@@ -17,6 +17,24 @@ data <- read_csv(here("data", "lassa", "lassa_seroprevalence.csv")) %>%
                                      TRUE ~ Rodent_or_human),
          Rodent_or_human = factor(Rodent_or_human))
 
+region_cases <- data %>%
+  drop_na(c("Longitude", "Latitude", "Number_acutecases")) %>%
+  mutate(Number_acutecases = as.numeric(Number_acutecases)) %>%
+  st_as_sf(coords = c("Longitude", "Latitude"), crs = 4326) %>%
+  mutate(Year_start = as.numeric(Year_start))
+
+tm_shape(region_cases) +
+  tm_bubbles(size = 0.2,
+             title.size = "Lassa infections",
+             legend.size.is.portrait = T,
+             style = "quantile",
+             col = "Year_end",
+             title.col = "Year",
+             jitter = 0.2,
+             alpha = 0.7) +
+  tm_legend(legend.format = list(fun=function(x) formatC(x, digits=0, format="d")),
+            legend.outside = F)
+
 sierra_leone <- data %>%
   filter(Country == "Sierra Leone") %>%
   drop_na(c("Longitude", "Latitude", "Number_acutecases")) %>%

@@ -225,7 +225,9 @@ tmap_plots <- plot_grid(tmap_grob(bambawo_raster_plot),
                         ncol = 2,
                         labels = c("Bambawo", "Lalehun",
                                    "Lambayama", "Seilama", 
-                                   "Baiama"))
+                                   "Baiama"),
+                        label_size = 10,
+                        align = "v")
 villages_plots <- plot_grid(tmap_plots, village_landuse_waffle, nrow = 1)
 save_plot(here("reports", "figures", "villages_plots.png"), villages_plots, ncol = 2, base_height = 8, base_width = 12)
 

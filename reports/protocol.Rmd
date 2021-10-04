@@ -1,5 +1,5 @@
 ---
-title: "Trapping protocol"
+title: "Rodent trapping protocol"
 date: "`r Sys.Date()`"
 output: 
   pdf_document: default
@@ -7,73 +7,109 @@ always_allow_html: yes
 ---
 
 ```{r setup, include=FALSE, echo=F}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 library("tidyverse")
 library("here")
 library("sf")
 library("tmap")
 library("tmaptools")
+source(here::here("scripts", "import_latest_data_function.R"))
 ```
+
+# Introduction
+
+Rodents are being trapped for an ongoing study of rodent population structures and assemblages in a Lassa fever endemic region of Eastern Sierra Leone. The study will continue for around 2 years. The primary outputs of the rodent trapping will be to identify to species level the small mammals in different habitat types at different times of the year in addition to the presence of antibodies to Lassa fever virus. Trapping will occur in pre-specified study site locations every 4 months. Study sites are villages, 5 have been trialled with 4 selected for ongoing work, the villages are Lalehun, Seilama, Lambayama and Baiama. At each study site up to 7 trap sites have been designated. A trap site contains a 7 x 7 grid of Sherman traps set up to 10 metres apart, the trap site may be entirely located within a single habitat type or may span multiple. The land use of the grid and its habitat structure will be noted at each study site visit. The specific location and characteristics of the habitat of each trap are also recorded for each study site visit. Traps are checked each morning following rebaiting of the traps the evening before. Traps are set for four consecutive nights at each visit.
+
+Trapped rodents are brought to the processing table within a trap following capture. The rodents are then euthanised following recommended procedures with halothene and cervical dislocation. Morphometric measurements are then obtained alongside biological samples for subsequent molecular speciation and assay for Lassa fever virus antibodies or acute infection. Rodent carcasses are then safely disposed of on site to reduce the risk of any infectious material remaining in the study environment. All data is collected in the field electronically using Open Data Kit questionnaires with photographic records collected as required. Samples are then returned to the study laboratory at Mercy Hospital, Bo, Sierra Leone where they remain in storage until analysis can be performed. Separate laboratory protocols describe the subsequent steps in the analysis (DNA Barcoding protocol and Lassa assay protocol).
 
 ## Preparation for field work
 
 Before going to the field it's important the following are checked
 
-  1. Adequate number of clean and functioning Sherman traps are brought. You will need at least **324** to set up the correct number so please bring some extra.
-  2. Enough sample pots for rodent specimens
-  3. Spare batteries for GPS devices
-  4. Battery packs if possible for the electronic tablets
-  5. Working portable freezer that can be stored at Panguma Hospital Lab
-  6. Paper copies of the data entry form in case the pads stop working
+1.  Adequate number of clean and functioning Sherman traps are brought. You will need at least **324** to set up the correct number of grids.
+2.  Adequate sample pots for rodent specimens.
+3.  Spare batteries for GPS devices.
+4.  Battery packs for electronic devices.
+5.  Portable freezer for rodent specimens, to be stored at Panguma Hospital Lab.
+6.  Paper copies of the data entry forms.
 
+## Locating the trap sites
 
-## Finding the trap sites
+The GPS devices can be used to locate the study sites. The coordinates of the corners of the study grids are below.
 
-Using the GPS device (GPS MAP65) to find the study sites.
+First turn on the device and press the find button on the front above mark. Use the direction buttons to select Coordinates and press enter. This takes to a page that asks you to enter the location. The left and right arrows at the bottom of the screen move across the numbers. Control what is highlighted using the directional buttons and enter to select. This will then produce a purple line that will guide you to the coordinates. Tie some ribbon to a plant to identify this corner of the grid and then perform the same for the 3 other corners.
 
-The coordinates of the corners of the study grids are below. To find them you can use the GPS.
+```{r traps, echo = F, layout = "markup"}
+traps <- latest_data("trap_sites", suppress = TRUE) %>%
+  filter(visit == 1) %>%
+  distinct(village, grid_number, trap_number, .keep_all = T) %>%
+  mutate(grid_number = as.character(grid_number)) %>%
+  st_as_sf(coords = c("lon", "lat"))
 
-First turn on the device and press the find button on the front above mark. Use the direction buttons to select Coordinates and press enter. This takes to a page that asks you to enter the location. The left and right arrows at the bottom of the screen move across the numbers you can control what is highlighted using the directional buttons and enter selects. This will then produce a purple line that will guide you to the coordinates. Tie some ribbon to a plant to identify this corner of the grid and then perform the same for the 3 other corners.
-
-``` {r traps, echo = F, layout = "markup"}
-lalehun_traps <- read_rds(here("data", "lalehun_traps.rds")) %>%
-  st_as_sf() %>%
-  distinct(geometry, .keep_all = T) %>%
-  mutate(grid_number = recode(grid_number,
-                              "3a" = "3",
-                              "3b" = "3"))
+lalehun_traps <- traps %>%
+  filter(village == "lalehun")
 
 osm_LAL <- read_osm(lalehun_traps, ext=1.6) 
+
 LAL_map <- tm_shape(osm_LAL) +
   tm_rgb() +
   tm_shape(lalehun_traps) +
   tm_dots(col = "grid_number",
-          palette = viridisLite::plasma(6, begin = 0, end = 0.4),
-          popup.vars = c("trap_number"),
-          title = "Lalehun Grids") +
-  tm_layout(legend.outside = F)
+          palette = "-Dark2",
+          size = 0.05,
+          title = "Grids") +
+  tm_layout(legend.outside = F,
+            legend.position = c("right", "top"),
+            main.title = "Lalehun")
   
 
-seilama_traps <- read_rds(here("data", "seilama_traps.rds")) %>%
-  st_as_sf() %>%
-  distinct(geometry, .keep_all = T) %>%
-  mutate(grid_number = recode(grid_number,
-                              "3a" = "3",
-                              "3b" = "3")) %>%
-  arrange(grid_number)
+seilama_traps <-traps %>%
+  filter(village == "seilama")
 
 osm_SEIL <- read_osm(seilama_traps, ext=1.2)
 SEIL_map <- tm_shape(osm_SEIL) +
   tm_rgb() +
   tm_shape(seilama_traps) +
   tm_dots(col = "grid_number",
-          palette = viridisLite::plasma(6, begin = 0, end = 0.4),
-          contrast = c(0, 0.65),
-          popup.vars = c("trap_number"),
-          title = "Seilama Grids") +
-  tm_layout(legend.outside = F)
+          palette = "-Dark2",
+          size = 0.05,
+          title = "Grids") +
+  tm_layout(legend.outside = F,
+            legend.position = c("right", "top"),
+            main.title = "Seilama")
 
-tmap_arrange(LAL_map, SEIL_map)
+lambayama_traps <-traps %>%
+  filter(village == "lambayama")
+
+osm_LAM <- read_osm(lambayama_traps, ext=1.2)
+
+LAM_map <- tm_shape(osm_LAM) +
+  tm_rgb() +
+  tm_shape(lambayama_traps) +
+  tm_dots(col = "grid_number",
+          palette = "-Dark2",
+          size = 0.05,
+          title = "Grids") +
+  tm_layout(legend.outside = F,
+            legend.position = c("right", "top"),
+            main.title = "Lambayama")
+
+baiama_traps <-traps %>%
+  filter(village == "baiama")
+
+osm_BAI <- read_osm(baiama_traps, ext=1.2)
+BAI_map <- tm_shape(osm_BAI) +
+  tm_rgb() +
+  tm_shape(baiama_traps) +
+  tm_dots(col = "grid_number",
+          palette = "-Dark2",
+          size = 0.05,
+          title = "Grids") +
+  tm_layout(legend.outside = F,
+            legend.position = c("right", "top"),
+            main.title = "Baiama")
+
+tmap_arrange(LAL_map, SEIL_map, LAM_map, BAI_map)
 ```
 
 ### Lalehun
@@ -82,40 +118,53 @@ We have set up **six** sites in Lalehun. Each site represents a grid that we set
 
 For each of the below grids there are coordinates for the corners of the grid. Try and set up lines of traps within the grids so it would be easier if you find the corners first
 
-  1. **Grid 1**: Edge of the village    
-      + Closest to the village = 8 11.801 N and 11 4.767 W
-      + Furthest from the village = 8 11.782 N and 11 4.742 W
-      + 8 11.781 N and 11 4.775 W
-      + 9 11.769 N and 11 4.758 W
-  2. **Grid 2**: Within and near a wet rice field   
-      + Closest to the village = 8 11.921 N and 11 4.771 W
-      + 8 11.94 N and 11 4.758 W
-      + Furthest in the field = 8 11.923 N and 11 4.727 W
-      + 8 11.908 and 11 4.739 W
-  3. **Grid 3**: Split into two, one part on the banana field and fallow land, the other on the banana field and pineapple garden   
-      + Near the compound = 8 11.9417 N and 11 4.811 W
-      + In the fallow land = 8 11.92 N and 11 4.822 W
-      + By the water store = 8 11.967 N and 11 4.826 W
-      + In the fallow land = 8 11.953 N and 11 4.838 W
-  4. **Grid 4**: Long term fallow land    
-      + Closest to the road = 8 11.644 N and 11 4.699 W
-      + Across the hill = 8 11.687 N and 11 4.696 W
-      + Up the hill = 8 11.644 N and 11 4.681 W
-      + Up the hill furthest from the road = 8 11.687 N and 11 4.68 W
-  5. **Grid 5**: Cassava plantation   
-      + Close to the road = 8 11.619 N and 11 4.811 W
-      + Down the hill along the road = 8 11.633 N and 11 4.831 W
-      + Into the field = 8 11.647 N and W 11 4.832 W
-      + 8 11.635 N and 11 4.806 W
-  6. In 3 lines through the village   
-      + Line 1 beginning = 8 11.911 N and 11 4.797 W
-      + Line 1 end = 8 11.819 N and 11 4.79 W
-      + Line 2 beginning = 8 11.888 N and 11 4.822 W
-      + Line 2 end = 8 11.82 N and 11 4.802 W
-      + Line 3 beginning = 8 11.872 N and 11 4.828 W
-      + Line 3 end = 8 11.809 N and 11 4.818 W
-  7. **Within houses**
-      + 4 traps per home
+1.  **Grid 1**: Edge of the village
+
+    -   Closest to the village = 8 11.801 N and 11 4.767 W
+    -   Furthest from the village = 8 11.782 N and 11 4.742 W
+    -   8 11.781 N and 11 4.775 W
+    -   9 11.769 N and 11 4.758 W
+
+2.  **Grid 2**: Within and near a wet rice field
+
+    -   Closest to the village = 8 11.921 N and 11 4.771 W
+    -   8 11.94 N and 11 4.758 W
+    -   Furthest in the field = 8 11.923 N and 11 4.727 W
+    -   8 11.908 and 11 4.739 W
+
+3.  **Grid 3**: Split into two, one part on the banana field and fallow land, the other on the banana field and pineapple garden
+
+    -   Near the compound = 8 11.9417 N and 11 4.811 W
+    -   In the fallow land = 8 11.92 N and 11 4.822 W
+    -   By the water store = 8 11.967 N and 11 4.826 W
+    -   In the fallow land = 8 11.953 N and 11 4.838 W
+
+4.  **Grid 4**: Long term fallow land
+
+    -   Closest to the road = 8 11.644 N and 11 4.699 W
+    -   Across the hill = 8 11.687 N and 11 4.696 W
+    -   Up the hill = 8 11.644 N and 11 4.681 W
+    -   Up the hill furthest from the road = 8 11.687 N and 11 4.68 W
+
+5.  **Grid 5**: Cassava plantation
+
+    -   Close to the road = 8 11.619 N and 11 4.811 W
+    -   Down the hill along the road = 8 11.633 N and 11 4.831 W
+    -   Into the field = 8 11.647 N and W 11 4.832 W
+    -   8 11.635 N and 11 4.806 W
+
+6.  In 3 lines through the village
+
+    -   Line 1 beginning = 8 11.911 N and 11 4.797 W
+    -   Line 1 end = 8 11.819 N and 11 4.79 W
+    -   Line 2 beginning = 8 11.888 N and 11 4.822 W
+    -   Line 2 end = 8 11.82 N and 11 4.802 W
+    -   Line 3 beginning = 8 11.872 N and 11 4.828 W
+    -   Line 3 end = 8 11.809 N and 11 4.818 W
+
+7.  **Within houses**
+
+    -   4 traps per home
 
 We will add another "site" which will be traps within the houses. For the traps in the houses it is important to note what the room is used for, the type of material the house is made from and the type of roof.
 
@@ -127,75 +176,193 @@ Is positioned in a relatively forested area South West of Panguma. There is sign
 
 We have set up **six** sites in Seilama.
 
- 1. **Grid 1**: Palm plantation, near the village and main road
-    + Close to the main road = 8 7.325 N and 11 11.539 W
-    + Down the road away from the village = 8 7.375 N and 11 11.511 W
-    + 8 7.375 N and 11 11.535
-    + Set this corner yourself
- 2. **Grid 2**: Cacao and Coffee plantation
-    + Close to the village = 8 7.378 N and 11 11.649 W
-    + Along the stream = 8 7.4 N and 11 11.643 W
-    + 8 7.413 N and 11 11.653 W
-    + Away from the village = 8 7.384 N and 11 11.67 W
- 3. **Grid 3**: Recently harvested dry rice field
-    + Close to the village = 8 7.424 N and 11 11.657 W
-    + Along the ravine = 8 7.446 N and 11 11.66 W
-    + 8 7.467 N and 11 11.672 W
-    + 8 7.443 N and 11 11.685 W
- 4. **Grid 4**: Wet rice plantation
-    + Closest to the village = 8 7.234 N and 11 11.651 W
-    + Furthest from the village = 8 7.22 N and 11 11.669 W
-    + Into the field = 8 7.255 N and 11 11.673 W
-    + 8 7.234 N and 11 11.678 W
-    + Line outside of grid beginning = 8 7.258 N and 11 11.619 W
-    + Line outside of grid end = 8 7.258 N and 11 11.619 W
- 5. **Grid 5**: Disturbed forest, long term fallow
-    + Closest to the village = 8 7.413 N and 11 11.871 W
-    + Away from the village = 8 7.428 N and 11 11.884 W
-    + 8 7.441 N and 11 11.861 W
-    + 8 7.43 N and 11 11.849 W
- 6. Within the village, outside of houses, two lines of 7 within the village
-    + Set in a ring around the village
-    + Line 1 beginning = 8 7.307 N and 11 11.625 W
-    + Line 1 end = 8 7.357 N and 11 11.624 W
-    + Line 2 beginning = 8 7.31 N and 11 11.6 W
-    + Line 2 end = 8 7.362 N and 11 11.611 W
-  7. **Within home**
-    
+1.  **Grid 1**: Palm plantation, near the village and main road
+
+    -   Close to the main road = 8 7.325 N and 11 11.539 W
+    -   Down the road away from the village = 8 7.375 N and 11 11.511 W
+    -   8 7.375 N and 11 11.535 W
+    -   Set this corner yourself
+
+2.  **Grid 2**: Cacao and Coffee plantation
+
+    -   Close to the village = 8 7.378 N and 11 11.649 W
+    -   Along the stream = 8 7.4 N and 11 11.643 W
+    -   8 7.413 N and 11 11.653 W
+    -   Away from the village = 8 7.384 N and 11 11.67 W
+
+3.  **Grid 3**: Recently harvested dry rice field
+
+    -   Close to the village = 8 7.424 N and 11 11.657 W
+    -   Along the ravine = 8 7.446 N and 11 11.66 W
+    -   8 7.467 N and 11 11.672 W
+    -   8 7.443 N and 11 11.685 W
+
+4.  **Grid 4**: Wet rice plantation
+
+    -   Closest to the village = 8 7.234 N and 11 11.651 W
+    -   Furthest from the village = 8 7.22 N and 11 11.669 W
+    -   Into the field = 8 7.255 N and 11 11.673 W
+    -   8 7.234 N and 11 11.678 W
+    -   Line outside of grid beginning = 8 7.258 N and 11 11.619 W
+    -   Line outside of grid end = 8 7.258 N and 11 11.619 W
+
+5.  **Grid 5**: Disturbed forest, long term fallow
+
+    -   Closest to the village = 8 7.413 N and 11 11.871 W
+    -   Away from the village = 8 7.428 N and 11 11.884 W
+    -   8 7.441 N and 11 11.861 W
+    -   8 7.43 N and 11 11.849 W
+
+6.  Within the village, outside of houses, two lines of 7 within the village
+
+    -   Set in a ring around the village
+    -   Line 1 beginning = 8 7.307 N and 11 11.625 W
+    -   Line 1 end = 8 7.357 N and 11 11.624 W
+    -   Line 2 beginning = 8 7.31 N and 11 11.6 W
+    -   Line 2 end = 8 7.362 N and 11 11.611 W
+
+7.  **Within houses**
+
+    -   4 traps per home
+
 Seilama is a much smaller village so just try and make sure that you have good coverage of the different areas of the village when setting the traps in houses.
 
 ### Bambawo
 
-Bambawo was selected due to its proximity to the national park and relatively heavily forested areas of Eastern Province while being on the outskirts of Kenema. 
+Bambawo was selected due to its proximity to the national park and relatively heavily forested areas of Eastern Province while being on the outskirts of Kenema. This site is no longer being used.
 
-Four sites have been established in the village. We were missing traps for the first visit so two further trap sites will be established on the the next visit. Traps across the village and within the houses will be placed starting at visit 2.
-
-  1. **Grid 1**: Far forest site. Previously used by mining company. Remains of accomodation houses for miners in the area. Forest currently used for animal trapping, nil significant disturbance.
-    + 
-  2. **Grid 2**: Rice farm on hillside recently cleared and burned. 
-  3. **Grid 3**: Old quarry site. Open mining now not significantly used. Low lying shrub surrounds
-  4. **Grid 4**: Mixed used agricultural land near the village. Currently grain and banana.
+Four sites have been established in the village. We were missing traps for the first visit so two further trap sites will be established on the the next visit.
 
 ### Lambayama
 
+Lambayama village.
+
+1.  **Grid 1**: Wet rice fields along the side of the raised walkways.
+
+    -   51.0376 N and 11 11.7345 W
+    -   51.0254 N and 11 11.7181 W
+    -   51.0787 N and 11 11.7033 W
+    -   51.074 N and 11 11.6944 W
+
+2.  **Grid 2**: Fallow land on the hill above the rice fields
+
+    -   Closest corner to the rice field = 7 51.075 N and 11 11.6834 W
+    -   7 51.0891 N and 11 11.671 W
+    -   Up the hill away from the field = 7 51.085 N and 11 11.6575 W
+    -   7 51.0671 N and 11 11.6719 W
+
+3.  **Grid 3**: Fallow land towards the reservoir
+
+    -   Corner closest to the village = 7 50.9534 N and 11 11.5559 W
+    -   On the same level towards the reservoir  = 7 50.949 N and 11 11.5379 W
+    -   Up the hill from corner 1 = 7 50.9635 N and 11 11.5501 W
+    -   Top right corner = 7 50.9585 N and 11 11.5346 W
+
+4.  **Grid 4**: Gardens on the edge of the village towards the marsh
+
+    -   This area is not set up as a true grid and is in parallel lines along the edge of the marsh and in the village gardens.
+    -   7 51.0077 N and 11 11.8312 W
+    -   7 50.9863 N and 11 11.8073 W
+    -   7 50.9659 N and 11 11.8175 W
+
 ### Baiama
+
+We have currently set 4 trap sites in Baiama, 1 will be added alongside the house site on the next visit.
+
+1.  **Grid 1**: Forested site
+
+    -   Closest to the store house = 7 49.4867 N and 11 15.0235 W
+    -   Towards the path = 7 49.4867 N and 11 15.0235 W
+    -   Into the forest from the house = 7 49.4708 N and 11 15.0098 W
+
+2.  **Grid 2**: Fallow land, new rice field
+
+    -   49.8157 N and 11 15.235 W
+    -   49.8086 N and 11 15.2235 W
+    -   49.7903 N and 11 15.2436 W
+    -   49.7885 N and 11 15.2318 W
+
+3.  **Grid 3**: This site lies near the old Baiama village
+
+    -   Closest to the village centre by the store house = 7 49.8151 N and 11 15.7421 W
+    -   Away from the village into the forest = 7 49.8179 N and 11 15.729 W
+    -   In the vegetable garden at the edge of the village = 7 49.8245 N and 11 15.7529 W
+    -   Into the forest = 7 49.8386 N and 11 15.7509 W
+
+4.  **Grid 4**: Banana plantation
+
+    -   7 50.1875 N and 11 15.9803 W
+    -   7 50.1968 N and 11 15.9904 W
+    -   7 50.1785 N and 11 15.9953 W
+    -   7 50.1844 N and 11 16.0042 W
+    
+    
+### Trap setup
+
+The trap is placed in the habitat. The coordinates are entered into the ODK questionnaire. The trap is baited with locally produced fish, meat, oat and palm oil based bait in the evening prior to the trapping night. During the trap check in the morning traps are closed prior to refreshing the bait in the evening. 
+
+### Trap check
+
+Each morning following trapping each trap is checked for the presence/absence of bait, whether the trap has snapped shut over night and whether a rodent has been trapped. The weather overnight is also collected on this data entry form.
+
+## Rodent sampling
+
+Trapped rodents are located at the trap check. The traps are placed in plastic bags and brought to the autopsy site. Rodents are euthanised prior to morphological measurements and sampling.
+
+0. Identification
+
+    - Rodent unique number
+    - Trap number
+    - Trap night
+    - Initial species/genus identification
+
+1. Morphological measures
+  
+    - Weight in grams
+    - Length of head to base of tail (head body) in mm
+    - Length of the tail in (note whether tail is cut) mm
+    - Length of the hind foot (not including claws) in mm
+    - Diameter of the ear measured from the pinna to the edge of the ear in mm
+    - Length of the skull from the occiput to the tip of the nose, for shrews measure to the end of the projecting teeth in mm
+
+2. Autopsy measures
+
+    - Rodent sex (M/F)
+    - Presence of internal or external testes for males
+    - Development of seminal vesicles for males
+    - The identification of a perforate vagina for females
+    - The presence of visible teats for females and the number of pairs of nipples
+    - The number of developing embryos for females
+
+3. Sample collection
+
+    - Document whether the following samples have been successfully obtained
+      - Photo of rodent
+      - Serum sample, in vial and on filter paper
+      - Tissue sample of liver and spleen
+      - Tissue sample of ear
+      - Eye of rodent
 
 ## Data collection process
 
-### Direct ODK entry **(Preferred)**
+### Direct ODK entry
 
-There are three forms you can access through ODK connect on your mobile phone or the study team tablets. The forms once saved will automatically be sent to the ODK server once they can connect to the internet. There is a sim card in the tablet that can be loaded with credit. 
+There are three forms you can access through ODK connect on your mobile phone or the study team tablets. The forms once saved will automatically be sent to the ODK server once they can connect to the internet. There is a sim card in the tablet that can be loaded with credit.
 
-  1. site_setup_v2: This sheet is completed for each site on the first day of trapping. It is important to ensure you correctly write the trap number and it's coordinates. If you make any errors you can edit the file or notify Dianah/David and they can amend it. You will describe each site, the habitat and surroundings of each trap and the coordinates for each trap. Photos can be taken if you are having difficulty completing the questions.
-  2. trap_check_v1: This sheet is used to collect information about the number of traps missing **bait**, **have been sprung shut** or contain **rodents** the next morning. It may be easier to note the traps on a piece of paper first and then to enter the data into ODK.
-  3. rodent_v1: This sheet is used to collect information about the trapped rodent. The most important parts of this are to ensure that the trap number and rodent number are correct. The trap number is important to know where the rodent came from. The rodent number should be made by putting the number of the visit, then the 3 letters of the village and then the number this rodent is for this visit. For example:
-    + The 12th rodent trapped in the 2nd visit in Seilama would be 2SEI-012
-    + The 3rd rodent trapped on the 1st visit in Bambawo would be 1BAM-003
+1.  site_setup_v2: This sheet is completed for each site on the first day of trapping. It is important to ensure you correctly write the trap number and it's coordinates. If you make any errors you can edit the file or notify Dianah/David and they can amend it. You will describe each site, the habitat and surroundings of each trap and the coordinates for each trap. Photos can be taken if you are having difficulty completing the questions.
+2.  trap_check_v1: This sheet is used to collect information about the number of traps missing **bait**, **have been sprung shut** or contain **rodents** the next morning. It may be easier to note the traps on a piece of paper first and then to enter the data into ODK.
+3.  rodent_v1: This sheet is used to collect information about the trapped rodent. The most important parts of this are to ensure that the trap number and rodent number are correct. The trap number is important to know where the rodent came from. The rodent number should be made by putting the number of the visit, then the 3 letters of the village and then the number this rodent is for this visit. 
+
+For example: 
+
+-   The 12th rodent trapped in the 2nd visit in Seilama would be 2SEI-012 
+-   The 3rd rodent trapped on the 1st visit in Bambawo would be 1BAM-003
 
 ### Data entry sheets
+
 The **Trap site setup** sheet needs to be completed once for each trap site (the grid of 49 traps) once during the study visit for all of the sites that are setup (so 7 including the indoor traps). I expect 7 completed forms from each village. Please try and be as accurate as possible with the GPS coordinates.
 
-The **Trap check** sheet needs to be completed for each trap site for each study night. 
+The **Trap check** sheet needs to be completed for each trap site for each study night.
 
 The **Rodent** sheet needs to be completed for each rodent that has been trapped.
 

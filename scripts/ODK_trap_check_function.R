@@ -14,7 +14,7 @@ clean_odk_trap_check <- function(type = "check") {
                        "individual_traps-bait_questions-number_traps_bait_missing",
                        "individual_traps-bait_questions-bait_removed")
   
-  trap_check <- read_csv(all_files[4]) %>%
+  trap_check <- read_csv(all_files[4], show_col_types = FALSE) %>%
     filter(ReviewState != "rejected" | is.na(ReviewState)) %>%
     mutate(village_name = as_factor(tolower(village_name)),
            form_entry = as.Date(ymd_hms(form_entry))) %>%
@@ -32,20 +32,20 @@ clean_odk_trap_check <- function(type = "check") {
   
   last_date <<- max(trap_check$form_entry)
   
-  trap_check_bait <- read_csv(all_files[1]) %>%
+  trap_check_bait <- read_csv(all_files[1], show_col_types = FALSE) %>%
     rename("trap_missing_bait" = 1,
            "key" = "PARENT_KEY") %>%
     mutate(bait_present = case_when(is.na(trap_missing_bait) ~ "y",
                                     TRUE ~ "n")) %>%
     dplyr::select(-KEY)
   
-  trap_check_shut <- read_csv(all_files[2]) %>%
+  trap_check_shut <- read_csv(all_files[2], show_col_types = FALSE) %>%
     rename("key" = "PARENT_KEY") %>%
     mutate(trap_sprung = case_when(is.na(trap_number_shut) ~ "n",
                                    TRUE ~ "y")) %>%
     dplyr::select(-KEY)
   
-  trap_check_rodent <- read_csv(all_files[3]) %>%
+  trap_check_rodent <- read_csv(all_files[3], show_col_types = FALSE) %>%
     rename("key" = "PARENT_KEY") %>% 
     mutate(rodent_trapped = case_when(is.na(trap_number_rodent) ~ "n",
                                       TRUE ~ "y")) %>%

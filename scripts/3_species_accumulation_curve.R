@@ -1,80 +1,64 @@
 source(here::here("scripts", "0_project_library.R"))
-source(here("scripts", "import_latest_data_function.R"))
 
 latest_rodent<- latest_data("rodents", clean = T)  %>%
-  dplyr::select(rodent_id, initial_species_id)
+  dplyr::select(rodent_id, initial_genus_id)
 latest_trapsite <- latest_data("trap_sites")
 
 species_acc <- latest_trapsite %>%
   left_join(., latest_rodent, by = "rodent_id")
 
 number_trapnights <- species_acc %>%
-  group_by(visit, village) %>%
+  group_by(village) %>%
   summarise(n_trapnights = n()) %>%
   ungroup()
 
 species <- species_acc %>%
-  group_by(village, visit, initial_species_id) %>%
+  group_by(village, initial_genus_id) %>%
   tally %>%
-  drop_na(initial_species_id) %>%
+  drop_na(initial_genus_id) %>%
   arrange(-n) %>%
   ungroup()
 
-village_acc <- list(Lalehun_1 = c(number_trapnights %>%
-                                    filter(village == "lalehun" & visit == 1) %>%
+village_acc <- list(Lalehun = c(number_trapnights %>%
+                                    filter(village == "lalehun") %>%
                                     pull(n_trapnights), 
                                   species %>%
-                                    filter(village == "lalehun" & visit == 1) %>%
+                                    filter(village == "lalehun") %>%
                                     pull(n)),
-                    Lalehun_2 = c(number_trapnights %>%
-                                    filter(village == "lalehun" & visit == 2) %>%
+                    Seilama = c(number_trapnights %>%
+                                    filter(village == "seilama") %>%
                                     pull(n_trapnights), 
                                   species %>%
-                                    filter(village == "lalehun" & visit == 2) %>%
+                                    filter(village == "seilama") %>%
                                     pull(n)),
-                    Seilama_1 = c(number_trapnights %>%
-                                    filter(village == "seilama" & visit == 1) %>%
-                                    pull(n_trapnights), 
-                                  species %>%
-                                    filter(village == "seilama" & visit == 1) %>%
-                                    pull(n)),
-                    Seilama_2 = c(number_trapnights %>%
-                                    filter(village == "seilama" & visit == 2) %>%
-                                    pull(n_trapnights), 
-                                  species %>%
-                                    filter(village == "seilama" & visit == 2) %>%
-                                    pull(n)),
-                    Bambawo_1 = c(number_trapnights %>%
-                                    filter(village == "bambawo" & visit == 1) %>%
+                    Bambawo = c(number_trapnights %>%
+                                    filter(village == "bambawo") %>%
                                     pull(n_trapnights),
                                   species %>%
-                                    filter(village == "bambawo" & visit == 1) %>%
-                                    pull(n))#,
-                    # Lambayama_1 = c(number_trapnights %>%
-                    #                   filter(village == "lambayama" & visit == 1) %>%
+                                    filter(village == "bambawo") %>%
+                                    pull(n)) #,
+                    # Lambayama = c(number_trapnights %>%
+                    #                   filter(village == "lambayama") %>%
                     #                   pull(n_trapnights),
                     #                 species %>%
-                    #                   filter(village == "lambayama" & visit == 1) %>%
+                    #                   filter(village == "lambayama") %>%
                     #                   summarise(n = sum(n)) %>%
                     #                   pull(n)),
-                    # Baiama_1 = c(number_trapnights %>%
-                    #                   filter(village == "baiama" & visit == 1) %>%
+                    # Baiama = c(number_trapnights %>%
+                    #                   filter(village == "baiama") %>%
                     #                   pull(n_trapnights),
                     #                 species %>%
-                    #                   filter(village == "baiama" & visit == 1) %>%
+                    #                   filter(village == "baiama") %>%
                     #                   summarise(n = sum(n)) %>%
                     #                   pull(n))
 )
 
-x_axis <- seq(1, 1300, by = 10)
+x_axis <- seq(1, 3500, by = 10)
 inc <- iNEXT(village_acc, q = 0, datatype = "incidence_freq", size = x_axis)
 
 plot_acc <- fortify(inc, type = 1)
 
 plot_acc %>%
-  mutate(visit = case_when(str_detect(site, "_1") ~ 1,
-                           str_detect(site, "_2") ~ 2),
-         site = gsub('.{2}$', '', site)) %>%
   ggplot(aes(x = x, y = y, colour = site)) +
   geom_point(data = . %>%
                filter(method == "observed"),
@@ -85,8 +69,9 @@ plot_acc %>%
                   fill = site, colour = NULL), alpha=0.2) +
   scale_fill_manual(values = village_palette) +
   scale_colour_manual(values = village_palette) +
-  labs(x = "Number of trapnights", y = "Genus diversity", colour = "Site", fill = "Site") +
-  facet_wrap(~ visit) +
+  labs(title = "Genus accumulation",
+       x = "Number of trapnights", y = "Genus diversity", colour = "Site", fill = "Site",
+       caption = "Lambayama and Baiama estimates currently unstable") +
   theme_minimal()
 
 ggsave(plot = last_plot(), here("reports", "figures", "species_accumulation.png"))

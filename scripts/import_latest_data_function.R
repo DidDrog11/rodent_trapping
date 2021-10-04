@@ -1,4 +1,4 @@
-latest_data <- function(start_of_filename = c("rodents", "trap_sites"), clean = FALSE) {
+latest_data <- function(start_of_filename = c("rodents", "trap_sites"), clean = FALSE, suppress = FALSE) {
   if(clean == FALSE) { 
     filename <- tibble(files = list.files(path = here("data", "clean_data", start_of_filename)[1], full.names = F)) %>%
       arrange(files) %>%
@@ -7,9 +7,11 @@ latest_data <- function(start_of_filename = c("rodents", "trap_sites"), clean = 
       pull() %>%
       paste0(here("data", "clean_data", start_of_filename), "/", .)
   
+    if(suppress == FALSE) {
     message(cat(
       paste0("Read in file: ", filename)
     ))
+    }
     
   return(read_csv(filename, col_types = cols()))
   } else {
@@ -20,9 +22,11 @@ latest_data <- function(start_of_filename = c("rodents", "trap_sites"), clean = 
       pull() %>%
       paste0(here("data", "clean_data", start_of_filename), "/", .)
     
-    message(cat(
-      paste0("Read in file: ", filename)
-    ))
+    if(suppress == FALSE) {
+      message(cat(
+        paste0("Read in file: ", filename)
+      ))
+    }
     
     return(read_csv(filename, col_types = cols()))
   }

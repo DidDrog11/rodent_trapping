@@ -9,10 +9,10 @@ trap_sites <- latest_trapsite %>%
                                     TRUE ~ "No"))
 
 location_rodents <- latest_rodent %>%
-  dplyr::select(rodent_id, trap_night, trap_uid, initial_species_id) %>%
+  dplyr::select(rodent_id, trap_night, trap_uid, initial_genus_id) %>%
   left_join(., trap_sites, 
             by = c("rodent_id", "trap_night")) %>%
-  dplyr::select(rodent_id, visit, grid_number, trap_night, initial_species_id, village, habitat) %>%
+  dplyr::select(rodent_id, visit, grid_number, trap_night, initial_genus_id, village, habitat) %>%
   mutate(across(.cols = everything(), .fns = factor))
 
 site_palette <- c("#e41a1c", "#377eb8", "#4daf4a",
@@ -177,7 +177,7 @@ distinct_baiama_traps <- baiama_traps %>%
   distinct(grid_number, trap_number, rodent_id, .keep_all = T)
 
 leaflet(distinct_baiama_traps) %>%
-  addTiles() %>%
+  addProviderTiles(providers$Esri.WorldImagery) %>%
   addCircleMarkers(color = ~pal(rodent_trapped),
                    radius = 3,
                    stroke = F,

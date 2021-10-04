@@ -10,9 +10,10 @@ author:
     orcid_id: 0000-0001-9655-1656
 date: "`r Sys.Date()`"
 output:
-  distill::distill_article:
-    self_contained: false
-    toc: true
+  # distill::distill_article:
+  #   self_contained: false
+  #   toc: true
+  html_document
 bibliography: citations.bib
 categories:
   - Lassa
@@ -29,24 +30,29 @@ Five villages have been enrolled, one will not be carried forward due to concern
 
   + Bambawo (coordinates 8.009 N, -11.1303 E)
     + Visit 1 - 2021-06-23 to 2021-06-27
+    + Visit 2 - 2021-10
   + Lalehun (coordinates  8.1975 N, -11.0803 E) 
     + Visit 1 - 2020-11-30 to 2020-12-03
     + Visit 2 - 2021-04-01 to 2021-04-04
     + Visit 3 - 2021-07-08 to 2021-07-12
+    + Visit 4 - 2021-10
   + Lambayama (coordinates 7.8544 N, -11.1897 E)
     + Visit 1 - 2021-06-28 to 2021-07-02
+    + Visit 2 - 2021-10
   + Seilama (coordinates 8.1222 N, -11.1936 E)
     + Visit 1 - 2020-12-05 to 2020-12-09
     + Visit 2 - 2021-04-12 to 2021-04-15
     + Visit 3 - 2021-07-13 to 2021-07-17
+    + Visit 4 - 2021-10
   + Baiama (coordinates 7.83708 N, -11.26845 E)
     + Visit 1 - 2021-07-03 to 2021-07-07
+    + Visit 2 - 2021-10
 
-Rodents are trapped at up to 6 distinct trap sites per village with up to 49 traps per site. Data is collected on this group of [data collection forms](https://drive.google.com/drive/folders/1yE_JAThq-DM9y5yvtSPMgM2ezMcZ_zyO?usp=sharing) or on the digitised versions using electronic pads in the field using [ODK](https://opendatakit.lshtm.ac.uk/lshtm-odk-servers/) all digital forms are encrypted locally on the device and sent to a server based at LSHTM.
+Rodents are trapped at up to 6 distinct trap sites per village with up to 49 traps per site. Data is collected on this group of [data collection forms](https://drive.google.com/drive/folders/1yE_JAThq-DM9y5yvtSPMgM2ezMcZ_zyO?usp=sharing) or on the digitised versions using electronic pads in the field using [ODK](https://opendatakit.lshtm.ac.uk/lshtm-odk-servers/) all digital forms are encrypted locally on the device and sent to a server based at LSHTM. The `.xlsx` versions of the ODK forms are available on the OpenScience Framework [project page](https://osf.io/usjrd/).
 
 We have currently obtained 7,270 trap nights across 3 visits (including the pilot).
 
-There will ideally be study visits 4 times per year (roughly every 3 months), dates will be confirmed with the study team.
+There will ideally be study visits 4 times per year (every 3 months), dates will be confirmed with the study team.
 
 The land use predominantly obtained from Jung et al. and ground truthed through discussion with local communities guided the selection of the trapping sites at study villages. 
 
@@ -66,7 +72,7 @@ The proportion of nights trapping in each habitat gave good coverage of land use
 include_graphics("figures/trap_plots.png")
 ```
 
-The trap success rate is around 4% this is fairly acceptable based on the review I did. We have trapped 137 rodents from at least 13 species. The majority of trapped individuals have been shrews (crocidura), mastomys sp., praomys sp., mus minutoides and lophyomys sp. Data from the most recent trapping activities from this visit during the rainy season have so far shown a dramatic drop in trap success.
+The trap success rate is around 4% this is fairly acceptable based on the review I did. We have trapped 137 rodents from at least 13 species. The majority of trapped individuals have been shrews (crocidura), *Mastomys sp.*, *Praomys sp.*, *Mus minutoides* and *Lophuromys sp.*. Data from the most recent trapping activities from visit 3 during the rainy season have so far shown a dramatic drop in trap success.
 
 ```{r, layout = "l-page"}
 include_graphics("figures/species_caught.png")
@@ -83,12 +89,3 @@ As we catch an increasing number of individuals we are seeing them clustering wi
 ```{r, layout = "l-page"}
 include_graphics("figures/species_locations.png")
 ```
-
-### Next steps
-
-  + Will be obtaining further traps
-  + Obtain lens weights (Visit 3)
-  + Begin sample processing for rodent speciation, delayed until next visit
-  + Ensure equipment needs for sequencing documented [started here](https://docs.google.com/document/d/12AqkKgvIWBj86V_P2sByx5eSmKwhzQ8b/edit)
-  + Budget for lab costs [started here](https://docs.google.com/spreadsheets/d/1zqm_UTWt5ovTRDNyiqvbj90seLRCEXVf/edit#gid=989773294) but around £15,000
-  + Begin process of costing samples for lassa assay.

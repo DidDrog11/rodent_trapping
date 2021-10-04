@@ -1,5 +1,4 @@
 source(here::here("scripts", "0_project_library.R"))
-source(here("scripts", "0_label_raster.R"))
 
 # Landuse -----------------------------------------------------------------
 

@@ -37,4 +37,5 @@ save_plot(here("reports","figures", "sites_in_habitats_c.png"), plot_grid(tmap_g
                                                                           tmap_grob(lambayama_trap_plot),
                                                                           tmap_grob(baiama_trap_plot),
           nrow = 3,
-          labels = c("Bambawo", "Lalehun", "Seilama", "Lambayama", "Baiama")))
+          labels = c("Bambawo", "Lalehun", "Seilama", "Lambayama", "Baiama"),
+          label_size = 8))
