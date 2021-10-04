@@ -21,9 +21,10 @@ categories:
 
 ```{r setup, include=FALSE, quietly=TRUE}
 knitr::opts_chunk$set(echo = F, warning = F, message = F)
-source(here::here("scripts", "0_report_library.R"))
-trap_sites <- latest_data("trap_sites")
-rodent_data <- latest_data("rodents", clean = T)
+library(here)
+# source(here::here("scripts", "0_report_library.R"))
+# trap_sites <- latest_data("trap_sites")
+# rodent_data <- latest_data("rodents", clean = T)
 ```
 
 Five villages have been enrolled, one will not be carried forward due to concerns from the local team. The village are:
@@ -57,35 +58,35 @@ There will ideally be study visits 4 times per year (every 3 months), dates will
 The land use predominantly obtained from Jung et al. and ground truthed through discussion with local communities guided the selection of the trapping sites at study villages. 
 
 ```{r village-landuse, layout = "l-page"}
-include_graphics("figures/villages_plots.png")
+knitr::include_graphics(here("reports", "figures", "villages_plots.png"))
 ```
 
 The trap locations are shown overlayed on these habitat maps below. 
 
 ```{r, layout = "l-page"}
-include_graphics("figures/sites_in_habitats_c.png")
+knitr::include_graphics(here("reports", "figures", "sites_in_habitats_c.png"))
 ```
 
 The proportion of nights trapping in each habitat gave good coverage of land use types in Eastern Sierra Leone.
 
 ```{r, layout = "l-page"}
-include_graphics("figures/trap_plots.png")
+knitr::include_graphics(here("reports", "figures", "trap_plots.png"))
 ```
 
 The trap success rate is around 4% this is fairly acceptable based on the review I did. We have trapped 137 rodents from at least 13 species. The majority of trapped individuals have been shrews (crocidura), *Mastomys sp.*, *Praomys sp.*, *Mus minutoides* and *Lophuromys sp.*. Data from the most recent trapping activities from visit 3 during the rainy season have so far shown a dramatic drop in trap success.
 
 ```{r, layout = "l-page"}
-include_graphics("figures/species_caught.png")
+knitr::include_graphics(here("reports", "figures", "species_caught.png"))
 ```
 
 Species accumulation curves have been produced for the first two visits from Lalehun and Seilama. It has not been possible to produce equivalent plots for Baiama and Lambayama due to the low number of individuals/species trapped in those locations. 
 
 ```{r, layout = "l-page"}
-include_graphics("figures/species_accumulation.png")
+knitr::include_graphics(here("reports", "figures", "species_accumulation.png"))
 ```
 
 As we catch an increasing number of individuals we are seeing them clustering within expected habitats.
 
 ```{r, layout = "l-page"}
-include_graphics("figures/species_locations.png")
+knitr::include_graphics(here("reports", "figures", "species_locations.png"))
 ```
