@@ -1,0 +1,304 @@
+clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
+  
+  source(here("R", "DdM_to_decimal_degrees_function.R"))
+  
+  all_files <- list.files(here("data", "raw_odk", paste0("trap_sites", "_", Sys.Date())), full.names = T)
+  
+  bambawo_trap_locations <- read_csv(here("data", "raw_odk", "ODK_trap_bambawo_locations.csv"), show_col_types = FALSE)
+  # due to a change in the the ODK form structure this data is read in from a previously saved file
+  
+  trap_locations <- read_csv(all_files[2], show_col_types = FALSE) %>%
+    bind_rows(., bambawo_trap_locations) %>%
+    rename("trap_number" = "site_grouping-trap_number",
+           "longitude" = "site_grouping-longitude",
+           "latitude" = "site_grouping-latitude",
+           "elevation" = "site_grouping-elevation",
+           "habitat" = "site_grouping-selected_habitat_trap",
+           "proximity" = "site_grouping-selected_proximity",
+           "trap_land_type" = "site_grouping-selected_land_type",
+           "key" = "PARENT_KEY") %>%
+    dplyr::select(-c("KEY", "site_grouping-trap_image", "site_grouping-bait_type"))
+  
+  house_sites <- read_csv(all_files[1], show_col_types = FALSE) %>%
+    rename("visit_key" = "PARENT_KEY",
+           "site_key" = "KEY") %>%
+    mutate(latitude = case_when(latitude == 118702.0000 ~ 11.8702,
+                                TRUE ~ latitude)) %>%
+    rename("number_traps" = "number_of_traps_in_house") %>%
+    left_join(., trap_sites %>%
+                dplyr::select(village_name, visit_number, study_site, habitat_type, key),
+              by = c("visit_key" = "key"))
+  
+  house_traps <- read_csv(all_files[3], show_col_types = FALSE) %>%
+    rename("site_key" = "PARENT_KEY") %>%
+    mutate(visit_key = gsub("\\/within.*", "", site_key)) %>%
+    dplyr::select(-KEY) %>%
+    left_join(., trap_sites %>%
+                dplyr::select(village_name, visit_number, study_site, habitat_type, key),
+              by = c("visit_key" = "key"))
+  
+  indoor_traps <- tibble(t_1 = c(246, 250, 254, 258, 262, 140, 131, 146, 135, 130),
+                         t_2 = c(247, 251, 255, 259, 263, 142, 132, 147, 136, 139),
+                         t_3 = c(248, 252, 256, 260, 264, 143, 133, 127, 137, 295),
+                         t_4 = c(249, 253, 257, 261, 265, 144, 134, 145, 138, 221))
+  
+  visit_3_houses <- house_sites %>% # The recording of which traps were within houses was not correctly completed for visit 3 in Lalehun and Seilama
+    filter(visit_number == 3 & village_name %in% c("lalehun", "seilama")) %>%
+    dplyr::select(-visit_key) %>%
+    left_join(., house_traps %>%
+                filter(visit_number == 3 & village_name %in% c("lalehun", "seilama")),
+              by = c("site_key", "village_name", "visit_number", "study_site", "habitat_type")) %>%
+    bind_cols(., indoor_traps) %>%
+    dplyr::select(-trap_number) %>%
+    pivot_longer(cols = c(t_1, t_2, t_3, t_4), values_to = "trap_number") %>%
+    dplyr::select(-name) %>%
+    mutate(visit_key = gsub("\\/within.*", "", site_key))
+  
+  houses <- house_traps %>%
+    left_join(., house_sites,
+              by = c("visit_key", "site_key", "village_name", "visit_number", "study_site", "habitat_type")) %>%
+    filter(!site_key %in% visit_3_houses$site_key) %>%
+    bind_rows(., visit_3_houses)
+  
+  full_trap_locations <- full_join(trap_sites, trap_locations, by = "key") %>%
+    full_join(., houses,
+              by = c("key" = "visit_key")) %>%
+    mutate(longitude = case_when(is.na(longitude.x) ~ longitude.y,
+                                 TRUE ~ longitude.x),
+           latitude = case_when(is.na(latitude.x) ~ latitude.y,
+                                TRUE ~ latitude.x),
+           elevation = case_when(is.na(elevation.x) ~ elevation.y,
+                                 TRUE ~ elevation.x),
+           trap_number = case_when(is.na(trap_number.x) ~ trap_number.y,
+                                   TRUE ~ trap_number.x),
+           number_traps = case_when(is.na(number_traps.x) ~ number_traps.y,
+                                    TRUE ~ number_traps.x),
+           habitat_type = case_when(is.na(habitat_type.x) ~ habitat_type.y,
+                                    TRUE ~ habitat_type.x),
+           study_site = case_when(is.na(study_site.x) ~ study_site.y,
+                                    TRUE ~ study_site.x),
+           trap_number = case_when(is.na(trap_number.x) ~ trap_number.y,
+                                    TRUE ~ trap_number.x),
+           village_name = case_when(is.na(village_name.x) ~ village_name.y,
+                                    TRUE ~ village_name.x),
+           visit_number = case_when(is.na(visit_number.x) ~ visit_number.y,
+                                    TRUE ~ visit_number.x)) %>%
+    dplyr::select(-any_of(ends_with(c(".x", ".y")))) %>%
+    drop_na(trap_number) %>%
+    rename("village" = "village_name",
+           "visit" = "visit_number",
+           "grid_number" = "study_site",
+           "lon_dec" = "longitude",
+           "lat_dec" = "latitude") %>%
+    # manage houses
+    group_by(village, visit, grid_number) %>%
+    mutate(site_use = case_when(habitat_type == "village_inside" ~ "housing",
+                                TRUE ~ site_use),
+           intensity = case_when(habitat_type == "village_inside" ~ "intense",
+                                 TRUE ~ intensity),
+           habitat = case_when(habitat_type == "village_inside" ~ "houses",
+                               TRUE ~ habitat)) %>%
+    ungroup() %>%
+    # sort misrecorded study_sites 
+    mutate(grid_number = case_when(site_use == "Forest" & village == "seilama" & visit == 3 & grid_number == "4" ~ 5,
+                                   site_use == "village_inside" ~ 7,
+                                   village == "lalehun" & visit == "3" & as.numeric(trap_number) < 99 & as.numeric(trap_number) >= 50 ~ 3,
+                                   TRUE ~ grid_number)) %>%
+    # sort misrecorded trap numbers
+    group_by(village, visit, trap_number) %>%
+    mutate(trap_number = paste(trap_number, row_number(), sep = "_"),
+           trap_number = str_remove(trap_number, "_1"),
+           trap_number = case_when(trap_number == "77_2" & visit == "1" & village == "lambayama" ~ "78", # Some trap sites have been misrecorded
+                                   trap_number == "85_2" & visit == "1" & village == "bambawo" ~ "95",
+                                   trap_number == "184_2" & visit == "1" & village == "bambawo" ~ "187",
+                                   trap_number == "146" & visit == "1" & village == "baiama" ~ "145",
+                                   trap_number == "146_2" & visit == "1" & village == "baiama" ~ "146",
+                                   trap_number == "141_2" & visit == "1" & village == "baiama" ~ "101",
+                                   
+                                   trap_number == "14" & visit == "3" & village == "lalehun" ~ "13",
+                                   trap_number == "14_2" & visit == "3" & village == "lalehun" ~ "14",
+                                   trap_number == "20_2" & visit == "3" & village == "lalehun" ~ "26",
+                                   trap_number == "221_2" & visit == "3" & village == "lalehun" ~ "295",
+                                   trap_number == "123" & visit == "3" & village == "seilama" ~ "23",
+                                   trap_number == "123_2" & visit == "3" & village == "seilama" ~ "123",
+                                   
+                                   trap_number == "296_2" & visit == "4" & village == "seilama" ~ "297",
+                                   trap_number == "267_2" & visit == "4" & village == "lalehun" ~ "270",
+                                   
+                                   TRUE ~ trap_number),
+           trap_number = as.numeric(trap_number)) %>%
+    mutate(lon_degree = 11,
+           lat_degree = case_when(village == "lambayama" ~ 7,
+                                  village == "baiama" ~ 7,
+                                  TRUE ~ 8),
+           swapped_lat = lat_dec,
+           swapped_lon = lon_dec,
+           lon_dec = case_when(
+             village == "lalehun" & visit == 3 & trap_number == 204 ~ 4.802,
+             village == "lalehun" & visit == 3 & lon_dec >= 11 ~ (lon_dec-11)*100,
+             
+             village == "lalehun" & visit == 4 & trap_number == 1 ~ 4.7653,
+             village == "lalehun" & visit == 4 & trap_number == 45 ~ 4.7544,
+             village == "lalehun" & visit == 4 & trap_number == 27 ~ 4.7653,
+             village == "lalehun" & visit == 4 & trap_number == 84 ~ 4.7430,
+             
+             village == "lalehun" & visit == 4 & lat_dec >=4 & lat_dec <= 5 ~ swapped_lat,
+             village == "lalehun" & visit == 4 & lat_dec > 11 ~ (swapped_lat-11)*100,
+             
+             village == "seilama" & visit == 3 & trap_number == 228 ~ 11.866,
+             village == "seilama" & visit == 3 & trap_number == 12 ~ 11.5320,
+             village == "seilama" & visit == 3 & trap_number == 22 ~ 11.5418,
+             village == "seilama" & visit == 3 & trap_number == 290 ~ 11.6351,
+             
+             village == "seilama" & visit == 3 & grid_number %in% c(2, 3, 4, 5) ~ (lon_dec-11) * 100,
+             
+             village == "seilama" & visit == 4 & trap_number == 19 ~ 11.5402,
+             village == "seilama" & visit == 4 & trap_number == 294 ~ 11.526,
+             
+             village == "seilama" & visit == 4 & grid_number %in% c(1, 6, 7) ~ swapped_lat,
+             
+             village == "baiama" & visit == 1 & trap_number %in% c(2, 3, 4, 5, 6, 7) ~ swapped_lat,
+             village == "baiama" & visit == 1 & trap_number == 195 ~ 15.9879,
+             
+             village == "lambayama" & visit == 1 & trap_number == 50 ~ 11.6820,
+             
+             village == "bambawo" & visit == 1 & trap_number == 191 ~ 8.5905,
+             
+             TRUE ~ lon_dec),
+           lat_dec = case_when(
+             
+             village == "lalehun" & visit == 3 & trap_number == 159 ~ 11.925,
+             village == "lalehun" & visit == 3 & trap_number == 188 ~ 11.915,
+             village == "lalehun" & visit == 3 & trap_number == 239 ~ 11.633,
+             village == "lalehun" & visit == 3 & trap_number == 218 ~ 11.628,
+             village == "lalehun" & visit == 3 & trap_number == 10 ~ 11.791,
+             
+             village == "lalehun" & visit == 3 & lat_dec <= 9 ~ (lat_dec-8)*100,
+             
+             village == "lalehun" & visit == 4 & trap_number == 27 ~ 11.7797,
+             village == "lalehun" & visit == 4 & trap_number == 45 ~ 11.7787,
+             village == "lalehun" & visit == 4 & trap_number == 1 ~ 11.8006,
+             
+             village == "lalehun" & visit == 4 & lat_dec <= 12 & lat_dec >= 8 ~ (swapped_lon-8)*100,
+             village == "lalehun" & visit == 4 & lat_dec <= 5 ~ swapped_lon,
+             
+             village == "seilama" & visit == 3 & trap_number == 208 ~ 7.424,
+             village == "seilama" & visit == 3 & trap_number == 203 ~ 7.412,
+             village == "seilama" & visit == 3 & trap_number == 112 ~ 7.2447,
+             village == "seilama" & visit == 3 & trap_number == 278 ~ 7.3694,
+             village == "seilama" & visit == 3 & trap_number == 12 ~ 7.3343,
+             
+             village == "seilama" & visit == 3 & grid_number %in% c(2, 3, 4, 5) ~ (lat_dec-8) * 100,
+             
+             village == "seilama" & visit == 4 & grid_number %in% c(1, 6, 7) ~ swapped_lon,
+             
+             village == "baiama" & visit == 1 & trap_number %in% c(2, 3, 4, 5, 6, 7) ~ swapped_lon,
+             
+             village == "lambayama" & visit == 1 & trap_number == 50 ~ 51.0729,
+             village == "lambayama" & visit == 1 & trap_number == 153 ~ 50.9851,
+             
+             village == "bambawo" & visit == 1 & trap_number == 53 ~ 0.5458,
+             
+             TRUE ~ lat_dec
+           )) %>%
+    mutate(lon_DdM = paste(paste(lon_degree, lon_dec, sep = "_"), "'", sep = ""),
+           lat_DdM = paste(paste(lat_degree, lat_dec, sep = "_"), "'", sep = ""),
+           lon = -1 * dg2dec(var = lon_DdM, Dg = "_", Min = "'"),
+           lat = dg2dec(var = lat_DdM, Dg = "_", Min = "'"),
+           grid_number = as.character(grid_number),
+           trap_land_type = str_replace_all(
+             case_when(is.na(proximity) ~ paste(trap_land_type, sep = " "),
+                       is.na(trap_land_type) & !is.na(proximity) ~ paste(proximity, sep = " "),
+                       TRUE ~ paste(trap_land_type, proximity, sep = ",")),
+             " ", ", "),
+           trap_land_type = case_when(site_use == "housing" ~ "indoors",
+                                      TRUE ~ str_to_sentence(trap_land_type)),
+           habitat = case_when(habitat == "agricultural" ~ habitat_type,
+                               TRUE ~ habitat),
+           job = case_when(job == "other" ~ str_to_lower(job_other),
+                           TRUE ~ job)) %>%
+    mutate(SubmissionDate = ymd(as.Date(SubmissionDate)),
+           date_set = ymd(as.Date(date_set)),
+           village = factor(village),
+           grid_number = factor(grid_number),
+           trap_number = as.integer(trap_number),
+           site_use = factor(site_use),
+           intensity = factor(intensity),
+           crop_type = factor(crop_type),
+           habitat = factor(habitat),
+           proximity = factor(proximity),
+           trap_land_type = factor(trap_land_type),
+           job = factor(job),
+           roof = factor(roof),
+           containers = factor(containers),
+           sleeping = factor(sleeping)) %>%
+    select(SubmissionDate, date_set, village, visit, grid_number, trap_number, site_use, intensity, crop_type, habitat,
+           proximity, trap_land_type, lon, lon_dec, lon_DdM, lat, lat_dec, lat_DdM, elevation, key, site_key, number_of_adults, job, number_of_children, roof, walls,
+           floor, containers, sleeping, trap_image)
+  
+  trap_nos <- filter(full_trap_locations, grepl("_2", trap_number))
+  
+  message(cat(
+    paste(
+      paste0("There are ", nrow(trap_nos), " duplicated trap numbers:"),
+      paste0("They are trap numbers: ", knitr::combine_words(trap_nos$trap_number)),
+      sep = "\n")))
+  
+  full_trap_locations <- full_trap_locations %>%
+    group_by_all() %>%
+    expand(trap_night = 1:4) %>%
+    ungroup() %>%
+    filter(!trap_number %in% trap_nos$trap_number) %>%
+    mutate(elevation = case_when(elevation >= 2000 ~ elevation/10,
+                                 elevation <= 100 ~ elevation*10,
+                                 TRUE ~ elevation),
+           date_set = date_set + (as.numeric(trap_night)-1),
+           trap_uid = paste0(village, "_", visit, "_", trap_night, "_", grid_number, "_", trap_number)) %>%
+    dplyr::select(-c(lat_dec, lat_DdM, lon_dec, lon_DdM))
+  
+  
+  coord_check <- full_trap_locations %>%
+    distinct(village, visit, trap_number, .keep_all = T) %>%
+    drop_na(lon, lat) %>%
+    st_as_sf(coords = c("lon", "lat")) %>%
+    st_set_crs(., value = 4326)
+  
+  coord_error <- bind_rows(coord_check %>%
+                             filter(village == "lalehun") %>%
+                             .[st_as_sf(village_bbox[["lalehun"]]), , op = st_disjoint],
+                           coord_check %>%
+                             filter(village == "seilama") %>%
+                             .[st_as_sf(village_bbox[["seilama"]]), , op = st_disjoint],
+                           coord_check %>%
+                             filter(village == "bambawo") %>%
+                             .[st_as_sf(village_bbox[["bambawo"]]), , op = st_disjoint],
+                           coord_check %>%
+                             filter(village == "baiama") %>%
+                             .[st_as_sf(village_bbox[["baiama"]]), , op = st_disjoint],
+                           coord_check %>%
+                             filter(village == "lambayama") %>%
+                             .[st_as_sf(village_bbox[["lambayama"]]), , op = st_disjoint])
+  
+  message(
+    cat(
+      paste(
+        paste0("Using the study site bounding coordinates from the first visit there are potentially ", nrow(coord_error), " misspecified trap locations:"),
+        paste0("These locations are contained in the coord_error dataframe"),
+        paste0("The unique ID of the trap for the first trap night are ", knitr::combine_words(coord_error$trap_uid)),
+        sep = "\n"))
+  )
+  
+  coord_error <- full_trap_locations %>%
+    distinct(village, visit, grid_number, trap_number, .keep_all = T) %>%
+    drop_na(lon, lat) %>%
+    mutate(coord ="Likely correct") %>%
+    filter(!trap_uid %in% coord_error$trap_uid)  %>%
+    st_as_sf(coords = c("lon", "lat")) %>%
+    st_set_crs(., value = 4326) %>%
+    bind_rows(coord_error %>%
+                mutate(coord = "Likely incorrect")) %>%
+    mutate(lon = st_coordinates(.)[,1],
+           lat = st_coordinates(.)[,2])
+ 
+  return(full_trap_locations) 
+}
