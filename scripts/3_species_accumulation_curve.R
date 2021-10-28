@@ -1,11 +1,11 @@
 source(here::here("scripts", "0_project_library.R"))
 
 latest_rodent<- latest_data("rodents", clean = T)  %>%
-  dplyr::select(rodent_id, initial_genus_id)
+  dplyr::select(rodent_id, initial_genus_id, trap_uid)
 latest_trapsite <- latest_data("trap_sites")
 
 species_acc <- latest_trapsite %>%
-  left_join(., latest_rodent, by = "rodent_id")
+  left_join(., latest_rodent, by = "trap_uid")
 
 number_trapnights <- species_acc %>%
   group_by(village) %>%
