@@ -1,3 +1,5 @@
+devtools::install_github("hrbrmstr/waffle")
+
 library(targets)
 library(here)
 library(tidyverse)
@@ -14,3 +16,7 @@ library(RhpcBLASctl)
 library(exactextractr)
 library(ruODK)
 library(googledrive)
+library(tmap)
+library(waffle)
+library(leaflet)
+library(iNEXT)

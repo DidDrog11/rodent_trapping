@@ -1,6 +1,6 @@
 combine_ODK_data <- function(trap = ODK_traps, check = ODK_trap_check, rodents = ODK_rodents) {
   
-  a <- trap %>%
+  combined_data <- trap %>%
     left_join(., rodents %>%
                 dplyr::select(trap_uid, rodent_uid),
               by = "trap_uid") %>%
@@ -24,4 +24,5 @@ combine_ODK_data <- function(trap = ODK_traps, check = ODK_trap_check, rodents =
                                       !is.na(rodent_uid) ~ "yes",
                                       TRUE ~ "no"))
   
+  return(combined_data)
 }

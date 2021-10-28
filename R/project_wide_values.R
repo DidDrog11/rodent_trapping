@@ -23,3 +23,21 @@ village_bbox <- list("lalehun" = read_rds(here("data", "spatial", "lal_bbox.rds"
                      "lambayama" = read_rds(here("data", "spatial", "lam_bbox.rds")),
                      "bambawo" = read_rds(here("data", "spatial", "bam_bbox.rds")),
                      "baiama" = read_rds(here("data", "spatial", "bai_bbox.rds")))
+
+ras_palette_sl <- c("Missing" = "#d9d9d9",
+                    "Forest" = "#00441b",
+                    "Forest - montane" = "#238b45",
+                    "Savanna - Dry" = "#e8e88e", 
+                    "Shrubland" =  "#ffff8c",
+                    "Shrubland - high altitude" = "#ffffcc",
+                    "Grassland" = "#68b85f",
+                    "Wetlands" = "#99d8c9",
+                    "Marine" =  "#253494",
+                    "Arable land" = "#fee391",
+                    "Pastureland" = "#fec44f",
+                    "Plantations" = "#ec7014",
+                    "Rural gardens" = "#662506",
+                    "Urban areas" = "#7a0177")
+
+village_palette <- c("#7a0177", "#fec44f", "#ec7014", "#005120", "#253494")
+names(village_palette) <-  c("Lalehun", "Seilama", "Bambawo", "Lambayama", "Baiama")

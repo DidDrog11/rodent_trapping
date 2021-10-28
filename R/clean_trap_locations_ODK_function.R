@@ -114,6 +114,7 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
                                    trap_number == "146" & visit == "1" & village == "baiama" ~ "145",
                                    trap_number == "146_2" & visit == "1" & village == "baiama" ~ "146",
                                    trap_number == "141_2" & visit == "1" & village == "baiama" ~ "101",
+                                   trap_number == "2002" & visit == "2" & village == "baiama" ~ "202",
                                    
                                    trap_number == "14" & visit == "3" & village == "lalehun" ~ "13",
                                    trap_number == "14_2" & visit == "3" & village == "lalehun" ~ "14",
@@ -141,6 +142,7 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
              village == "lalehun" & visit == 4 & trap_number == 45 ~ 4.7544,
              village == "lalehun" & visit == 4 & trap_number == 27 ~ 4.7653,
              village == "lalehun" & visit == 4 & trap_number == 84 ~ 4.7430,
+             village == "lalehun" & visit == 3 & trap_number == 35 ~ 4.7621,
              
              village == "lalehun" & visit == 4 & lat_dec >=4 & lat_dec <= 5 ~ swapped_lat,
              village == "lalehun" & visit == 4 & lat_dec > 11 ~ (swapped_lat-11)*100,
@@ -160,6 +162,8 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
              village == "baiama" & visit == 1 & trap_number %in% c(2, 3, 4, 5, 6, 7) ~ swapped_lat,
              village == "baiama" & visit == 1 & trap_number == 195 ~ 15.9879,
              
+             village == "baiama" & visit == 2 & grid_number %in% c(4, 5, 6) ~ swapped_lat,
+             
              village == "lambayama" & visit == 1 & trap_number == 50 ~ 11.6820,
              
              village == "bambawo" & visit == 1 & trap_number == 191 ~ 8.5905,
@@ -172,12 +176,14 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
              village == "lalehun" & visit == 3 & trap_number == 239 ~ 11.633,
              village == "lalehun" & visit == 3 & trap_number == 218 ~ 11.628,
              village == "lalehun" & visit == 3 & trap_number == 10 ~ 11.791,
+             village == "lalehun" & visit == 3 & trap_number == 35 ~ 11.7751,
              
              village == "lalehun" & visit == 3 & lat_dec <= 9 ~ (lat_dec-8)*100,
              
              village == "lalehun" & visit == 4 & trap_number == 27 ~ 11.7797,
              village == "lalehun" & visit == 4 & trap_number == 45 ~ 11.7787,
              village == "lalehun" & visit == 4 & trap_number == 1 ~ 11.8006,
+             village == "lalehun" & visit == 4 & trap_number == 142 ~ 11.962,
              
              village == "lalehun" & visit == 4 & lat_dec <= 12 & lat_dec >= 8 ~ (swapped_lon-8)*100,
              village == "lalehun" & visit == 4 & lat_dec <= 5 ~ swapped_lon,
@@ -193,6 +199,10 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
              village == "seilama" & visit == 4 & grid_number %in% c(1, 6, 7) ~ swapped_lon,
              
              village == "baiama" & visit == 1 & trap_number %in% c(2, 3, 4, 5, 6, 7) ~ swapped_lon,
+             
+             village == "baiama" & visit == 2 & trap_number == 185 ~ 50.1830,
+             
+             village == "baiama" & visit == 2 & grid_number %in% c(4, 5, 6) ~ swapped_lon,
              
              village == "lambayama" & visit == 1 & trap_number == 50 ~ 51.0729,
              village == "lambayama" & visit == 1 & trap_number == 153 ~ 50.9851,
@@ -232,7 +242,7 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
            roof = factor(roof),
            containers = factor(containers),
            sleeping = factor(sleeping)) %>%
-    select(SubmissionDate, date_set, village, visit, grid_number, trap_number, site_use, intensity, crop_type, habitat,
+    dplyr::select(SubmissionDate, date_set, village, visit, grid_number, trap_number, site_use, intensity, crop_type, habitat,
            proximity, trap_land_type, lon, lon_dec, lon_DdM, lat, lat_dec, lat_DdM, elevation, key, site_key, number_of_adults, job, number_of_children, roof, walls,
            floor, containers, sleeping, trap_image)
   

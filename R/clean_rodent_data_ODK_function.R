@@ -105,6 +105,6 @@ clean_rodent_data_ODK <- function(){
                                   TRUE ~ as.numeric(study_site)),
            study_site = as_factor(study_site),
            trap_uid = paste0(village, "_", visit, "_", trap_night, "_", study_site, "_", trap_number)) %>%
-           select(-any_of(not_needed_vars), -starts_with("site_images"))
+           dplyr::select(-any_of(not_needed_vars), -starts_with("site_images"))
   
 }
