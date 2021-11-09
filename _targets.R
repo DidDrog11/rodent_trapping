@@ -37,6 +37,9 @@ view_traps <- plot_traps_interactively(final_cleaned_trap_data$clean_sites)
 # Produce a species accumulation curve for the study up to the current trapping visit
 species_accumulation <- derive_accumulation_curves()
 
+# Trap site landuse
+landuse_trap_site <- plot_landuse_trapistes(data = sle_raster)
+
 # Set up parallelism (no of targets that can run simultaneously)
 tar_config_set(workers = get_num_cores())
 
