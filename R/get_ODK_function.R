@@ -7,6 +7,7 @@ get_ODK <- function(){
   
   all_forms <- form_list()$name
   
+  if(file.exists(here("data", "raw_odk", "last_submission.rds"))) {
   last_submission <- read_rds(here("data", "raw_odk", "last_submission.rds"))
   
   recent_submission <- max(form_list()$last_submission, na.rm = TRUE)
@@ -14,6 +15,12 @@ get_ODK <- function(){
   download_new <- recent_submission > last_submission
   
   write_rds(recent_submission, here("data", "raw_odk", "last_submission.rds"))
+  
+  } else {
+    
+    download_new = TRUE
+    
+  }
   
   if(download_new == TRUE) {
   
