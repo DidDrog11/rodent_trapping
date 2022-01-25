@@ -26,9 +26,13 @@ clean_rodent_data_ODK <- function(){
   
   rodents <- read_csv(all_files[1], show_col_types = FALSE) %>%
     filter(ReviewState != "rejected" | is.na(ReviewState)) %>%
-    mutate(date_entered = as.Date(ymd_hms(form_entry)),
+    mutate(village_name = case_when(is.na(village_name) & rodent_number == 38 ~ "seilama",
+                                    TRUE ~ village_name),
+           date_entered = as.Date(ymd_hms(form_entry)),
            village_abbreviation = toupper(str_sub(village_name, end = 3)),
            visit = case_when(is.na(visit) & village_name == "bambawo" ~ 1,
+                             visit == 41 ~ 4,
+                             month(form_entry) <= 2 & year(form_entry) == 2022 & village_name %in% c("lalehun", "seilama") ~ 5,
                              TRUE ~ visit),
            genus = case_when(`rodent_details-genus` == "not_listed" ~ `rodent_details-genus_other`,
                              TRUE ~ `rodent_details-genus`),
@@ -46,8 +50,8 @@ clean_rodent_data_ODK <- function(){
                                      `acquisition-ear_snip` == "yes" &
                                      `acquisition-eye_sample` == "yes" ~ "yes",
                                    TRUE ~ "no"),
-           visit = case_when(visit == 41 ~ 4,
-                             TRUE ~ visit)) %>%
+           rodent_number = case_when(rodent_number == 249 ~ 8,
+                                     TRUE ~ rodent_number)) %>%
     rename("village" = "village_name",
            "study_site" = "trap_details-study_site", 
            "trap_number" = "trap_details-trap_number_int",
@@ -75,6 +79,8 @@ clean_rodent_data_ODK <- function(){
            rodent_uid = paste0(visit, "_", village_abbreviation, "_", filter_label_number),
            trap_number = case_when(rodent_number == 1 & village == "bambawo" & visit == 1 ~ 9,
                                    rodent_number == 2 & village == "bambawo" & visit == 1 ~ 13,
+                                   
+                                   rodent_number == 4 & village == "lambayama" & visit == 2 ~ 232,
                                    TRUE ~ trap_number),
            study_site = case_when(village == "lalehun" & study_site == "not_listed" & visit == 4 ~ 7,
                                   
@@ -100,6 +106,8 @@ clean_rodent_data_ODK <- function(){
                                   rodent_number == 4 & village == "lalehun" & visit == 3 ~ 2,
                                   rodent_number == 7 & village == "lalehun" & visit == 3 ~ 3,
                                   rodent_number == 3 & village == "lalehun" & visit == 3 ~ 3,
+                                  
+                                  rodent_number %in% c(8, 9, 10, 11, 12, 25) & village == "lalehun" & visit == 4 ~ 7,
                                   
                                   rodent_number == 5 & village == "lambayama" & visit == 1 ~ 4,
                                   TRUE ~ as.numeric(study_site)),

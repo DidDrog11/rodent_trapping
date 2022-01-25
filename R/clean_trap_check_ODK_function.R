@@ -33,6 +33,7 @@ clean_trap_check_ODK <- function() {
            "key" = "KEY") %>%
     dplyr::select(-any_of(not_needed_vars), -starts_with("site_images")) %>%
     mutate(visit = case_when(key == "uuid:21f76f88-0c45-4382-97fa-4768777feae8" ~ 1,
+                             month(form_entry) <= 2 & year(form_entry) == 2022 & village %in% c("lalehun", "seilama") ~ 5,
                              TRUE ~ visit)) # Correct miscoded visit number
   
   last_date <- max(trap_check$form_entry)

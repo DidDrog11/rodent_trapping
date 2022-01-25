@@ -23,6 +23,7 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
     rename("visit_key" = "PARENT_KEY",
            "site_key" = "KEY") %>%
     mutate(latitude = case_when(latitude == 118702.0000 ~ 11.8702,
+                                latitude == 11.31840 & trap_image == "1642601179101.jpg" ~ 7.31840,
                                 TRUE ~ latitude)) %>%
     rename("number_traps" = "number_of_traps_in_house") %>%
     left_join(., trap_sites %>%
@@ -63,26 +64,16 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
   full_trap_locations <- full_join(trap_sites, trap_locations, by = "key") %>%
     full_join(., houses,
               by = c("key" = "visit_key")) %>%
-    mutate(longitude = case_when(is.na(longitude.x) ~ longitude.y,
-                                 TRUE ~ longitude.x),
-           latitude = case_when(is.na(latitude.x) ~ latitude.y,
-                                TRUE ~ latitude.x),
-           elevation = case_when(is.na(elevation.x) ~ elevation.y,
-                                 TRUE ~ elevation.x),
-           trap_number = case_when(is.na(trap_number.x) ~ trap_number.y,
-                                   TRUE ~ trap_number.x),
-           number_traps = case_when(is.na(number_traps.x) ~ number_traps.y,
-                                    TRUE ~ number_traps.x),
-           habitat_type = case_when(is.na(habitat_type.x) ~ habitat_type.y,
-                                    TRUE ~ habitat_type.x),
-           study_site = case_when(is.na(study_site.x) ~ study_site.y,
-                                    TRUE ~ study_site.x),
-           trap_number = case_when(is.na(trap_number.x) ~ trap_number.y,
-                                    TRUE ~ trap_number.x),
-           village_name = case_when(is.na(village_name.x) ~ village_name.y,
-                                    TRUE ~ village_name.x),
-           visit_number = case_when(is.na(visit_number.x) ~ visit_number.y,
-                                    TRUE ~ visit_number.x)) %>%
+    mutate(longitude = coalesce(longitude.x, longitude.y),
+           latitude = coalesce(latitude.x, latitude.y),
+           elevation = coalesce(elevation.x, elevation.y),
+           trap_number = coalesce(trap_number.x, trap_number.y),
+           number_traps = coalesce(number_traps.x, number_traps.y),
+           habitat_type = coalesce(habitat_type.x, habitat_type.y),
+           study_site = coalesce(study_site.x, study_site.y),
+           trap_number = coalesce(trap_number.x, trap_number.y),
+           village_name = coalesce(village_name.x, village_name.y),
+           visit_number = coalesce(visit_number.x, visit_number.y)) %>%
     dplyr::select(-any_of(ends_with(c(".x", ".y")))) %>%
     drop_na(trap_number) %>%
     rename("village" = "village_name",
@@ -155,6 +146,10 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
              village == "lalehun" & visit == 4 & lat_dec >=4 & lat_dec <= 5 ~ swapped_lat,
              village == "lalehun" & visit == 4 & lat_dec > 11 ~ (swapped_lat-11)*100,
              
+             village == "lalehun" & visit == 5 & grid_number == 4 & trap_number == 176  ~ 4.6840,
+             
+             village == "lalehun" & visit == 5 & grid_number %in% c(5, 4) ~ (swapped_lat - 11) * 100,
+             
              village == "seilama" & visit == 3 & trap_number == 228 ~ 11.866,
              village == "seilama" & visit == 3 & trap_number == 12 ~ 11.5320,
              village == "seilama" & visit == 3 & trap_number == 22 ~ 11.5418,
@@ -202,6 +197,8 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
              
              village == "lalehun" & visit == 4 & lat_dec <= 12 & lat_dec >= 8 ~ (swapped_lon-8)*100,
              village == "lalehun" & visit == 4 & lat_dec <= 5 ~ swapped_lon,
+             
+             village == "lalehun" & visit == 5 & grid_number %in% c(4, 5) ~ (swapped_lon-8)*100,
              
              village == "seilama" & visit == 3 & trap_number == 208 ~ 7.424,
              village == "seilama" & visit == 3 & trap_number == 203 ~ 7.412,
@@ -264,16 +261,16 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
            containers = factor(containers),
            sleeping = factor(sleeping)) %>%
     dplyr::select(SubmissionDate, date_set, village, visit, grid_number, trap_number, site_use, intensity, crop_type, habitat,
-           proximity, trap_land_type, lon, lon_dec, lon_DdM, lat, lat_dec, lat_DdM, elevation, key, site_key, number_of_adults, job, number_of_children, roof, walls,
-           floor, containers, sleeping, trap_image)
+                  proximity, trap_land_type, lon, lon_dec, lon_DdM, lat, lat_dec, lat_DdM, elevation, key, site_key, number_of_adults, job, number_of_children, roof, walls,
+                  floor, containers, sleeping, trap_image)
   
   trap_nos <- filter(full_trap_locations, grepl("_2", trap_number))
   
-  message(cat(
-    paste(
-      paste0("There are ", nrow(trap_nos), " duplicated trap numbers:"),
-      paste0("They are trap numbers: ", knitr::combine_words(trap_nos$trap_number)),
-      sep = "\n")))
+  message(cat(ifelse(nrow(trap_nos) == 0, "There are no duplicated trap numbers,",
+                     paste(
+                       paste0("There are ", nrow(trap_nos), " duplicated trap numbers:"),
+                       paste0("They are trap numbers: ", knitr::combine_words(trap_nos$trap_number)),
+                       sep = "\n"))))
   
   full_trap_locations <- full_trap_locations %>%
     group_by_all() %>%
@@ -287,12 +284,23 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
            trap_uid = paste0(village, "_", visit, "_", trap_night, "_", grid_number, "_", trap_number)) %>%
     dplyr::select(-c(lat_dec, lat_DdM, lon_dec, lon_DdM))
   
+  message("Traps expanded for 4 nights at each site.")
+  
+  # fix improbable coordinates here
+  full_trap_locations <- fix_improbable_coordinates(data =  full_trap_locations)
+  
+  improbable_coordinates <- full_trap_locations %>%
+    distinct(village, visit, trap_number, .keep_all = T) %>%
+    filter(lon <= -14 | lon >= -10 | lat  >= 9 | lat <= 7)
+  
+  message(paste(nrow(improbable_coordinates), "trap sites have improbable coordinates that need changing within the correction dictionary. The trap unique id's are stored in the improbable coordinates element"))
   
   coord_check <- full_trap_locations %>%
     distinct(village, visit, trap_number, .keep_all = T) %>%
     drop_na(lon, lat) %>%
     st_as_sf(coords = c("lon", "lat")) %>%
-    st_set_crs(., value = 4326)
+    st_set_crs(., value = 4326) %>%
+    ungroup()
   
   coord_error <- bind_rows(coord_check %>%
                              filter(village == "lalehun") %>%
@@ -315,22 +323,25 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
     cat(
       paste(
         paste0("Using the study site bounding coordinates from the first visit there are potentially ", nrow(coord_error), " misspecified trap locations:"),
-        paste0("These locations are contained in the coord_error dataframe"),
-        paste0("The unique ID of the trap for the first trap night are ", knitr::combine_words(coord_error$trap_uid)),
+        paste0("These locations are contained in the coord_error dataframe. This does not include locations with improbable coordinates"),
         sep = "\n"))
   )
   
-  coord_error <- full_trap_locations %>%
-    distinct(village, visit, grid_number, trap_number, .keep_all = T) %>%
-    drop_na(lon, lat) %>%
-    mutate(coord ="Likely correct") %>%
-    filter(!trap_uid %in% coord_error$trap_uid)  %>%
-    st_as_sf(coords = c("lon", "lat")) %>%
-    st_set_crs(., value = 4326) %>%
-    bind_rows(coord_error %>%
-                mutate(coord = "Likely incorrect")) %>%
-    mutate(lon = st_coordinates(.)[,1],
-           lat = st_coordinates(.)[,2])
- 
-  return(full_trap_locations) 
+  coord_error <- list(spatial = full_trap_locations %>%
+                        distinct(village, visit, grid_number, trap_number, .keep_all = T) %>%
+                        drop_na(lon, lat) %>%
+                        mutate(coord ="Likely correct") %>%
+                        filter(!trap_uid %in% coord_error$trap_uid)  %>%
+                        st_as_sf(coords = c("lon", "lat")) %>%
+                        st_set_crs(., value = 4326) %>%
+                        bind_rows(coord_error %>%
+                                    mutate(coord = "Likely incorrect")) %>%
+                        mutate(lon = st_coordinates(.)[,1],
+                               lat = st_coordinates(.)[,2]),
+                      traps_error = full_trap_locations %>%
+                        filter(trap_uid %in% coord_error$trap_uid))
+  
+  return(output = list(full_trap_locations = full_trap_locations,
+                       improbable_coordinates = improbable_coordinates,
+                       coord_error = coord_error))
 }
