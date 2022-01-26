@@ -80,8 +80,7 @@ derive_accumulation_curves <- function(rodent_data = final_cleaned_rodent_data, 
       scale_fill_manual(values = village_palette) +
       scale_colour_manual(values = village_palette) +
       labs(title = "Genus accumulation",
-           x = "Number of trapnights", y = "Genus diversity", colour = "Site", fill = "Site",
-           caption = "Lambayama estimates currently unstable") +
+           x = "Number of trapnights", y = "Genus diversity", colour = "Site", fill = "Site") +
       theme_minimal()
     
     return(accumulation_plot)

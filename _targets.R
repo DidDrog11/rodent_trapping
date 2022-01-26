@@ -41,6 +41,10 @@ species_accumulation <- derive_accumulation_curves()
 # Trap site landuse
 landuse_trap_site <- plot_landuse_trapsites(data = sle_raster)
 
+# Trap success rate
+trap_success_plot <- plot_trap_success(data = final_cleaned_trap_data$clean_sites)
+
+
 # Set up parallelism (no of targets that can run simultaneously)
 tar_config_set(workers = get_num_cores())
 

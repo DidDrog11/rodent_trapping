@@ -23,7 +23,7 @@ final_cleaning <- function(trap_data = all_traps, rodent_data = all_rodents) {
       paste(
         paste0("All trap data is available in the clean_data$clean_sites dataframe"),
         paste0("However, due to some delays in uploading data from Sierra Leone some rodent records may be temporarily unmatched."),
-        paste0("Currently there are ", nrow(missing_rodents), " they are stored in the $missing_rodents dataframe"),
+        paste0("Currently there are ", nrow(missing_rodents), ". They are stored in the $missing_rodents dataframe"),
         sep = "\n"))
   )
   

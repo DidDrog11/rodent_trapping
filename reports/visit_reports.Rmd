@@ -31,31 +31,33 @@ Five villages have been enrolled, one will not be carried forward due to concern
 
   + Bambawo (coordinates 8.009 N, -11.1303 E)
     + Visit 1 - 2021-06-23 to 2021-06-27
-    + Visit 2 - 2021-10
+    + Stopped after a single visit
   + Lalehun (coordinates  8.1975 N, -11.0803 E) 
-    + Visit 1 - 2020-11-30 to 2020-12-03
+    + Pilot/Visit 1 - 2020-11-30 to 2020-12-03
     + Visit 2 - 2021-04-01 to 2021-04-04
     + Visit 3 - 2021-07-08 to 2021-07-12
-    + Visit 4 - 2021-10
+    + Visit 4 - 2021-10-12 to 2021-10-15
+    + Visit 5 - 2022-01-16 to 2022-01-19
   + Lambayama (coordinates 7.8544 N, -11.1897 E)
     + Visit 1 - 2021-06-28 to 2021-07-02
-    + Visit 2 - 2021-10
+    + Visit 2 - 2021-10-28 to 2021-10-31
+    + Visit 3 - 2022
   + Seilama (coordinates 8.1222 N, -11.1936 E)
-    + Visit 1 - 2020-12-05 to 2020-12-09
+    + Pilot/Visit 1 - 2020-12-05 to 2020-12-09
     + Visit 2 - 2021-04-12 to 2021-04-15
     + Visit 3 - 2021-07-13 to 2021-07-17
-    + Visit 4 - 2021-10
+    + Visit 4 - 2021-10-16 to 2021-10-19
+    + Visit 5 - 2022-01-18 to 2022-01-21
   + Baiama (coordinates 7.83708 N, -11.26845 E)
     + Visit 1 - 2021-07-03 to 2021-07-07
-    + Visit 2 - 2021-10
+    + Visit 2 - 2021-10-22 to 2021-10-25
+    + Visit 3 - 2022
 
-Rodents are trapped at up to 6 distinct trap sites per village with up to 49 traps per site. Data is collected on this group of [data collection forms](https://drive.google.com/drive/folders/1yE_JAThq-DM9y5yvtSPMgM2ezMcZ_zyO?usp=sharing) or on the digitised versions using electronic pads in the field using [ODK](https://opendatakit.lshtm.ac.uk/lshtm-odk-servers/) all digital forms are encrypted locally on the device and sent to a server based at LSHTM. The `.xlsx` versions of the ODK forms are available on the OpenScience Framework [project page](https://osf.io/usjrd/).
+Rodents are trapped at up to 6 distinct trap sites per village with up to 49 traps per site. Data was previously collected on this group of [data collection forms](https://drive.google.com/drive/folders/1yE_JAThq-DM9y5yvtSPMgM2ezMcZ_zyO?usp=sharing). Since June 2021 all data has been collected on digitised versions using electronic pads/phones in the field through the [ODK](https://opendatakit.lshtm.ac.uk/lshtm-odk-servers/) platform all digital forms are encrypted locally on the device and sent to a server hosted at LSHTM. The `.xlsx` versions of the ODK forms are available on the OpenScience Framework [project page](https://osf.io/usjrd/).
 
-We have currently obtained 7,270 trap nights across 3 visits (including the pilot).
+`r nrow(final_cleaned_trap_data$clean_sites` trap nights across these visits have been completed. Study visits are scheduled four times per year (every 3 months).
 
-There will ideally be study visits 4 times per year (every 3 months), dates will be confirmed with the study team.
-
-The land use predominantly obtained from Jung et al. and ground truthed through discussion with local communities guided the selection of the trapping sites at study villages. 
+Remote sensed land use classifications derived from Jung et al. and ground-truthed through input from local communities guided the selection of the trapping sites at the selected study villages. 
 
 ```{r village-landuse, layout = "l-page"}
 knitr::include_graphics(here("reports", "figures", "villages_plots.png"))

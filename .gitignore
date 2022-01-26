@@ -6,8 +6,15 @@
 reports/figures/
 
 data/satellite/
-data/spatial/
+data/spatial/*
 data/plots/
 
 data/raw_odk/
 data/clean_data/
+
+# allow
+!data/spatial/lal_bbox.rds
+!data/spatial/sei_bbox.rds
+!data/spatial/lam_bbox.rds
+!data/spatial/bam_bbox.rds
+!data/spatial/bai_bbox.rds

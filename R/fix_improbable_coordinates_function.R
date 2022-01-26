@@ -1,7 +1,7 @@
 fix_improbable_coordinates <- function(data = full_trap_locations) {
   
   
-  data %>%
+  updated_coordinates <- data %>%
   mutate(lon = case_when(village == "lalehun" & visit == 5 & grid_number == 1 & trap_number == 34 ~ -11.07941,
                          village == "lalehun" & visit == 5 & grid_number == 2 & trap_number == 86 ~ -11.07901,
                          village == "lalehun" & visit == 5 & grid_number == 2 & trap_number == 94 ~ -11.0789,
@@ -29,5 +29,5 @@ fix_improbable_coordinates <- function(data = full_trap_locations) {
                          village == "seilama" & visit == 5 & grid_number == 3 & trap_number == 124 ~ 8.123936,
                          TRUE ~ lat))
   
-  return(data)
+  return(updated_coordinates)
   }
