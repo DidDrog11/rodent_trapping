@@ -32,6 +32,9 @@ sle_raster <- generate_raster()
 # Landuse plots
 landuse_plots <- plot_landuse(data = sle_raster)
 
+# save plots if not previously saved
+save_landuse_plots()
+
 # View traps on leaflet maps
 view_traps <- plot_traps_interactively(final_cleaned_trap_data$clean_sites)
 

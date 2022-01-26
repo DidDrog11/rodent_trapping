@@ -15,7 +15,7 @@ plot_landuse <- function(data = sle_raster) {
               palette = data$raster_labels$palette,
               title = "") +
     tm_layout(legend.outside = TRUE,
-              main.title = "Land use in the Eastern Province of Sierra Leone") +
+              main.title = "Land use in Eastern Province, \nSierra Leone") +
     tm_compass() +
     tm_scale_bar()
   
@@ -43,6 +43,10 @@ plot_landuse <- function(data = sle_raster) {
     labs(fill = "Eastern province land use",
          caption = "Each rectangle represents ~1% of land area") +
     theme_enhance_waffle()
+  
+  combined_eastern_province_landuse <- plot_grid(tmap_grob(region_landuse_raster), region_landuse_waffle +
+                                                   theme(legend.position = "none"),
+                                                 rel_heights = c(1, 0.8), rel_widths = c(2, 1))
   
   eastern_province_landuse <- list(eastern_province_raster = region_landuse_raster,
                                    eastern_province_waffle = region_landuse_waffle)

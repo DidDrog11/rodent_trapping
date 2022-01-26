@@ -5,7 +5,7 @@
 
 reports/figures/
 
-data/satellite/
+data/satellite/*
 data/spatial/*
 data/plots/
 
@@ -18,3 +18,6 @@ data/clean_data/
 !data/spatial/lam_bbox.rds
 !data/spatial/bam_bbox.rds
 !data/spatial/bai_bbox.rds
+
+!data/satellite/eastern_province_landuse.rds
+!data/satellite/eastern_province_landuse_labels.rds

@@ -31,8 +31,10 @@ ODK_paper_combine_rodent <- function(ODK_data = ODK_rodents) {
            "rodent_uid" = "rodent_id") %>%
     dplyr::select(-date, -any_of(c("blood_filter", "filter_id", "serum", "liver_spleen", "ear_sampled", "eye_sampled", "site_id")))
   
-  combined_rodents <- bind_rows(paper_forms_trapped_rodents,
-                                ODK_data) %>%
+  combined_rodents <- bind_rows(paper_forms_trapped_rodents %>%
+                                  mutate(source_data = "Paper"),
+                                ODK_data %>%
+                                  mutate(source_data = "ODK")) %>%
     mutate(across(any_of(factor_vars), ~as_factor(.)),
            rodent_uid = substr(rodent_uid, 1, 9))
   
