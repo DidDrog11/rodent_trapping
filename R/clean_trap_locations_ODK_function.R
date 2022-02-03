@@ -111,7 +111,6 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
                                    trap_number == "2002" & visit == "2" & village == "baiama" ~ "202",
                                    
                                    trap_number == "237" & visit == "2" & village == "lambayama" & grid_number == 5 ~ "236",
-                                   is.na(trap_number) & visit == "2" & village == "lambayama" & grid_number == 5 ~ "237",
                                    
                                    trap_number == "14" & visit == "3" & village == "lalehun" ~ "13",
                                    trap_number == "14_2" & visit == "3" & village == "lalehun" ~ "14",
@@ -126,7 +125,25 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
                                    trap_number == "267_2" & visit == "4" & village == "lalehun" ~ "270",
                                    
                                    TRUE ~ trap_number),
-           trap_number = as.numeric(trap_number)) %>%
+           trap_number = as.numeric(trap_number),
+           trap_number = case_when(is.na(trap_number) & visit == "2" & village == "lambayama" & grid_number == 3 ~ 62,
+                                   is.na(trap_number) & visit == "2" & village == "lambayama" & grid_number == 1 & elevation == 152 ~ 195,
+                                   is.na(trap_number) & visit == "2" & village == "lambayama" & grid_number == 1 & elevation == 155 ~ 294,
+                                   is.na(trap_number) & visit == "2" & village == "lambayama" & grid_number == 5 ~ 237,
+                                   
+                                   is.na(trap_number) & visit == "2" & village == "baiama" & grid_number == "5" & proximity == "garden" ~ 233,
+                                   is.na(trap_number) & visit == "2" & village == "baiama" & grid_number == "5" & proximity == "road" ~ 245,
+                                   
+                                   is.na(trap_number) & visit == "5" & village == "seilama" & grid_number == "6" ~ 270,
+                                   
+                                   is.na(trap_number) & visit == "5" & village == "lalehun" & grid_number == "4" ~ 175,
+                                   
+                                   is.na(trap_number) & visit == "3" & village == "baiama" & grid_number == "4" ~ 150,
+                                   is.na(trap_number) & visit == "3" & village == "baiama" & grid_number == "2" ~ 97,
+                                   
+                                   is.na(trap_number) & visit == "3" & village == "lambayama" & grid_number == "4" & proximity == "garden" ~ 170,
+                                   is.na(trap_number) & visit == "3" & village == "lambayama" & grid_number == "4" & proximity == "house" ~ 179,
+                                   TRUE ~ as.numeric(trap_number))) %>%
     mutate(lon_degree = 11,
            lat_degree = case_when(village == "lambayama" ~ 7,
                                   village == "baiama" ~ 7,
@@ -167,6 +184,8 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
              
              village == "baiama" & visit == 2 & grid_number %in% c(4, 5, 6) ~ swapped_lat,
              
+             village == "baiama" & visit == 3 & grid_number %in% c(1, 2, 3) ~ (swapped_lat - 11) * 100,
+             
              village == "lambayama" & visit == 1 & trap_number == 50 ~ 11.6820,
              
              village == "lambayama" & visit == 2 & trap_number == 156 ~ 11.8062,
@@ -175,6 +194,8 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
              village == "lambayama" & visit == 2 & trap_number == 215 ~ 11.7934,
              
              village == "lambayama" & visit == 2 & grid_number %in% c(1, 2, 3, 4, 5, 6) ~ swapped_lat,
+             
+             village == "lambayama" & visit == 3 & grid_number %in% c(1, 2, 3) ~ (swapped_lat - 11) * 100,
              
              village == "bambawo" & visit == 1 & trap_number == 191 ~ 8.5905,
              
@@ -216,6 +237,9 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
              
              village == "baiama" & visit == 2 & grid_number %in% c(4, 5, 6) ~ swapped_lon,
              
+             village == "baiama" & visit == 3 & grid_number %in% c(1, 2, 3) ~ (swapped_lon - 7) * 100,
+             village == "baiama" & visit == 3 & grid_number == 4 & trap_number == 150 ~ 50.1842,
+            
              village == "lambayama" & visit == 1 & trap_number == 50 ~ 51.0729,
              village == "lambayama" & visit == 1 & trap_number == 153 ~ 50.9851,
              
@@ -224,6 +248,8 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
              village == "lambayama" & visit == 2 & trap_number == 165 ~ 50.9904,
              
              village == "lambayama" & visit == 2 & grid_number %in% c(1, 2, 3, 4, 5, 6) ~ swapped_lon,
+             
+             village == "lambayama" & visit == 3 & grid_number %in% c(1, 2, 3) ~ (swapped_lon - 7) * 100,
              
              village == "bambawo" & visit == 1 & trap_number == 53 ~ 0.5458,
              
@@ -272,6 +298,13 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
                        paste0("They are trap numbers: ", knitr::combine_words(trap_nos$trap_number)),
                        sep = "\n"))))
   
+  missing_trap_nos <- full_trap_locations %>%
+    filter(is.na(trap_number))
+  
+  message(cat(ifelse(nrow(missing_trap_nos) == 0, "There are no missing trap numbers,",
+                     paste(
+                       paste0("There are ", nrow(missing_trap_nos), " missing trap numbers:")))))
+  
   full_trap_locations <- full_trap_locations %>%
     group_by_all() %>%
     expand(trap_night = 1:4) %>%
@@ -317,7 +350,7 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
                            coord_check %>%
                              filter(village == "lambayama") %>%
                              .[st_as_sf(village_bbox[["lambayama"]]), , op = st_disjoint]) %>%
-    filter(!(village == "baiama" & visit == 2 & grid_number %in% c(5, 6)))
+    filter(!(village == "baiama" & visit %in% c(2, 3) & grid_number %in% c("5", "6"))) # these sites were set up after visit 1
   
   message(
     cat(

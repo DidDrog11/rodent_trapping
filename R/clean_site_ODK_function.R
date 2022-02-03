@@ -22,6 +22,7 @@ clean_site_ODK <- function() {
                                     month(form_entry) >= 10 & month(form_entry) <= 11 & year(form_entry) == 2021 & village_name %in% c("lalehun", "seilama") ~ 4,
                                     month(form_entry) >= 10 & month(form_entry) <= 11 & year(form_entry) == 2021 & village_name %in% c("lambayama", "bambawo", "baiama") ~ 2,
                                     month(form_entry) <= 2 & year(form_entry) == 2022 & village_name %in% c("lalehun", "seilama") ~ 5,
+                                    month(form_entry) <= 2 & year(form_entry) == 2022 & village_name %in% c("lambayama") ~ 3,
                                     TRUE ~ visit_number),
            study_site = case_when(KEY == "uuid:5bedb731-5e12-49e2-8aef-fca6a1647690" ~ 2, # A trap site was miscoded as 1 instead of 2, this corrects it.
                                   KEY == "uuid:78e1e027-0851-4c47-8077-ccb8e0e2f049" ~ 5,

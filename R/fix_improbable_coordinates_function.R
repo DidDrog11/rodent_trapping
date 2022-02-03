@@ -13,6 +13,10 @@ fix_improbable_coordinates <- function(data = full_trap_locations) {
                          village == "seilama" & visit == 5 & grid_number == 4 & trap_number == 161 ~ -11.19457,
                          village == "seilama" & visit == 5 & grid_number == 4 & trap_number == 192 ~ -11.19483,
                          
+                         village == "lambayama" & visit == 3 & grid_number == 5 & trap_number == 226 ~ -11.197811667,
+                         village == "lambayama" & visit == 3 & grid_number == 5 & trap_number == 237 ~ -11.19681,
+                         village == "lambayama" & visit == 3 & grid_number == 2 & trap_number == 69 ~ -11.19463,
+                         
                          TRUE ~ lon),
          lat = case_when(village == "lalehun" & visit == 5 & grid_number == 6 & trap_number == 275 ~ 8.197686,
                          village == "lalehun" & visit == 5 & grid_number == 4 & trap_number == 167 ~ 8.194110,
@@ -27,6 +31,17 @@ fix_improbable_coordinates <- function(data = full_trap_locations) {
                          village == "lalehun" & visit == 5 & grid_number == 3 & trap_number == 131 ~ 8.198868,
                          
                          village == "seilama" & visit == 5 & grid_number == 3 & trap_number == 124 ~ 8.123936,
+                         
+                         village == "baiama" & visit == 3 & grid_number %in% c(4, 5, 6) & trap_number %in% c(168, 169, 185, 195, 206, 216, 250, 251, 252, 253) ~ (lat/10000) + 7,
+                         village == "baiama" & visit == 3 & grid_number == 1 & trap_number == 13 ~ 7.82467,
+                         village == "baiama" & visit == 3 & grid_number == 1 & trap_number == 14 ~ 7.82475,
+                         village == "baiama" & visit == 3 & grid_number == 1 & trap_number == 40 ~ 7.824557,
+                         
+                         village == "lambayama" & visit == 3 & grid_number == 5 & trap_number == 214 ~ (lat/10000) + 7,
+                         village == "lambayama" & visit == 3 & grid_number == 5 & trap_number == 216 ~ 7.8506575,
+                         village == "lambayama" & visit == 3 & grid_number == 5 & trap_number == 217 ~ 7.8506282,
+                         village == "lambayama" & visit == 3 & grid_number == 4 & trap_number == 154 ~ 7.849887,
+                         village == "lambayama" & visit == 3 & grid_number == 6 & trap_number %in% c(271:274) ~ 7.850658,
                          TRUE ~ lat))
   
   return(updated_coordinates)
