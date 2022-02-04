@@ -10,6 +10,9 @@ get_ODK()
 # Update the local data
 ODK_sites <- clean_site_ODK()
 ODK_traps <- clean_trap_locations_ODK()
+
+# fix the obvious errors, i.e. swapped lat/lon and including the degrees before changing the improbables manually in specific the function
+# check using mapview::mapview(ODK_traps$coord_error$spatial)
 ODK_trap_check <- clean_trap_check_ODK()
 ODK_rodents <- clean_rodent_data_ODK()
 
