@@ -1,7 +1,7 @@
 ---
-title: "Visit Reports"
+title: "Chapter outline - Rodent trapping and speciation"
 description: |
-  This report will clean and perform initial descriptives for the repeat longitudinal study visits.
+  This is the outline and initial analysis plan for rodent data obtained from the longitudinal study visits.
 author:
   - name: "David Simons"
     url: https://github.com/diddrog11/rodent_trapping
@@ -18,6 +18,21 @@ bibliography: citations.bib
 categories:
   - Lassa
 ---
+
+# Abstract
+
+# Introduction
+
+# Research questions
+
+# Methods
+
+# Results
+
+# Discussion
+
+# Conclusion
+
 
 ```{r setup, include=FALSE, quietly=TRUE}
 knitr::opts_chunk$set(echo = F, warning = F, message = F)

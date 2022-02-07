@@ -61,7 +61,8 @@ generate_raster <- function() {
     
   }
   
-  eastern_province_landuse_raster <- read_rds(here("data", "satellite", "eastern_province_landuse.rds"))
+  eastern_province_landuse_raster <- read_rds(here("data", "satellite", "eastern_province_landuse.rds")) 
+  crs(eastern_province_landuse_raster) <- project_crs
   ras_landuse_e <- read_rds(here("data", "satellite", "eastern_province_landuse_labels.rds"))
   
   return(list("raster" = eastern_province_landuse_raster,

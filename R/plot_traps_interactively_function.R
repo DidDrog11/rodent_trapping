@@ -1,8 +1,4 @@
-plot_traps_interactively <- function(data = final_cleaned_trap_data$clean_sites) {
-  
-  data <- data %>%
-    drop_na(lon, lat) %>%
-    st_as_sf(coords = c("lon", "lat"))
+plot_traps_interactively <- function(data = final_cleaned_trap_data$spatial_data) {
   
   plot_traps <- function(village_name) {
     
@@ -25,8 +21,8 @@ plot_traps_interactively <- function(data = final_cleaned_trap_data$clean_sites)
                        radius = 3, 
                        stroke = FALSE,
                        fillOpacity = 1,
-                       popup = paste("Grid number:", combined$grid_number,
-                                     "Trap number:", combined$trap_number),
+                       popup = paste("Trap UID:", combined$trap_uid,
+                                     "Rodent UID:", combined$rodent_uid),
                        popupOptions = popupOptions(closeOnClick = TRUE)) %>%
       addLegend("topright", pal = pal, values = ~rodent_trapped,
                 title = "Successful capture")

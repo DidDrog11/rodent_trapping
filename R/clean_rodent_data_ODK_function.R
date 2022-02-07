@@ -27,12 +27,14 @@ clean_rodent_data_ODK <- function(){
   rodents <- read_csv(all_files[1], show_col_types = FALSE) %>%
     filter(ReviewState != "rejected" | is.na(ReviewState)) %>%
     mutate(village_name = case_when(is.na(village_name) & rodent_number == 38 ~ "seilama",
+                                    KEY == "uuid:d33d36a5-37ce-4453-bcde-46ef75d23974" ~ "lambayama",
                                     TRUE ~ village_name),
            date_entered = as.Date(ymd_hms(form_entry)),
            village_abbreviation = toupper(str_sub(village_name, end = 3)),
            visit = case_when(is.na(visit) & village_name == "bambawo" ~ 1,
                              visit == 41 ~ 4,
                              month(form_entry) <= 2 & year(form_entry) == 2022 & village_name %in% c("lalehun", "seilama") ~ 5,
+                             month(form_entry) <= 2 & year(form_entry) == 2022 & village_name %in% c("lambayama", "baiama") ~ 3,
                              TRUE ~ visit),
            genus = case_when(`rodent_details-genus` == "not_listed" ~ `rodent_details-genus_other`,
                              TRUE ~ `rodent_details-genus`),
@@ -76,6 +78,7 @@ clean_rodent_data_ODK <- function(){
     filter(key != "uuid:16e6f1d6-6e16-4d70-8aa2-b82698872d69") %>%
     # Create the rodent number based on the label used for blood filter
     mutate(filter_label_number = str_pad(str_extract(`acquisition-filter_label`, "\\d+[^\\d]*$"), 3, pad = 0), 
+           filter_label = `acquisition-filter_label`,
            rodent_uid = paste0(visit, "_", village_abbreviation, "_", filter_label_number),
            trap_number = case_when(rodent_number == 1 & village == "bambawo" & visit == 1 ~ 9,
                                    rodent_number == 2 & village == "bambawo" & visit == 1 ~ 13,
@@ -110,6 +113,9 @@ clean_rodent_data_ODK <- function(){
                                   rodent_number %in% c(8, 9, 10, 11, 12, 25) & village == "lalehun" & visit == 4 ~ 7,
                                   
                                   rodent_number == 5 & village == "lambayama" & visit == 1 ~ 4,
+                                  
+                                  rodent_number == 38 & village == "seilama" & visit == 5 ~ 3,
+                                  
                                   TRUE ~ as.numeric(study_site)),
            study_site = as_factor(study_site),
            trap_uid = paste0(village, "_", visit, "_", trap_night, "_", study_site, "_", trap_number)) %>%
