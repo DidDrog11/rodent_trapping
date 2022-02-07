@@ -14,18 +14,9 @@ plot_landuse <- function(data = sle_raster) {
               labels = c(data$raster_labels$label),
               palette = data$raster_labels$palette,
               title = "") +
-    tm_layout(legend.outside = TRUE,
-              main.title = "Land use in Eastern Province, \nSierra Leone") +
+    tm_layout(legend.outside = TRUE) +
     tm_compass() +
     tm_scale_bar()
-  
-  regional_landuse_palette <- data$raster_labels %>%
-    filter(sle_landuse %in% c(108, 109, 1402, 1403, 306, 307, 1405)) %>%
-    pull(palette)
-  
-  names(regional_landuse_palette) <- data$raster_labels %>%
-    filter(sle_landuse %in% c(108, 109, 1402, 1403, 306, 307, 1405)) %>%
-    pull(label)
   
   region_landuse_waffle <- as.data.frame(data$raster) %>%
     tibble() %>%
@@ -44,12 +35,15 @@ plot_landuse <- function(data = sle_raster) {
          caption = "Each rectangle represents ~1% of land area") +
     theme_enhance_waffle()
   
-  combined_eastern_province_landuse <- plot_grid(tmap_grob(region_landuse_raster), region_landuse_waffle +
-                                                   theme(legend.position = "none"),
-                                                 rel_heights = c(1, 0.8), rel_widths = c(2, 1))
+  combined_eastern_province_landuse <-  plot_grid(region_landuse_waffle +
+                                                    theme(legend.position = "none"),
+                                                  tmap_grob(region_landuse_raster),
+                                                  rel_heights = c(0.8, 1), rel_widths = c(1, 2), align = "hv",
+                                                  labels = c("Proportional land use", "Land use map"))
   
   eastern_province_landuse <- list(eastern_province_raster = region_landuse_raster,
-                                   eastern_province_waffle = region_landuse_waffle)
+                                   eastern_province_waffle = region_landuse_waffle,
+                                   combined_eastern_province_landuse = combined_eastern_province_landuse)
   
   ### Study area landuse
   
@@ -72,9 +66,8 @@ plot_landuse <- function(data = sle_raster) {
     tm_symbols(alpha = 0, 
                border.col = "black",
                border.lwd = 2) +
-    tm_layout(legend.outside = TRUE,
-              main.title = paste0("Land use in ", str_to_sentence(village_name))) +
-    tm_scale_bar()
+    tm_layout(legend.outside = TRUE) +
+    tm_scale_bar(bg.color = "white")
   
   village_waffle <- as.data.frame(village_crop) %>%
     tibble() %>%
@@ -93,8 +86,16 @@ plot_landuse <- function(data = sle_raster) {
          caption = "Each rectangle represents ~1% of land area") +
     theme_enhance_waffle()
   
+  combined_village_landuse <-  plot_grid(village_waffle +
+                                                    theme(legend.position = "none"),
+                                                  tmap_grob(village_raster),
+                                                  rel_heights = c(0.8, 1), rel_widths = c(1, 2), align = "hv",
+                                                  labels = c(paste0("Proportional land use (", str_to_sentence(village_name), ")."),
+                                                             paste0("Land use map (", str_to_sentence(village_name), ").")))
+  
   return(list("village_raster" = village_raster,
-              "village_waffle" = village_waffle))
+              "village_waffle" = village_waffle,
+              "combined_village_landuse" = combined_village_landuse))
     
     }
   

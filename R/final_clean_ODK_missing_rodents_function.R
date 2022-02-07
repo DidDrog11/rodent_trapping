@@ -1,4 +1,4 @@
-final_cleaning <- function(trap_data = all_traps, rodent_data = all_rodents) {
+final_cleaning <- function(trap_data = all_traps, rodent_data = all_rodents, site_data = ODK_sites$site_habitats) {
   
   # Add the rodent ID's back into the trap data
   clean_sites <- trap_data %>%
@@ -10,6 +10,11 @@ final_cleaning <- function(trap_data = all_traps, rodent_data = all_rodents) {
            habitat = recode(habitat, !!!clean_habitat),
            rodent_trapped = case_when(rodent_trapped == "yes" ~ "yes",
                                       TRUE ~ "no")) %>%
+    left_join(., site_data %>%
+                mutate(visit_number = as_factor(visit_number),
+                       site = as_factor(site)) %>%
+                select(site_habitat = habitat, village, visit = visit_number, grid_number = site),
+              by = c("village", "visit", "grid_number")) %>%
     write_csv(here("data", "clean_data", "trap_sites", paste0("trap_sites_", Sys.Date(), ".csv"))) #Read the data file from excel document and save within the repo as csv
   
   missing_rodents <- rodent_data %>%

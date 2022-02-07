@@ -23,7 +23,7 @@ all_traps <- ODK_paper_combine(ODK_data = ODK_combined)
 all_rodents <- ODK_paper_combine_rodent(ODK_data = ODK_rodents)
 
 # Associate trapped rodents with locations
-final_cleaned_trap_data <- final_cleaning(trap_data = all_traps, rodent_data = all_rodents)
+final_cleaned_trap_data <- final_cleaning(trap_data = all_traps, rodent_data = all_rodents, site_data = ODK_sites$site_habitats)
 final_cleaned_rodent_data <- final_cleaning_rodents(rodent_data = all_rodents)
 
 # Rodent speciation values
@@ -36,19 +36,34 @@ sle_raster <- generate_raster()
 landuse_plots <- plot_landuse(data = sle_raster)
 
 # save plots if not previously saved
-save_landuse_plots()
+save_landuse_plots(landuse_plots)
+
+# Spatial dataframe of trap site locations
+final_cleaned_trap_data$spatial_data <- st_as_sf(final_cleaned_trap_data$clean_sites, coords = c("lon", "lat")) %>%
+  st_set_crs(value = project_crs)
 
 # View traps on leaflet maps
-view_traps <- plot_traps_interactively(final_cleaned_trap_data$clean_sites)
+view_traps <- plot_traps_interactively(final_cleaned_trap_data$spatial_data)
 
 # Produce a species accumulation curve for the study up to the current trapping visit
 species_accumulation <- derive_accumulation_curves()
 
 # Trap site landuse
-landuse_trap_site <- plot_landuse_trapsites(data = sle_raster)
+landuse_trap_site <- plot_landuse_trapsites(raster_data = sle_raster, trap_data = final_cleaned_trap_data$spatial_data)
+
+# save plots
+save_landuse_plots(landuse_trap_site, combined_only = TRUE)
 
 # Trap success rate
-trap_success_plot <- plot_trap_success(data = final_cleaned_trap_data$clean_sites)
+trap_success_plot <- plot_trap_success(data = final_cleaned_trap_data$clean_sites, by_village = FALSE, save_plots = FALSE)
+
+save_plot(here("output", "figures", "trap_success", "all_sites_success.png"), trap_success_plot,
+          base_height = 10, base_width = 12)
+
+trap_success_village <- plot_trap_success(data = final_cleaned_trap_data$clean_sites, by_village = TRUE, save_plots = TRUE)
+
+# Rodent description
+rodent_descriptives <- describe_rodents_trapped(data = final_cleaned_rodent_data, trap_data = final_cleaned_trap_data$clean_sites)
 
 
 # Set up parallelism (no of targets that can run simultaneously)

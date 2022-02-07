@@ -41,3 +41,11 @@ ras_palette_sl <- c("Missing" = "#d9d9d9",
 
 village_palette <- c("#7a0177", "#fec44f", "#ec7014", "#005120", "#253494")
 names(village_palette) <-  c("Lalehun", "Seilama", "Bambawo", "Lambayama", "Baiama")
+
+regional_landuse_palette <- c("#00441b", "#238b45", "#ffff8c", "#ffffcc", "#fec44f", "#ec7014", "#7a0177")
+names(regional_landuse_palette) <- c("Forest", "Forest - montane", "Shrubland", "Shrubland - high altitude", "Pastureland", "Plantations", "Urban Areas")
+
+trap_palette <- c("#7a0177", "#fec44f", "#fee391", "#00441b")
+names(trap_palette) <- c("Village", "Proximal agriculture", "Distal agriculture", "Forest/fallow land")
+
+project_crs <- "+proj=longlat +datum=WGS84 +no_defs"

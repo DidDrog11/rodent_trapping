@@ -1,4 +1,4 @@
-combine_ODK_data <- function(trap = ODK_traps, check = ODK_trap_check, rodents = ODK_rodents) {
+combine_ODK_data <- function(trap = ODK_traps$full_trap_locations, check = ODK_trap_check, rodents = ODK_rodents) {
   
   combined_data <- trap %>%
     left_join(., rodents %>%
@@ -23,6 +23,14 @@ combine_ODK_data <- function(trap = ODK_traps, check = ODK_trap_check, rodents =
                                       rodent_trapped == "n" ~ "no",
                                       !is.na(rodent_uid) ~ "yes",
                                       TRUE ~ "no"))
+  
+  unaligned_rodents <- trap %>%
+    anti_join(rodents %>%
+                dplyr::select(trap_uid, rodent_uid),
+              .,
+              by = "trap_uid")
+  
+  message(paste(nrow(unaligned_rodents), "rodents are unmatched based on trap_uid. Currently 16 rodents are known to be unmatched due to delay in uploading trap data for visit 4 in Seilama and Lalehun"))
   
   return(combined_data)
 }
