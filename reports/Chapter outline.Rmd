@@ -1,5 +1,5 @@
 ---
-title: "Chapter outline - Rodent trapping to investigate rodent assemblage structure in Eastern Sierra Leone and potential impacts on Lassa fever transmission."
+title: "Rodent trapping to investigate rodent assemblage structure in Eastern Sierra Leone to understand the spatio-temporal hazard of Lassa fever spillover."
 description: |
   This is the outline and initial analysis plan for rodent data obtained from the longitudinal study visits.
 author:
@@ -22,30 +22,41 @@ In this chapter I report a longitudinal rodent trapping study at four study site
 
 # Abstract
 
-*Lassa mammarenavirus*, the causative agent of Lassa fever is endemic to Eastern Sierra Leone. The principal reservoir species (*Mastomys natalensis*), is considered abundant in human dominated habitats, however, rodent species' assemblages are not well described. To investigate the structure of these assemblages in this heterogeneous landscape we conducted three monthly rodent trapping surveys for two years. Study sites were selected to provide coverage of different land classifications of Eastern Sierra Leone in the Lassa fever endemic region. Trapping effort, measured through trap-nights, was consistent across study sites and study visits allowing direct comparison between visits and between study sites. We describe rodent assemblages and their structures through morphological and molecular speciation, age classification, reproductive status and habitat preference. Trapping data was used to produce species distribution maps across this region.
+*Lassa mammarenavirus*, the causative agent of Lassa fever is endemic to Eastern Sierra Leone. The principal reservoir species (*Mastomys natalensis*), is considered abundant in human dominated habitats, however, rodent species' assemblages are not well described. To investigate the structure of these assemblages in this heterogeneous landscape we conducted three monthly rodent trapping surveys for two years. We describe these rodent assemblages and their structures through morphological and molecular speciation, age classification, reproductive status and habitat preference. We produce species distribution maps across the study region from presence and absence data.
 
-We found that *Mastomys natalensis* displayed seasonal variation in abundance (measured by number of individuals trapped per trap night) and habitat choices with populations concentrated in areas of human habitation during the dry season with minimal radiation to nearby agricultural areas during the wet season. We found that other rodent species within these communities diversify into habitat niches, and that during periods of increased competition for resources (i.e., the dry season), generalist species (e.g. *Mus musculus*, *Rattus rattus* and *Mastomys natalensis*) were more abundant than specialist species. There was good concordance between morphological field based identification and subsequent molecular speciation. Species distribution maps identified areas of expected absence of our species of interest *Matsomys natalensis* and potential discontinuity between populations.
+We found that *Mastomys natalensis* displayed seasonal variation in abundance and habitat choice, with populations concentrated in areas of human habitation during the dry season. We found that other rodent species' within these communities diversify into distinct habitat niches, and that during periods of increased competition for resources, generalist species were more abundant than specialist species. There was good concordance between morphological field based identification and subsequent molecular speciation. Species distribution maps identified areas of expected absence of our species of interest *Matsomys natalensis* and potential discontinuity between populations.
 
-We identify a complex dynamic system within rodent species assemblages co-located with human communities in Eastern Sierra Leone. The hazard of *Lassa mammarenavirus* spillover will be driven by fluctuating populations of host species due to either rodent population numbers (driving increased interaction with human populations) or increased viral transmission within these rodent population due to immunological dynamics. The produced species distribution maps go some way towards explaining the observed limited geographic radiation of outbreaks of Lassa fever in this region and the slow spread of Lassa fever across space as reported elsewhere. We anticipate that this data will help inform higher resolution models of rodent distributions across West Africa. This may be of interest when investigating the effect of increasing development and land use change on rodent assemblages and in particular the hazard of Lassa fever outbreaks. Finally, these data highlight the need for comprehensive studies of rodent species assemblages elsewhere in the Lassa fever endemic zone to understand the generalisability of these findings and for future production of hazard hotspot maps for zoonotic pathogen spillover risk. 
+We identify a complex dynamic system within rodent species assemblages co-located with human communities in Eastern Sierra Leone. The hazard of *Lassa mammarenavirus* spillover will be driven by fluctuating populations of host species due to either rodent population numbers or increased viral transmission within these rodent population due. The produced species distribution maps go some way towards explaining the observed limited geographic radiation of outbreaks of Lassa fever in this region and the slow spread of Lassa fever. We anticipate that this data will help inform higher resolution models of rodent distributions across West Africa. This may be of interest when investigating the effect of increasing development and land use change on rodent assemblages and in particular the hazard of Lassa fever outbreaks. Finally, these data highlight the need for comprehensive studies of rodent species assemblages elsewhere in the Lassa fever endemic zone to understand the generalisability of these findings and for future production of hazard hotspot maps for zoonotic pathogen spillover risk. 
 
 # Introduction
 
-# Research questions
+  * Description of Lassa fever geography and epidemiology
+  * Description of *Mastomys natalensis* distribution and dynamics associated with Lassa fever outbreaks
+  * Introduce complex species networks with competition and dynamic population numbers resulting in the ongoing establishment of generalist species
+  
+  ---
+  
+  * Highlight that few studies have investigated the wider rodent/small mammal assemblages in this region
+  * Introduce longitudinal, high intensity trapping as a useful methodology to describe population abundance and diversity in the absence of a feasible mark-recapture-release approach
+  
+  ---
+  
+  * Introduce the potential impact of land use and climate change on the increase of the Lassa fever endemic region based on changes in rodent populations and environmental suitability
+  * Highlight that the production of species distribution maps which incorporate interactions between different species may produce better estimates than those based on single species studies, particularly in these highly competitive situations
+  
+  ---
 
-I aim to address the following questions:   
-
-  1. What rodent species are prevalent at the study sites and how are species assemblages structured?
-  2. How do these species assemblages vary over space and are population structures associated with land use?
-  3. What is the potential impact of climate and land use change on *Lassa mammarenavirus* spillover hazard?
+First, we aimed to identify which rodent species were active at our study sites, to measure their prevalence and to described the structure of these species assemblages. Second, we wanted to investigate the association between these species assemblages, their population structures and land use. Third, we aimed to investigate the potential alterations to these species assemblages due to projected climate and land use change, in particular how changes to *Mastomys natalensis* populations may modify the hazard of *Lassa mammarenavirus* spillover.
 
 # Methods
 
   * Trapping occurs at up to 6 sites at 4 villages in the Eastern Province of Sierra Leone
-  * Each trap is set and baited for 4 consecutive nights - trapping effort is maintained across site and visit
+  * Study sites within villages were selected to provide coverage of different land classifications of Eastern Sierra Leone in the Lassa fever endemic region
+  * Each trap is set and baited for 4 consecutive nights - trapping effort is maintained across site and visit allowing comparison within and between sites
   * Rodents are euthanised, morphological measurements obtained and samples of tissue collected for molecular speciation
   * Land use is classified at both trap sites and exact location of each trap
-  
-## Rodent presence and species assemblages
+
+## Rodent prevalence and species assemblage structure
 
   * Presence of individual rodent species is detected through a successful trapping event
   * Pseudo-absence of an individual is defined as no detection after 3,000 consecutive trap-nights at a study-site within a study village
@@ -56,7 +67,7 @@ I aim to address the following questions:
 
   * Relative abundance of a species in different land use types will be reported - consistent trapping effort will support this estimate in the absence of mark-recapture-release studies which are not suitable due to concerns about Lassa infection of rodents at the study sites.
   * The change in these assemblage by season will be explored and associated with remote sensed environmental data such as NDVI, ground temperature, isothermality and precipitation
-  * Species distribution maps will be produced for each identified species with sufficient data. 
+  * Species distribution maps will be produced for each identified species with sufficient data using Bayesian additive regression trees
   * These distributions will be examined to investigate the potential role of competition between species at study sites where absence or abundance is less than would be expected based on these distribution maps (i.e. mus or rattus displacing mastomys from suitable habitats)
   
 ## Impact of climate or land use change on rodent distributions
@@ -92,9 +103,6 @@ I aim to address the following questions:
 ```{r setup, include=FALSE, quietly=TRUE}
 knitr::opts_chunk$set(echo = F, warning = F, message = F)
 library(here)
-# source(here::here("scripts", "0_report_library.R"))
-# trap_sites <- latest_data("trap_sites")
-# rodent_data <- latest_data("rodents", clean = T)
 ```
 
 Five villages have been enrolled, one will not be carried forward due to concerns from the local team. The village are:
@@ -125,18 +133,18 @@ Five villages have been enrolled, one will not be carried forward due to concern
 
 Rodents are trapped at up to 6 distinct trap sites per village with up to 49 traps per site. Data was previously collected on this group of [data collection forms](https://drive.google.com/drive/folders/1yE_JAThq-DM9y5yvtSPMgM2ezMcZ_zyO?usp=sharing). Since June 2021 all data has been collected on digitised versions using electronic pads/phones in the field through the [ODK](https://opendatakit.lshtm.ac.uk/lshtm-odk-servers/) platform all digital forms are encrypted locally on the device and sent to a server hosted at LSHTM. The `.xlsx` versions of the ODK forms are available on the OpenScience Framework [project page](https://osf.io/usjrd/).
 
-`r nrow(final_cleaned_trap_data$clean_sites` trap nights across these visits have been completed. Study visits are scheduled four times per year (every 3 months).
+trap nights across these visits have been completed. Study visits are scheduled four times per year (every 3 months).
 
 Remote sensed land use classifications derived from Jung et al. and ground-truthed through input from local communities guided the selection of the trapping sites at the selected study villages. First landuse classifications for the Lassa virus endemic region of Eastern Sierra Leone was mapped with the distribution of different land classifications visualised to aid selection of adequate coverage of land types (Figure 1.). The study region was the environs of Kenema, seen as the purple region in the lower left part of the map. Subsequently the land use classifications of each study village was matched to identify potential sites to produce adequate coverage by village (Figure 2-7).
 
 ```{r eastern-province-landuse, layout = "l-page", fig.cap = "Figure 1. Land use classification of the Eastern Province of Sierra Leone. **(L)** the proportion of different land use types and **(R)** a map of land use."}
-knitr::include_graphics(here("output", "figures", "landuse_plots", "eastern_province_combined_landuse_plots.png"))
+
 ```
 
 The first study village was Lalehun, a village north of Kenema, on the road between Panguma and Tonga. This village of ~1,000 inhabitants is surrounded by agricultural land with seasonal crop production. Some areas of secondary forest and fallow land remain and are the location of cultivation of cacao or used for bushmeat hunting. 
 
 ```{r lalehun-landuse, layout = "l-page", fig.cap = "Figure 2. Land use classification around Lalehun"}
-knitr::include_graphics(here("output", "figures", "landuse_plots", "lalehun_combined_landuse_plots.png"))
+
 ```
 
 Seven trap sites have been used at this village.
@@ -153,29 +161,29 @@ The trap locations are shown overlayed on these habitat maps below.
 
 
 ```{r, layout = "l-page"}
-knitr::include_graphics(here("reports", "figures", "sites_in_habitats_c.png"))
+
 ```
 
 The proportion of nights trapping in each habitat gave good coverage of land use types in Eastern Sierra Leone.
 
 ```{r, layout = "l-page"}
-knitr::include_graphics(here("reports", "figures", "trap_plots.png"))
+
 ```
 
 The trap success rate is around 4% this is fairly acceptable based on the review I did. We have trapped 137 rodents from at least 13 species. The majority of trapped individuals have been shrews (crocidura), *Mastomys sp.*, *Praomys sp.*, *Mus minutoides* and *Lophuromys sp.*. Data from the most recent trapping activities from visit 3 during the rainy season have so far shown a dramatic drop in trap success.
 
 ```{r, layout = "l-page"}
-knitr::include_graphics(here("reports", "figures", "species_caught.png"))
+
 ```
 
 Species accumulation curves have been produced for the first two visits from Lalehun and Seilama. It has not been possible to produce equivalent plots for Baiama and Lambayama due to the low number of individuals/species trapped in those locations. 
 
 ```{r, layout = "l-page"}
-knitr::include_graphics(here("reports", "figures", "species_accumulation.png"))
+
 ```
 
 As we catch an increasing number of individuals we are seeing them clustering within expected habitats.
 
 ```{r, layout = "l-page"}
-knitr::include_graphics(here("reports", "figures", "species_locations.png"))
+
 ```
