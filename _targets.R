@@ -48,6 +48,8 @@ view_traps <- plot_traps_interactively(final_cleaned_trap_data$spatial_data)
 # Produce a species accumulation curve for the study up to the current trapping visit
 species_accumulation <- derive_accumulation_curves()
 
+save_plot(here("output", "figures", "species_accumulation_plot.png"), species_accumulation, base_height = 10, base_width = 12)
+
 # Trap site landuse
 landuse_trap_site <- plot_landuse_trapsites(raster_data = sle_raster, trap_data = final_cleaned_trap_data$spatial_data)
 
@@ -65,6 +67,8 @@ trap_success_village <- plot_trap_success(data = final_cleaned_trap_data$clean_s
 # Rodent description
 rodent_descriptives <- describe_rodents_trapped(data = final_cleaned_rodent_data, trap_data = final_cleaned_trap_data$clean_sites)
 
+# Rodent presence/absence maps
+rodent_locations <- describe_rodent_locations(spatial_data = final_cleaned_trap_data$spatial_data, rodent_data = final_cleaned_rodent_data)
 
 # Set up parallelism (no of targets that can run simultaneously)
 tar_config_set(workers = get_num_cores())
