@@ -6,7 +6,11 @@ describe_rodents_trapped <- function(data = final_cleaned_rodent_data, trap_data
   number_rodents <- nrow(data)
   
   n_rodents_village <- data %>% 
-    janitor::tabyl(village)
+    tabyl(village)
+  
+  n_rodents_trap_night_village <- trap_data %>%
+    tabyl(village) %>%
+    mutate(tn_per_rodent = 1/(n_rodents_village$n/n))
   
   n_rodents_genus <- data %>% 
     janitor::tabyl(genus)
@@ -122,6 +126,7 @@ describe_rodents_trapped <- function(data = final_cleaned_rodent_data, trap_data
   
   output <- list(number_rodents = number_rodents,
                  n_rodents_village = n_rodents_village,
+                 n_rodents_trap_night_village = n_rodents_trap_night_village,
                  n_rodents_genus = n_rodents_genus,
                  n_rodents_genus_village = n_rodents_genus_village,
                  genus_plot = genus_plot,

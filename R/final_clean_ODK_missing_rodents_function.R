@@ -15,6 +15,9 @@ final_cleaning <- function(trap_data = all_traps, rodent_data = all_rodents, sit
                        site = as_factor(site)) %>%
                 select(site_habitat = habitat, village, visit = visit_number, grid_number = site),
               by = c("village", "visit", "grid_number")) %>%
+    mutate(research_visit = case_when(village %in% c("bambawo", "lambayama", "baiama") ~ as.numeric(visit) + 1,
+                                      village %in% c("lalehun", "seilama") ~ as.numeric(visit) - 1),
+           research_visit = factor(research_visit, labels = c("Pilot", "1", "2", "3", "4"))) %>%
     write_csv(here("data", "clean_data", "trap_sites", paste0("trap_sites_", Sys.Date(), ".csv"))) #Read the data file from excel document and save within the repo as csv
   
   missing_rodents <- rodent_data %>%

@@ -10,14 +10,24 @@ author:
     orcid_id: 0000-0001-9655-1656
 date: "`r Sys.Date()`"
 output:
-  distill::distill_article:
-    self_contained: false
-    toc: true
+  # distill::distill_article:
+  #   self_contained: false
+  #   toc: true
   # html_document
+  word_document
 bibliography: citations.bib
 categories:
   - Lassa
 ---
+```{r setup, include=FALSE, quietly=TRUE}
+knitr::opts_chunk$set(
+	echo = FALSE,
+	message = FALSE,
+	warning = FALSE
+)
+library(here)
+```
+
 In this chapter I report a longitudinal rodent trapping study at four study sites in a Lassa fever endemic region of Eastern Sierra Leone. I perform rodent trapping along socio-ecological gradients to understand the association of land use on rodent species assemblages and population structures. I will perform morphological and molecular speciation on sampled rodents to understand the spatial and temporal dynamics of rodent species at the selected study sites. Data obtained from this study will be used to inform species occupancy and distribution models in the Eastern province of Sierra Leone. These models can be used to identify regions of interest for further investigation of Lassa fever epidemiology.
 
 # Abstract
@@ -50,17 +60,18 @@ First, we aimed to identify which rodent species were active at our study sites,
 
 # Methods
 
-  * Trapping occurs at up to 6 sites at 4 villages in the Eastern Province of Sierra Leone
-  * Study sites within villages were selected to provide coverage of different land classifications of Eastern Sierra Leone in the Lassa fever endemic region
-  * Each trap is set and baited for 4 consecutive nights - trapping effort is maintained across site and visit allowing comparison within and between sites
-  * Rodents are euthanised, morphological measurements obtained and samples of tissue collected for molecular speciation
-  * Land use is classified at both trap sites and exact location of each trap
+Rodent trapping occurred at up to 7 sites in 4 villages in the Lassa fever endemic zone of the Eastern Province of Sierra Leone. The villages were enrolled based on accessibility to the sites during all seasons, discussions with the Lassa fever outreach team at Kenema Government Hospital and acceptability of the protocol to the village community. Lalehun (coordinates  8.1975 N, -11.0803 E), is a relatively large village (~ 1,000 inhabitants) located on the route between Panguma and Tonga, Lambayama (coordinates 7.8544 N, -11.1897 E) is a peri-urban community that is becoming enveloped within Kenema, Seilama (coordinates 8.1222 N, -11.1936 E) is a small village (~ 300 inhabitants) located to the South-West of Panguma and Baiama (coordinates 7.83708 N, -11.26845 E) is a small village (~300 inhabitants) to the West of Kenema located off the main road between Kenema and Bo.
+
+Within each village up to 7 study sites were chosen to provide coverage of the different observed land classifications of Eastern Sierra Leone. Study sites were geolocated for repeated trapping and alterations to land use at the study site were recorded at each visit. Within each study site up to 49 individual Sherman traps (**size and reference**) were baited with a locally produced mixture of oats, palm oil and dried fish for 4 consecutive nights. Each morning the traps were checked and closed for the day prior to rebaiting during the evening. Traps identified to contain rodents were brought to the biopsy site. Rodents were sedated and euthanised using cervical dislocation prior to obtaining morphological measurements and samples of blood and tissue. 
+
+Morphological speciation in the field was performed using a dichotomous key to identify rodents to species or genus (**will place in supplementary**). Molecular speciation was performed on formalin fixed tissue samples (**insert further details**). Rodents were sexed based on external and internal genitalia. Age estimation was performed through both, description of the rodents reproductive status and weighing of dried eye lenses.
 
 ## Rodent prevalence and species assemblage structure
-
-  * Presence of individual rodent species is detected through a successful trapping event
-  * Pseudo-absence of an individual is defined as no detection after 3,000 consecutive trap-nights at a study-site within a study village
-  * A species assemblage is defined at multiple geographic scales as all species identified within a single study-site that shares a habitat type in addition to at the village level and collection of habitat types.
+  
+  * Adequacy of trapping effort at each village site was assessed using species accumulation curves
+  * Presence of an individual rodent species was detected through a successful trapping event within a study site
+  * Pseudo-absence of an individual was defined as no detection after 3,000 (**or some other value**) consecutive trap-nights at a study site within a study village
+  * We describe species assemblages at multiple geographic scales. First, all species identified within a single study-site. Second, all species identified within a village (i.e. an area in when rodents would be expected *a priori* to be able to diffuse across). Thirdy, all species identified within a single habitat type across multiple study sites and villages.
   * The structure of a species assemblage includes description of the proportion of male and female individuals and their age classification (e.g. juvenile, adult).
 
 ## Rodent species assemblages and land use
@@ -76,9 +87,15 @@ First, we aimed to identify which rodent species were active at our study sites,
 
 # Results
 
-## Summary of trapping effort and rodent descriptives
+## Summary of trapping effort and rodent descriptives (**potentially methods**)
 
-  * Potentially this will go in the methods?
+Trapping visits to villages occurred at three monthly intervals for at least two years. One village (Bambawo) was removed from the study due to concerns raised by the study team over equipment security. 
+
+```{r study-activity, layout = "l-page", fig.cap = "Figure 1. Timeline of trapping activity at village sites. Intensity of the colour relates to the number of trap nights obtained during the trapping visit. The blue shaded area represents the rainy season in Eastern Sierra Leone (monthly precipitation >300mm)"}
+
+knitr::include_graphics(here("output", "figures", "timeline_plot.png"))
+
+```
   
 ## Rodent presence and species assemblage structure
 
@@ -99,11 +116,6 @@ First, we aimed to identify which rodent species were active at our study sites,
 
 # Conclusion
 
-
-```{r setup, include=FALSE, quietly=TRUE}
-knitr::opts_chunk$set(echo = F, warning = F, message = F)
-library(here)
-```
 
 Five villages have been enrolled, one will not be carried forward due to concerns from the local team. The village are:
 

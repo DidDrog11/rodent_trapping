@@ -2,12 +2,15 @@ clean_site_ODK <- function() {
   
   all_files <- list.files(here("data", "raw_odk", paste0("trap_sites", "_", Sys.Date())), full.names = T)
   
+  if(identical(all_files, character(0))) all_files <- list.files(tail(sort(list.files(here("data", "raw_odk"), pattern = "trap_sites_", full.names = TRUE)), 1), full.names = TRUE)
+  
   not_needed_vars <- c("other_village_name", "consecutive_traps", "meta-instanceID", "submitterID", "SubmitterName", "AttachmentsPresent",
                        "AttachmentsExpected", "Status", "ReviewState", "DeviceID", "Edits", "non_village-consecutive_traps", "non_village-starting_number",
                        "non_village-highest", "non_village-ending_number", "non_village-trap_count", "within_houses-consecutive_traps", "swapped_lat", "swapped_lon")
   
   trap_sites <- read_csv(all_files[4], show_col_types = FALSE) %>%
     filter(ReviewState != "rejected" | is.na(ReviewState)) %>%
+    filter(!KEY %in% c("uuid:4161d048-299d-42b8-a758-480ba044cea9", "uuid:3db1d7ec-ca8c-407c-900a-b7d4e48c3d3f")) %>%
     mutate(SubmissionDate = ymd(as.Date(SubmissionDate)),
            form_entry = ymd(as.Date(form_entry)),
            other_village_name = case_when(other_village_name == "Lambeyama" ~ "Lambayama", # Correct the spelling of a village site

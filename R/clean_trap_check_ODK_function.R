@@ -2,6 +2,8 @@ clean_trap_check_ODK <- function() {
   
   all_files <- list.files(here("data", "raw_odk", paste0("trap_check", "_", Sys.Date())), full.names = T)
   
+  if(identical(all_files, character(0))) all_files <- list.files(tail(sort(list.files(here("data", "raw_odk"), pattern = "trap_check_20", full.names = TRUE)), 1), full.names = TRUE)
+  
   not_needed_vars <- c("SubmissionDate", "photo_paper", 
                        "notes", "meta-instanceID", "SubmitterID", "SubmitterName", 
                        "AttachmentsPresent", "AttachmentsExpected", "Status", "ReviewState", 

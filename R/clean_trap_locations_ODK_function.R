@@ -4,6 +4,8 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
   
   all_files <- list.files(here("data", "raw_odk", paste0("trap_sites", "_", Sys.Date())), full.names = T)
   
+  if(identical(all_files, character(0))) all_files <- list.files(tail(sort(list.files(here("data", "raw_odk"), pattern = "trap_sites_", full.names = TRUE)), 1), full.names = TRUE)
+  
   bambawo_trap_locations <- read_csv(here("data", "raw_odk", "ODK_trap_bambawo_locations.csv"), show_col_types = FALSE)
   # due to a change in the the ODK form structure this data is read in from a previously saved file
   

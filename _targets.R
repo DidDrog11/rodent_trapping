@@ -42,6 +42,9 @@ save_landuse_plots(landuse_plots)
 final_cleaned_trap_data$spatial_data <- st_as_sf(final_cleaned_trap_data$clean_sites, coords = c("lon", "lat")) %>%
   st_set_crs(value = project_crs)
 
+# Trapping timeline
+study_timeline <- timeline_plot(final_cleaned_trap_data$clean_sites)
+
 # View traps on leaflet maps
 view_traps <- plot_traps_interactively(final_cleaned_trap_data$spatial_data)
 

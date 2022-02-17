@@ -2,6 +2,8 @@ clean_rodent_data_ODK <- function(){
   
   all_files <- list.files(here("data", "raw_odk", paste0("rodent_data", "_", Sys.Date())), full.names = T)
   
+  if(identical(all_files, character(0))) all_files <- list.files(tail(sort(list.files(here("data", "raw_odk"), pattern = "rodent_data_", full.names = TRUE)), 1), full.names = TRUE)
+  
   correct_species_error <- c("unclear_dasymys", "unclear_lemnisomys",
                              "unclear_lophuromys", "unclear_praomys")  
   names(correct_species_error) <- c("unclear_dasymysrus", "unclear_lemniscrus", 
