@@ -9,7 +9,7 @@ fix_improbable_coordinates <- function(data = full_trap_locations) {
                          village == "lalehun" & visit == 5 & grid_number == 4 & trap_number == 174 ~ -11.07810,
                          
                          village == "seilama" & visit == 5 & grid_number == 1 & trap_number == 31 ~ -11.19249,
-                         village == "seilama" & visit == 5 & grid_number == 2 & trap_number == 71 ~ -11.19526,
+                         village == "seilama" & visit == 5 & grid_number == 2 & trap_number == 71 ~ -11.19426,
                          village == "seilama" & visit == 5 & grid_number == 4 & trap_number == 161 ~ -11.19457,
                          village == "seilama" & visit == 5 & grid_number == 4 & trap_number == 192 ~ -11.19483,
                          

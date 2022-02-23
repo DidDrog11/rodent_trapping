@@ -77,6 +77,7 @@ plot_trap_success <- function(data = final_cleaned_trap_data$clean_sites, by_vil
       if(save_plots == TRUE) {save_plot(plot = plot, filename = here("output", "figures", "trap_success", paste0(str_to_lower(village_name), "_site_by_visit_success.png")),
                                         base_width = 12, base_height = 10)}
       
+      return(plot)
     })
     
   }

@@ -1,9 +1,28 @@
-derive_accumulation_curves <- function(rodent_data = final_cleaned_rodent_data, trap_data = final_cleaned_trap_data$clean_sites) {
+derive_accumulation_curves <- function(rodent_data = final_cleaned_rodent_data, trap_data = final_cleaned_trap_data$clean_sites, ignore_bambawo = TRUE) {
   
-  species_accumulation <- trap_data %>%
-    dplyr::select(village, trap_uid, rodent_uid) %>%
-    left_join(., rodent_data %>%
-                dplyr::select(rodent_uid, trap_uid, genus), by = c("rodent_uid", "trap_uid"))
+  if(ignore_bambawo == TRUE) {
+    
+    village_palette <- village_palette[names(village_palette) != "Bambawo"]
+    
+  }
+  
+  
+  if(ignore_bambawo == TRUE) {
+    
+    species_accumulation <- trap_data %>%
+      dplyr::select(village, trap_uid, rodent_uid) %>%
+      left_join(., rodent_data %>%
+                  dplyr::select(rodent_uid, trap_uid, genus), by = c("rodent_uid", "trap_uid")) %>%
+      filter(village != "bambawo")
+    
+  } else {
+    
+    species_accumulation <- trap_data %>%
+      dplyr::select(village, trap_uid, rodent_uid) %>%
+      left_join(., rodent_data %>%
+                  dplyr::select(rodent_uid, trap_uid, genus), by = c("rodent_uid", "trap_uid")) 
+    
+  }
   
   number_trapnights <- species_accumulation %>%
     group_by(village) %>%
@@ -61,7 +80,11 @@ derive_accumulation_curves <- function(rodent_data = final_cleaned_rodent_data, 
     return(inc)
   }
   
-  village_accumulation <- village_acc(village_names = c("lalehun", "seilama", "baiama", "bambawo", "lambayama"))
+  village_accumulation <- if(ignore_bambawo == TRUE) { 
+    village_acc(village_names = c("lalehun", "seilama", "baiama", "lambayama"))
+  } else {
+    village_acc(village_names = c("lalehun", "seilama", "baiama", "bambawo", "lambayama"))
+  }
   
   plot_accumulation <- function(accumulation_data) {
     
