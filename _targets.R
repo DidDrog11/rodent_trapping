@@ -26,6 +26,10 @@ all_rodents <- ODK_paper_combine_rodent(ODK_data = ODK_rodents)
 final_cleaned_trap_data <- final_cleaning(trap_data = all_traps, rodent_data = all_rodents, site_data = ODK_sites$site_habitats)
 final_cleaned_rodent_data <- final_cleaning_rodents(rodent_data = all_rodents)
 
+# Spatial dataframe of trap site locations
+final_cleaned_trap_data$spatial_data <- st_as_sf(final_cleaned_trap_data$clean_sites, coords = c("lon", "lat")) %>%
+  st_set_crs(value = project_crs)
+
 # Rodent speciation values
 rodent_speciation <- read_species_characteristics()
 
@@ -38,18 +42,14 @@ landuse_plots <- plot_landuse(data = sle_raster)
 # save plots if not previously saved
 save_landuse_plots(landuse_plots)
 
-# Spatial dataframe of trap site locations
-final_cleaned_trap_data$spatial_data <- st_as_sf(final_cleaned_trap_data$clean_sites, coords = c("lon", "lat")) %>%
-  st_set_crs(value = project_crs)
-
 # Trapping timeline
-study_timeline <- timeline_plot(final_cleaned_trap_data$clean_sites)
+study_timeline <- study_timeline(final_cleaned_trap_data$clean_sites)
 
 # View traps on leaflet maps
 view_traps <- plot_traps_interactively(final_cleaned_trap_data$spatial_data)
 
 # Produce a species accumulation curve for the study up to the current trapping visit
-species_accumulation <- derive_accumulation_curves()
+species_accumulation <- derive_accumulation_curves(ignore_bambawo = TRUE)
 
 save_plot(here("output", "figures", "species_accumulation_plot.png"), species_accumulation, base_height = 10, base_width = 12)
 
@@ -72,6 +72,9 @@ rodent_descriptives <- describe_rodents_trapped(data = final_cleaned_rodent_data
 
 # Rodent presence/absence maps
 rodent_locations <- describe_rodent_locations(spatial_data = final_cleaned_trap_data$spatial_data, rodent_data = final_cleaned_rodent_data)
+
+# Figure 1
+fig_1 <- create_fig_1()
 
 # Set up parallelism (no of targets that can run simultaneously)
 tar_config_set(workers = get_num_cores())
