@@ -1,25 +1,32 @@
 devtools::install_github("hrbrmstr/waffle")
 
-library(targets)
-library(here)
-library(tidyverse)
-library(lubridate)
-library(stringr)
-library(readr)
-library(snakecase)
-library(sf)
-library(terra)
-library(countrycode)
-library(purrr)
-library(fs)
-library(RhpcBLASctl)
-library(terra)
-library(exactextractr)
-library(ruODK)
-library(googledrive)
-library(tmap)
-library(waffle)
-library(leaflet)
-library(iNEXT)
-library(cowplot)
-library(janitor)
+if (!require("pacman")) install.packages("pacman")
+pkgs =
+  c("countrycode",
+    "cowplot",
+    "exactextractr",
+    "fs",
+    "ggmap",
+    "googledrive",
+    "here",
+    "iNEXT",
+    "janitor",
+    "leaflet",
+    "lubridate",
+    "purr",
+    "readr",
+    "readxl",
+    "RhpcBLASctl",
+    "ruODK",
+    "sf",
+    "snakecase",
+    "stringr",
+    "targets",
+    "terra",
+    "tidyverse",
+    "tmap",
+    "tmaptools",
+    "waffle"
+  )
+pacman::p_load(pkgs, character.only = T)
+

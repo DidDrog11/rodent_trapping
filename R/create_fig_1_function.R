@@ -109,4 +109,7 @@ create_fig_1 <- function(data = final_cleaned_trap_data$clean_sites, spatial_dat
                         legend), rel_widths = c(3, 0.4))
   
   save_plot(plot = plot_grid(top_row, map_rows, rel_widths = c(2, 4)), filename = here("output", "figures", "fig1_combined.png"), base_height = 12, base_width = 16)
+  fig_1 <- plot_grid(top_row, map_rows, rel_widths = c(2, 4))
+  
+  return(fig_1)
 }

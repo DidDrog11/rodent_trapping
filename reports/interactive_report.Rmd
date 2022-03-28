@@ -1,0 +1,20 @@
+---
+title: "Understanding the structure of rodent species assemblages and land use change on the occurrence of the rodent host of Lassa Fever."
+author:
+  - name: "David Simons"
+    url: https://github.com/diddrog11/rodent_trapping
+    affiliation: The Royal Veterinary College, London, UK
+    affiliation_url: https://www.rvc.ac.uk
+    orcid_id: 0000-0001-9655-1656
+date: "`r Sys.Date()`"
+output:
+  distill::distill_article:
+    self_contained: false
+    toc: true
+  # html_document
+  # word_document
+bibliography: citations.bib
+categories:
+  - Lassa
+---
+

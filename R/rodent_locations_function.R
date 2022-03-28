@@ -35,4 +35,6 @@ describe_rodent_locations <- function(spatial_data = final_cleaned_trap_data$spa
       
   }
   
+  return(presence_maps)
+  
 }
