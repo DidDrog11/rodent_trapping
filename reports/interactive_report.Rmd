@@ -18,3 +18,82 @@ categories:
   - Lassa
 ---
 
+```{r setup, include=FALSE, quietly=TRUE}
+knitr::opts_chunk$set(
+	echo = FALSE,
+	message = FALSE,
+	warning = FALSE
+)
+library(here)
+```
+
+# Study questions
+
+  1. What is the structure of rodent species assemblages in the Lassa fever endemic region of Sierra Leone?
+  2. Do these assemblage structures and species richness vary by land use type?
+  3. How might these assemblages change under different future land use and climate change scenarios and what impact may this have on the hazard of Lassa fever spillover events?
+  
+# Study design
+
+## Study area
+
+We conducted rodent trapping at 7 trapping sites within 4 villages in the Lassa fever endemic zone of the Eastern Province of Sierra Leone (Figure 1A). We surveyed the rodent community in forested, fallow, agricultural and areas of human occupation along an anthropogenic land use gradient. Eastern Sierra Leone has undergone significant deforestation and conversion to agricultural land, currently 55.8% is designated as primary and secondary forest, 31.1% as shrubland, 12.1% as agricultural land and 0.9% as areas of human occupation. Villages were enrolled based on accessibility to the sites during all seasons, discussions with the Lassa fever outreach team at Kenema Government Hospital and acceptability of the protocol to the village community. Villages and trapping sites were selected to be representative at the study level for land use in Eastern Sierra Leone.
+
+```{r trap-locations, layout = "l-page", fig.cap = "A) Locations of study villages (diamonds) in Eastern Province (blue outlined region) within Sierra Leone (black border). B) Trap sites in Lalehun village. C) Trap sites in Seilama village. D) Trap sites in Lambayama. E) Trap sites in Baiama village. The trap success rate in each trap sites for all study visits is shown through the colour associated with each trap site. Single points represent the location of a single trap."}
+
+knitr::include_graphics(here("output", "figures", "fig1_combined.png"))
+
+```
+
+## Rodent trapping
+
+Trap sites were geolocated for repeated trapping activities, changes to land use at the trapping site were recorded at each study visit. Within each study site 49 individual Sherman traps were baited with a locally produced mixture of oats, palm oil and dried fish for 4 consecutive nights. Each morning the traps were checked and closed for the day prior to re-baiting during the evening.
+
+Trapped rodents were sedated and euthanised using cervical dislocation prior to obtaining morphological measurements and samples of blood and tissue following published guidance [@fichet-calvet_chapter_2014]. Morphological speciation in the field was performed using a dichotomous key produced from two available resources to identify rodents to species or genus [@happold_mammals_2013; @monadjem_rodents_2015]. Rodents were sexed based on external and internal genitalia. Age estimation was performed through both, description of the rodents reproductive status (identification of perforate or imperforate vagina, scarring from prior embryo development and current pregnancy status or descent of testes and seminal vesicle development) and weighing of dried eye lenses. Carcasses were disposed and processed in the field to eliminate risk of pathogen transmission. Molecular speciation was performed on formalin fixed tissue samples that were stored at -20°C until processing. 
+
+# Statistical analysis
+
+## Rodent occurrence and species assemblage structure
+
+We obtained X trap-nights over Y trapping visits between 2020-11-30 and YYYY-MM-DD. Trapping effort was assessed using species accumulation curves (**Supplementary figure**), suggesting adequate effort to detect rodent species at each village site. We constructed detection/non-detection histories for all identified rodent species, assigning "1" when the species was detected and "0" otherwise. We augmented data by creating all-zero detection histories of rodent species that can have been previously described as occurring in the region and were never recorded in our study.
+
+We describe species assemblages at multiple geographic scales. First, all species identified within a single trap site. Second, all species identified within a village (i.e. an area in when rodents would be expected, in the absence of habitat preference, to be able to diffuse across). Third, all species identified within a single habitat type across multiple trapping sites and villages.
+
+We describe the age-sex population structure of each species trapped and variation in their abundance over the study period.
+
+## Estimating the effect of land use on species occurrence and richness
+
+First, we adopted a Bayesian multi-species occupancy framework to analyse rodent trapping data. We implemented a model to estimate occupancy and species richness in each habitat type studied. In the detection component of the model, we included the monthly precipitation during the study visit to account for variation in rodent foraging behaviour due to seasonal effects.
+
+  * Probability of occurrence ~ (species_specific_intercept * Forested) + (species_specific_intercept * Agricultural) + (species_specific_intercept * Housing)
+  * Probability of detection ~ (species_specific_intercept * monthly_precipitation) (**Difficult to tease out whether this is a detection or occurrence factor**)
+
+Using this model, we calculate the effect of landuse as the difference in occupancy probability for each species between each of the four land use classifications. Only estimates for species with at least X records to avoid inference from limited data. Occupancy is interpreted here as the species' probability of being detected through a successful trapping event during the study. We estimate species richness in each habitat type by obtaining the sum of species at a trapping site for each iteration of the Bayesian sampling process to compare rodent assemblage responses to land use classification.
+
+## Species distribution maps for current land use classifications and potential future change
+
+We adopted a Bayesian additive regression tree (BART) approach to predict species distributions for each identified species of interest (*Mastomys natalensis* and competing commensal rodents *Rattus rattus*, *Mus musculus* and *Praomys rostratus*). Similar to other classification tree methods BART functions by producing a set of decision trees that explain different components of variance in the outcome variable (presence of the species of interest) with the additional benefit of capturing model uncertainty. Covariates will include, land use classification, mean temperature, isothermality, precipitation and human population density. Variable importance plots will be produced for the final models for each species. These species distribution models will be examined to investigate the spatial overlap between competing species' distribution and the impact this may have on potential expansion of the Lassa fever endemic region (i.e. mus or rattus displacing mastomys from suitable habitats).
+
+Using projected land use change/climate change we will produce future potential species distribution models for these species to understand how future projected land use change and climate change may impact the distribution of these species and future hazard of Lassa fever outbreaks.
+
+# Preliminary results
+
+## Rodent occurrence and species assemblage structure
+
+## Estimating the effect of land use on species occurrence and richness
+
+## Species distribution maps for current land use classifications and potential future change
+
+# Current progress
+
+```{r study-activity, layout = "l-page", fig.cap = "Timeline of trapping activity at village sites. Intensity of the colour relates to the number of trap nights obtained during the trapping visit. The blue shaded area represents the rainy season in Eastern Sierra Leone (monthly precipitation >300mm)"}
+
+knitr::include_graphics(here("output", "figures", "timeline_plot.png"))
+
+```
+
+```{r species-accumulation, fig.cap = "Species accumulation curves for each village site"}
+
+knitr::include_graphics(here("output", "figures", "species_accumulation_plot.png"))
+
+```

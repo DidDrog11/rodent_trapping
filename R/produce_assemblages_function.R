@@ -55,21 +55,118 @@ produce_assemblages <- function(spatial_data = final_cleaned_trap_data$spatial_d
   same_visit <- summarise_assemblages %>%
     filter(same_visit == TRUE)
   
-  same_visit %>%
+  summarise_assemblages_same_visit_plot <- same_visit %>%
     group_by(assemblage) %>%
-    mutate(n_other_species = n()-1) %>%
+    mutate(n_other_species = n()-1,
+           clean_names = str_to_sentence(str_replace_all(clean_names, "_", " "))) %>%
     filter(reference_rodent == "reference") %>%
-    ggplot() + 
-    geom_violin(aes(x = clean_names, y = n_other_species)) +
-    coord_flip()
+    ggplot(aes(x = clean_names, y = n_other_species)) + 
+    geom_violin() +
+    geom_jitter(width = 0.1, height = 0.1) +
+    coord_flip() +
+    theme_minimal() +
+    labs(y = "Co-located species (N)",
+         x = element_blank(),
+         title = "Same visit")
   
   all_visits <- summarise_assemblages
   
-  all_visits %>%
+  summarise_assemblages_all_visits_plot <- all_visits %>%
     group_by(assemblage) %>%
-    mutate(n_other_species = n()-1) %>%
+    mutate(n_other_species = n()-1,
+           clean_names = str_to_sentence(str_replace_all(clean_names, "_", " "))) %>%
     filter(reference_rodent == "reference") %>%
-    ggplot() + 
-    geom_violin(aes(x = clean_names, y = n_other_species)) +
-    coord_flip()
+    ggplot(aes(x = clean_names, y = n_other_species)) + 
+    geom_violin() +
+    geom_jitter(width = 0.1, height = 0.1) +
+    scale_y_continuous(breaks = scales::pretty_breaks()) +
+    coord_flip() +
+    theme_minimal() +
+    labs(y = "Co-located species (N)",
+         x = element_blank(),
+         title = "All visits")
+  
+  colocated_species_same_visit <- same_visit %>%
+    group_by(assemblage) %>%
+    mutate(reference_species = case_when(reference_rodent == "reference" ~ clean_names,
+                                         TRUE ~ as.character(NA)),
+           colocated_species = case_when(reference_rodent == "non_reference" ~ clean_names,
+                                         TRUE ~ as.character(NA))) %>%
+    fill(reference_species, .direction = "updown") %>%
+    fill(colocated_species, .direction = "downup") %>%
+    ungroup() %>%
+    distinct(assemblage, reference_species, colocated_species) %>%
+    mutate(colocated_species = str_to_sentence(str_replace_all(colocated_species, "_", " ")),
+           reference_species = str_to_sentence(str_replace_all(reference_species, "_", " ")),
+           colocated_species = replace_na(colocated_species, replace = "No co-located species")) %>%
+    group_by(reference_species, colocated_species) %>%
+    summarise(n = n()) %>%
+    group_by(reference_species) %>%
+    mutate(total = sum(n),
+           proportion = round(n/total, 2))
+  
+  order_species <- c(colocated_species_same_visit %>% 
+                       group_by(colocated_species) %>% 
+                       summarise(n = n()) %>% 
+                       arrange(-n) %>% 
+                       pull(colocated_species),
+                     "Gerbilliscus spp")
+  
+  colocated_species_same_visit %<>%
+    mutate(reference_species = factor(reference_species, levels = order_species, labels = str_replace_all(order_species, " ", "\n")),
+           colocated_species = factor(colocated_species, levels = order_species, labels = str_replace_all(order_species, " ", "\n")))
+  
+  colocated_species_same_visit_plot <- ggplot(colocated_species_same_visit) +
+    geom_tile(aes(x = colocated_species, y = reference_species, fill = proportion, width = 0.95, height = 0.95)) +
+    geom_label(aes(x = colocated_species, y = reference_species, label = proportion)) +
+    scale_fill_viridis_c() +
+    theme_minimal() +
+    labs(y = "Reference species",
+         x = "Co-located species",
+         fill = "Proportion",
+         title = "Same visit")
+  
+  colocated_species_all_visits <- all_visits %>%
+    group_by(assemblage) %>%
+    mutate(reference_species = case_when(reference_rodent == "reference" ~ clean_names,
+                                         TRUE ~ as.character(NA)),
+           colocated_species = case_when(reference_rodent == "non_reference" ~ clean_names,
+                                         TRUE ~ as.character(NA))) %>%
+    fill(reference_species, .direction = "updown") %>%
+    fill(colocated_species, .direction = "downup") %>%
+    ungroup() %>%
+    distinct(assemblage, reference_species, colocated_species) %>%
+    mutate(colocated_species = str_to_sentence(str_replace_all(colocated_species, "_", " ")),
+           reference_species = str_to_sentence(str_replace_all(reference_species, "_", " ")),
+           colocated_species = replace_na(colocated_species, replace = "No co-located species")) %>%
+    group_by(reference_species, colocated_species) %>%
+    summarise(n = n()) %>%
+    group_by(reference_species) %>%
+    mutate(total = sum(n),
+           proportion = round(n/total, 2))
+  
+  colocated_species_all_visits %<>%
+    mutate(reference_species = factor(reference_species, levels = order_species, labels = str_replace_all(order_species, " ", "\n")),
+           colocated_species = factor(colocated_species, levels = order_species, labels = str_replace_all(order_species, " ", "\n")))
+  
+  colocated_species_all_visits_plot <- ggplot(colocated_species_all_visits) +
+    geom_tile(aes(x = colocated_species, y = reference_species, fill = proportion, width = 0.95, height = 0.95)) +
+    geom_label(aes(x = colocated_species, y = reference_species, label = proportion)) +
+    scale_fill_viridis_c() +
+    theme_minimal() +
+    labs(y = "Reference species",
+         x = "Co-located species",
+         fill = "Proportion",
+         title = "All visits")
+  
+  combined_colocation <- plot_grid(plotlist = list(colocated_species_same_visit_plot,
+                                                   colocated_species_all_visits_plot),
+                                   ncol = 1)
+  
+  return(list(summary_plots = list(same_visit = summarise_assemblages_same_visit_plot,
+                                   all_visits = summarise_assemblages_all_visits_plot),
+              co_location_plots = list(same_visit = colocated_species_same_visit_plot,
+                                       all_visits = colocated_species_all_visits_plot,
+                                       combined_plot = combined_colocation)))
+  
 }
