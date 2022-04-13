@@ -1,6 +1,6 @@
-plot_trap_success <- function(data = final_cleaned_trap_data$clean_sites, by_village = FALSE, save_plots = FALSE) {
+plot_trap_success <- function(data = final_cleaned_trap_data$clean_sites, by_village = FALSE, by_habitat = FALSE, save_plots = FALSE) {
   
-  if(by_village == FALSE) {
+  if(by_village == FALSE & by_habitat == FALSE) {
     plot_data <- data %>%
       tibble() %>%
       mutate(trap_success = case_when(!is.na(rodent_uid) ~ "Success",
@@ -26,7 +26,7 @@ plot_trap_success <- function(data = final_cleaned_trap_data$clean_sites, by_vil
       theme_minimal()
   }
   
-  if(by_village == TRUE) {
+  if(by_village == TRUE & by_habitat == FALSE) {
     
     plot_data <- data %>%
       tibble() %>%
@@ -79,6 +79,18 @@ plot_trap_success <- function(data = final_cleaned_trap_data$clean_sites, by_vil
       
       return(plot)
     })
+    
+  }
+  
+  if(by_village == FALSE & by_habitat == TRUE) {
+    
+    message("Data needs to be cleaned for habitat type")
+    
+  }
+  
+  if(by_village == TRUE & by_habitat == TRUE) {
+    
+    message("Select one of by_village or by_habitat")
     
   }
   

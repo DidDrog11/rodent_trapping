@@ -8,6 +8,7 @@ reports/figures/
 data/satellite/*
 data/spatial/*
 data/plots/
+data/rodent_images/
 
 data/raw_odk/
 data/clean_data/

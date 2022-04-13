@@ -36,7 +36,7 @@ plot_traps_interactively <- function(data = final_cleaned_trap_data$spatial_data
   lambayama <- plot_traps("lambayama")
   
   return(list(lalehun_leaflet = lalehun,
-              sailama_leaflet = seilama,
+              seilama_leaflet = seilama,
               baiama_leaflet = baiama,
               bambawo_leaflet = bambawo,
               lambayama_leaflet = lambayama))

@@ -2,13 +2,15 @@ devtools::install_github("hrbrmstr/waffle")
 
 if (!require("pacman")) install.packages("pacman")
 pkgs =
-  c("countrycode",
+  c("caret",
+    "countrycode",
     "cowplot",
     "exactextractr",
     "fs",
     "ggmap",
     "googledrive",
     "here",
+    "htmltools",
     "iNEXT",
     "janitor",
     "leaflet",
@@ -18,8 +20,10 @@ pkgs =
     "readr",
     "readxl",
     "RhpcBLASctl",
+    "rsample",
     "ruODK",
     "sf",
+    "slickR",
     "snakecase",
     "stringr",
     "targets",
@@ -27,7 +31,8 @@ pkgs =
     "tidyverse",
     "tmap",
     "tmaptools",
-    "waffle"
+    "waffle",
+    "widgetframe"
   )
 pacman::p_load(pkgs, character.only = T)
 

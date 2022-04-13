@@ -22,6 +22,9 @@ ODK_combined <- combine_ODK_data(trap = ODK_traps$full_trap_locations, check = O
 all_traps <- ODK_paper_combine(ODK_data = ODK_combined)
 all_rodents <- ODK_paper_combine_rodent(ODK_data = ODK_rodents)
 
+# Rename images stored in data/rodent_images
+rename_images()
+
 # Associate trapped rodents with locations
 final_cleaned_trap_data <- final_cleaning(trap_data = all_traps, rodent_data = all_rodents, site_data = ODK_sites$site_habitats)
 final_cleaned_rodent_data <- final_cleaning_rodents(rodent_data = all_rodents)
@@ -30,11 +33,26 @@ final_cleaned_rodent_data <- final_cleaning_rodents(rodent_data = all_rodents)
 final_cleaned_trap_data$spatial_data <- st_as_sf(final_cleaned_trap_data$clean_sites, coords = c("lon", "lat")) %>%
   st_set_crs(value = project_crs)
 
+write_rds(final_cleaned_trap_data$spatial_data, here("data", "clean_data", "spatial_traps", "trap_spatial.rds"))
+
 # Rodent speciation values
 rodent_speciation <- read_species_characteristics()
 
+# standard deviations are produced under the assumption that values are normally distributed within the range
+rodent_speciation_literature <- produce_species_classification()
+
+classified_species <- run_classifier()
+
 # SLE Raster
 sle_raster <- generate_raster()
+
+# Proportion of land use types in Eastern Province
+as_tibble(freq(rast(sle_raster$raster))) %>%
+  left_join(., sle_raster$raster_labels, by = c("value" = "sle_landuse")) %>%
+  mutate(n_cells = sum(count)) %>%
+  group_by(group) %>%
+  summarise(proportion = sum(count)/n_cells) %>%
+  distinct()
 
 # Landuse plots
 landuse_plots <- plot_landuse(data = sle_raster)
@@ -67,14 +85,22 @@ save_plot(here("output", "figures", "trap_success", "all_sites_success.png"), tr
 
 trap_success_village <- plot_trap_success(data = final_cleaned_trap_data$clean_sites, by_village = TRUE, save_plots = TRUE)
 
+trap_success_habitat <- plot_trap_success(data = final_cleaned_trap_data$clean_sites, by_village = FALSE, by_habitat = TRUE, save_plots = TRUE)
+
 # Rodent description
 rodent_descriptives <- describe_rodents_trapped(data = final_cleaned_rodent_data, trap_data = final_cleaned_trap_data$clean_sites)
+
+save_plot(here("output", "figures", "genus_trapped", "combined_genus.png"), rodent_descriptives$plot_combined, base_height = 8, base_width = 6)
+save_plot(here("output", "figures", "genus_trapped", "genus_by_village.png"), rodent_descriptives$plot_village, base_height = 8, base_width = 10)
 
 # Rodent presence/absence maps
 rodent_locations <- describe_rodent_locations(spatial_data = final_cleaned_trap_data$spatial_data, rodent_data = final_cleaned_rodent_data)
 
 # Figure 1
 fig_1 <- create_fig_1()
+
+# Producing species assemblages within 50m radius of trapped rodent
+assemblages <- produce_assemblages(distance = 50)
 
 # Set up parallelism (no of targets that can run simultaneously)
 tar_config_set(workers = get_num_cores())
