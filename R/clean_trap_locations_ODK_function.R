@@ -75,7 +75,8 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
            study_site = coalesce(study_site.x, study_site.y),
            trap_number = coalesce(trap_number.x, trap_number.y),
            village_name = coalesce(village_name.x, village_name.y),
-           visit_number = coalesce(visit_number.x, visit_number.y)) %>%
+           visit_number = coalesce(visit_number.x, visit_number.y),
+           key = factor(key)) %>%
     dplyr::select(-any_of(ends_with(c(".x", ".y")))) %>%
     drop_na(trap_number) %>%
     rename("village" = "village_name",
@@ -98,7 +99,7 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
                                    village == "lalehun" & visit == "3" & as.numeric(trap_number) < 99 & as.numeric(trap_number) >= 50 ~ 3,
                                    TRUE ~ grid_number)) %>%
     # sort misrecorded trap numbers
-    group_by(village, visit, trap_number) %>%
+    group_by(village, visit, trap_number, key) %>%
     mutate(trap_number = paste(trap_number, row_number(), sep = "_"),
            trap_number = str_remove(trap_number, "_1"),
            trap_number = case_when(trap_number == "77_2" & visit == "1" & village == "lambayama" ~ "78", # Some trap sites have been misrecorded

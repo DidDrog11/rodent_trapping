@@ -7,6 +7,7 @@ pkgs =
     "cowplot",
     "exactextractr",
     "fs",
+    "fuzzyjoin",
     "ggmap",
     "googledrive",
     "here",

@@ -4,6 +4,9 @@
 suppressPackageStartupMessages(source(here::here("packages.R")))
 walk(dir_ls(here("R")),  ~try(source(.)))
 
+# If using rodent images set to true
+download_rodent_pictures = TRUE
+
 # Update the data if required
 get_ODK()
 
@@ -22,8 +25,11 @@ ODK_combined <- combine_ODK_data(trap = ODK_traps$full_trap_locations, check = O
 all_traps <- ODK_paper_combine(ODK_data = ODK_combined)
 all_rodents <- ODK_paper_combine_rodent(ODK_data = ODK_rodents)
 
-# Rename images stored in data/rodent_images
-rename_images()
+# Rename images stored in data/rodent_images only needed if download_rodent_pictures was set to TRUE, otherwise would have previously been done.
+all_images <- rename_images(new_images = FALSE, delete_old_images = FALSE)
+
+# Images are missing for 89 rodents
+table(is.na(all_images$file))
 
 # Associate trapped rodents with locations
 final_cleaned_trap_data <- final_cleaning(trap_data = all_traps, rodent_data = all_rodents, site_data = ODK_sites$site_habitats)

@@ -2,7 +2,9 @@ clean_rodent_data_ODK <- function(){
   
   all_files <- list.files(here("data", "raw_odk", paste0("rodent_data", "_", Sys.Date())), full.names = T)
   
-  if(identical(all_files, character(0))) all_files <- list.files(tail(sort(list.files(here("data", "raw_odk"), pattern = "rodent_data_", full.names = TRUE)), 1), full.names = TRUE)
+  if(!identical(all_files, character(0))) 
+    
+    all_files <- list.files(tail(sort(list.files(here("data", "raw_odk"), pattern = "rodent_data_", full.names = TRUE)), 1), full.names = TRUE)[2]
   
   correct_species_error <- c("unclear_dasymys", "unclear_lemnisomys",
                              "unclear_lophuromys", "unclear_praomys")  
@@ -37,6 +39,7 @@ clean_rodent_data_ODK <- function(){
                              visit == 41 ~ 4,
                              month(form_entry) <= 2 & year(form_entry) == 2022 & village_name %in% c("lalehun", "seilama") ~ 5,
                              month(form_entry) <= 2 & year(form_entry) == 2022 & village_name %in% c("lambayama", "baiama") ~ 3,
+                             month(form_entry) <= 4 & year(form_entry) == 2022 & village_name %in% c("lalehun", "seilama") ~ 6,
                              TRUE ~ visit),
            genus = case_when(`rodent_details-genus` == "not_listed" ~ `rodent_details-genus_other`,
                              TRUE ~ `rodent_details-genus`),
