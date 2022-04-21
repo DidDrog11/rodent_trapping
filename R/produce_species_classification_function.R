@@ -1,10 +1,85 @@
-produce_species_classification <- function(trapped_rodents = final_cleaned_rodent_data, data = rodent_speciation) {
+produce_species_classification <- function(trapped_rodents = rodent_image_speciation, data = rodent_speciation, final_cleaned_rodent = final_cleaned_rodent_data) {
+  
+  identified_genus <- trapped_rodents %>%
+    select(rodent_id, weight, head_body, tail, hind_foot, ear, length_skull,
+           pelage, abdominal_colouring, coat_feature, ear_size, initial_species_id,
+           photo_identification) %>%
+    mutate(initial_species_id = case_when(initial_species_id == "proamys_spp" ~ "praomys_spp",
+                                          TRUE ~ initial_species_id),
+           initial_genus_id = str_split(initial_species_id, "_", simplify = TRUE)[, 1],
+           photo_genus_id =  str_split(photo_identification, "_", simplify = TRUE)[, 1],
+           initial_photo_match = case_when(initial_genus_id == photo_genus_id ~ TRUE,
+                                           TRUE ~ FALSE)) %>%
+    mutate(morphological_genus_id = case_when(initial_photo_match == TRUE ~ initial_genus_id,
+                                              initial_photo_match == FALSE & is.na(photo_genus_id) ~ initial_genus_id,
+                                              initial_photo_match == FALSE & !is.na(photo_genus_id) ~ photo_genus_id,
+                                              TRUE ~ "check")) %>%
+    left_join(., final_cleaned_rodent %>%
+                select(rodent_uid, sex),
+              by = c("rodent_id" = "rodent_uid"))
   
   if(!file.exists(here("data", "speciation", "bayes_classifier.rds"))) {
     
-    identified_genus <- 
+    granjon <- data %>%
+      filter(source == "granjon") %>%
+      mutate(genus = str_split(name, "_", simplify = TRUE)[, 1])
     
-    mean_sd <- data %>%
+    # We use a truncated normal distribution to sample 10,000 values from these distributions. The min and max are set to 75% and 125% of the min and max respectively
+    simulated_morphology <- list()
+    
+    for(i in 1:nrow(granjon)) {
+      
+      species = rep(granjon$name[i], each = 10000)
+      sex = rep(granjon$sex[i], each = 10000)
+      weight = rtruncnorm(n = 10000, mean = granjon$weight_mean[i], sd = granjon$weight_sd[i], a = granjon$weight_min[i]*0.75, b = granjon$weight_max[i]*1.25)
+      head_body = rtruncnorm(n = 10000, mean = granjon$head_body_mean[i], sd = granjon$head_body_sd[i], a = granjon$head_body_min[i]*0.75, b = granjon$head_body_max[i]*1.25)
+      tail = rtruncnorm(n = 10000, mean = granjon$tail_mean[i], sd = granjon$tail_sd[i], a = granjon$tail_min[i]*0.75, b = granjon$tail_max[i]*1.25)
+      hind_foot = rtruncnorm(n = 10000, mean = granjon$hind_foot_mean[i], sd = granjon$hind_foot_sd[i], a = granjon$hind_foot_min[i]*0.75, b = granjon$hind_foot_max[i]*1.25)
+      ear = rtruncnorm(n = 10000, mean = granjon$ear_mean[i], sd = granjon$ear_sd[i], a = granjon$ear_min[i]*0.75, b = granjon$ear_max[i]*1.25)
+      
+      simulated_morphology[[i]] <- tibble(species, sex, weight, head_body, tail, hind_foot, ear)
+      
+    }
+    
+    simulated_morphology <- bind_rows(simulated_morphology)
+    
+    train <- simulated_morphology %>%
+      mutate(response = case_when(species == "rattus_rattus" ~ 1,
+                                  TRUE ~ 0))
+    
+    rattus_rattus_m1 <- gam(response ~ weight + head_body + tail + hind_foot + ear, data = train, family = binomial, method = "REML")
+    
+    rattus_test <- identified_genus %>%
+      filter(str_detect(morphological_genus_id, "rattus|mastomys|mus|praomys")) %>%
+      select(rodent_id, photo_identification, weight, head_body, tail, hind_foot, ear)
+    
+    rattus_test$predict <- predict(rattus_rattus_m1, type = "response", newdata = rattus_test)
+    
+    features <- c("weight", "head_body", "tail", "hind_foot", "ear")
+    x <- rattus_train[, features]
+    y <- rattus_train$species
+    
+    rodent_split <- initial_split(mus_classification, prop = .7, strata = "species")
+    rodent_train <- training(rodent_split)
+    rodent_test  <- testing(rodent_split)
+    
+    # create response and feature data
+    features <- setdiff(names(rodent_train), "species")
+    x <- rodent_train[, features]
+    y <- rodent_train$species
+    
+    # set up 10-fold cross validation procedure
+    train_control <- trainControl(method = "cv", number = 10)
+    
+    # train model
+    nb.m1 <- train(x = x, y = y, method = "nb", trControl = train_control)
+    
+    # results
+    confusionMatrix(nb.m1)
+    sim_pred <- predict(nb.m1, newdata = rodent_test)
+    simulated_predictions <- confusionMatrix(sim_pred, factor(rodent_test$species))
+
+        mean_sd <- data %>%
       mutate(weight_sd = (weight_max - weight_mean)/4,
              head_body_sd = (head_body_max - head_body_min)/4,
              tail_sd = (tail_max -tail_mean)/4,
@@ -39,6 +114,10 @@ produce_species_classification <- function(trapped_rodents = final_cleaned_roden
     
     dormice_sim <- simulated_morphology %>%
       filter(species %in% dormice)
+    
+    rodent <- data %>%
+      filter(group == "rodent") %>%
+      pull(name)
     
     rodent_sim <- simulated_morphology %>%
       filter(species %in% rodent)

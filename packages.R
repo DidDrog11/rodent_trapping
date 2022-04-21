@@ -32,6 +32,7 @@ pkgs =
     "tidyverse",
     "tmap",
     "tmaptools",
+    "truncnorm",
     "waffle",
     "widgetframe"
   )

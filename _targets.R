@@ -11,17 +11,20 @@ download_rodent_pictures = TRUE
 get_ODK()
 
 # Update the local data
+# If the study visit has been incorrectly input into the forms, correct in the following function
 ODK_sites <- clean_site_ODK()
+# If coordinates have been incorrectly input into the forms, correct in the following function
 ODK_traps <- clean_trap_locations_ODK()
-
 # fix the obvious errors, i.e. swapped lat/lon and including the degrees before changing the improbables manually in specific the function
 # check using mapview::mapview(ODK_traps$coord_error$spatial)
+
 ODK_trap_check <- clean_trap_check_ODK()
 ODK_rodents <- clean_rodent_data_ODK()
 
-# Combine the forms
+# Combine the ODK forms
 ODK_combined <- combine_ODK_data(trap = ODK_traps$full_trap_locations, check = ODK_trap_check, rodent = ODK_rodents)
 
+# Combine the paper and ODK forms
 all_traps <- ODK_paper_combine(ODK_data = ODK_combined)
 all_rodents <- ODK_paper_combine_rodent(ODK_data = ODK_rodents)
 
@@ -44,7 +47,14 @@ write_rds(final_cleaned_trap_data$spatial_data, here("data", "clean_data", "spat
 # Rodent speciation values
 rodent_speciation <- read_species_characteristics()
 
-# standard deviations are produced under the assumption that values are normally distributed within the range
+# Rodent speciation is based on the matched_images.xlsx file in data/speciation
+# This includes manually extracted data on pelage, coat descriptives and ear size that haven't been captured in the questionnaires but are obtained by viewing the images
+rodent_image_speciation <- read_xlsx(path = here("data", "speciation", "matched_images.xlsx")) %>%
+  mutate(date = as.Date(date))
+
+# Literature based classification uses three resources, data have been extracted into a spreadsheet
+# We use this to calculate the probability that a rodent has been correctly allocated
+# For species not included in Granjon we produce standard deviations for measurements under the assumption that values are normally distributed within the range
 rodent_speciation_literature <- produce_species_classification()
 
 classified_species <- run_classifier()
