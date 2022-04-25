@@ -98,6 +98,12 @@ Using projected land use change/climate change we will produce future potential 
   **IGNORE BELOW**
   ---
 
+# Methods
+
+What is the expected relationship between land use and species diversity/composition?
+How are generalist and specialist species defined?
+Networks of species.
+
 # Results
 
 ## Rodent occurrence and species assemblage structure

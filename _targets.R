@@ -4,8 +4,8 @@
 suppressPackageStartupMessages(source(here::here("packages.R")))
 walk(dir_ls(here("R")),  ~try(source(.)))
 
-# If using rodent images set to true
-download_rodent_pictures = TRUE
+# If using rodent images set to TRUE
+download_rodent_pictures = FALSE
 
 # Update the data if required
 get_ODK()

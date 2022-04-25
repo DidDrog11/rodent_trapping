@@ -1,0 +1,11 @@
+name: Publish Document
+title:
+username:
+account: rpubs
+server: rpubs.com
+hostUrl: rpubs.com
+appId: https://api.rpubs.com/api/v1/document/893300/1673a42d318747e2a38df3549280079f
+bundleId: https://api.rpubs.com/api/v1/document/893300/1673a42d318747e2a38df3549280079f
+url: http://rpubs.com/diddrog11/893300
+when: 1650618098.56929
+lastSyncTime: 1650618098.56929

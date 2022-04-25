@@ -92,8 +92,8 @@ produce_assemblages <- function(spatial_data = final_cleaned_trap_data$spatial_d
                                          TRUE ~ as.character(NA)),
            colocated_species = case_when(reference_rodent == "non_reference" ~ clean_names,
                                          TRUE ~ as.character(NA))) %>%
-    fill(reference_species, .direction = "updown") %>%
-    fill(colocated_species, .direction = "downup") %>%
+    tidyr::fill(reference_species, .direction = "updown") %>%
+    tidyr::fill(colocated_species, .direction = "downup") %>%
     ungroup() %>%
     distinct(assemblage, reference_species, colocated_species) %>%
     mutate(colocated_species = str_to_sentence(str_replace_all(colocated_species, "_", " ")),
@@ -132,8 +132,8 @@ produce_assemblages <- function(spatial_data = final_cleaned_trap_data$spatial_d
                                          TRUE ~ as.character(NA)),
            colocated_species = case_when(reference_rodent == "non_reference" ~ clean_names,
                                          TRUE ~ as.character(NA))) %>%
-    fill(reference_species, .direction = "updown") %>%
-    fill(colocated_species, .direction = "downup") %>%
+    tidyr::fill(reference_species, .direction = "updown") %>%
+    tidyr::fill(colocated_species, .direction = "downup") %>%
     ungroup() %>%
     distinct(assemblage, reference_species, colocated_species) %>%
     mutate(colocated_species = str_to_sentence(str_replace_all(colocated_species, "_", " ")),

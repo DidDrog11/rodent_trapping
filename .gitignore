@@ -9,6 +9,7 @@ data/satellite/*
 data/spatial/*
 data/plots/
 data/rodent_images/
+data/tmp_data
 
 data/raw_odk/
 data/clean_data/
