@@ -65,9 +65,23 @@ family_allocation <- c("lophuromys" = "muridae",
                        "rattus" = "muridae",
                        "dasymys" = "muridae",
                        "gerbilliscus" = "muridae")
+sub_family_allocation <- c("lophuromys" = "murinae",
+                           "crocidura" = "crocidurinae",
+                           "lemniscomys" = "murinae",
+                           "mus" = "murinae",
+                           "malacomys" = "murinae",
+                           "praomys" = "murinae",
+                           "mastomys" = "murinae",
+                           "hylomyscus" = "murinae",
+                           "hybomys" = "murinae",
+                           "rattus" = "murinae",
+                           "dasymys" = "murinae",
+                           "gerbillinae" = "gerbillinae",
+                           "gerbilliscus" = "gerbillinae")
 
 species_dictionary <- tibble(current_names = names(species_id),
                              clean_names = species_id) %>%
   mutate(genus = recode(current_names, !!!genus_allocation),
-         family = recode(genus, !!!family_allocation)) %>%
-  distinct(current_names, clean_names, genus, family)
+         family = recode(genus, !!!family_allocation),
+         sub_family = recode(genus, !!!sub_family_allocation)) %>%
+  distinct(current_names, clean_names, genus, family, sub_family)

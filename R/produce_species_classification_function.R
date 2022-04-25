@@ -15,16 +15,15 @@ produce_species_classification <- function(trapped_rodents = rodent_image_specia
                                               initial_photo_match == FALSE & !is.na(photo_genus_id) ~ photo_genus_id,
                                               TRUE ~ "check")) %>%
     left_join(., final_cleaned_rodent %>%
-                select(rodent_uid, sex),
+                select(rodent_uid, "subfamily" = sub_family, sex),
               by = c("rodent_id" = "rodent_uid"))
   
   # Granjon has a more helpful data structure but is not for all species of interest. Where this is available we use this source
   
-  if(!file.exists(here("data", "speciation", "multinomial_model.rds"))) {
+  if(!file.exists(here("data", "speciation", "multinomial_classification.rds"))) {
     
     granjon <- data %>%
       filter(source == "granjon") %>%
-      filter(!str_detect(name, "arvicanthis")) %>% # we have not identified any arvicanthis
       mutate(genus = str_split(name, "_", simplify = TRUE)[, 1])
     
     # We use a truncated normal distribution to sample 10,000 values from these distributions. The min and max are set to 75% and 125% of the min and max respectively
@@ -33,6 +32,7 @@ produce_species_classification <- function(trapped_rodents = rodent_image_specia
     for(i in 1:nrow(granjon)) {
       
       species = rep(granjon$name[i], each = 1000)
+      subfamily = rep(granjon$sub_family[i], each = 1000)
       sex = rep(granjon$sex[i], each = 1000)
       weight = rtruncnorm(n = 1000, mean = granjon$weight_mean[i], sd = granjon$weight_sd[i], a = granjon$weight_min[i]*0.75, b = granjon$weight_max[i]*1.25)
       head_body = rtruncnorm(n = 1000, mean = granjon$head_body_mean[i], sd = granjon$head_body_sd[i], a = granjon$head_body_min[i]*0.75, b = granjon$head_body_max[i]*1.25)
@@ -41,7 +41,7 @@ produce_species_classification <- function(trapped_rodents = rodent_image_specia
       ear = rtruncnorm(n = 1000, mean = granjon$ear_mean[i], sd = granjon$ear_sd[i], a = granjon$ear_min[i]*0.75, b = granjon$ear_max[i]*1.25)
       hb_tail_ratio = tail/head_body
       
-      simulated_morphology_granjon[[i]] <- tibble(species, sex, weight, head_body, tail, hb_tail_ratio, hind_foot, ear)
+      simulated_morphology_granjon[[i]] <- tibble(species, subfamily, sex, weight, head_body, tail, hb_tail_ratio, hind_foot, ear)
       
     }
     
@@ -51,7 +51,7 @@ produce_species_classification <- function(trapped_rodents = rodent_image_specia
       filter(source != "granjon") %>%
       filter(!str_detect(group, "squirrel")) %>%
       filter(!name %in% granjon$name) %>%
-      filter(!str_detect(name, "arvicanthis|obscurior|denti")) %>%
+      filter(!str_detect(name, "obscurior|denti")) %>% # missing data on these two shrew species
       mutate(genus = str_split(name, "_", simplify = TRUE)[, 1])
     
     mean_sd <- others %>%
@@ -68,78 +68,90 @@ produce_species_classification <- function(trapped_rodents = rodent_image_specia
     for(i in 1:length(unique(mean_sd$name))) {
       
       species = rep(mean_sd$name[i], each = 2000)
-      weight = rtruncnorm(n = 2000, mean = mean_sd$weight_mean[i], sd = mean_sd$weight_sd[i], a = mean_sd$weight_min*0.75, b = mean_sd$weight_max*1.25)
-      head_body = rtruncnorm(n = 2000, mean = mean_sd$head_body_mean[i], sd = mean_sd$head_body_sd[i], a = mean_sd$head_body_min*0.75, b = mean_sd$head_body_max*1.25)
-      tail = rtruncnorm(n = 2000, mean = mean_sd$tail_mean[i], sd = mean_sd$tail_sd[i], a = mean_sd$tail_min*0.75, b = mean_sd$tail_max*1.25)
-      hind_foot = rtruncnorm(n = 2000, mean = mean_sd$hind_foot_mean[i], sd = mean_sd$hind_foot_sd[i], a = mean_sd$hind_foot_min*0.75, b = mean_sd$hind_foot_max*1.25)
-      ear = rtruncnorm(n = 2000, mean = mean_sd$ear_mean[i], sd = mean_sd$ear_sd[i], a = mean_sd$ear_min*0.75, b = mean_sd$ear_max*1.25)
+      subfamily = rep(mean_sd$sub_family[i], each = 2000)
+      weight = rtruncnorm(n = 2000, mean = mean_sd$weight_mean[i], sd = mean_sd$weight_sd[i], a = mean_sd$weight_min[i]*0.75, b = mean_sd$weight_max[i]*1.25)
+      head_body = rtruncnorm(n = 2000, mean = mean_sd$head_body_mean[i], sd = mean_sd$head_body_sd[i], a = mean_sd$head_body_min[i]*0.75, b = mean_sd$head_body_max[i]*1.25)
+      tail = rtruncnorm(n = 2000, mean = mean_sd$tail_mean[i], sd = mean_sd$tail_sd[i], a = mean_sd$tail_min[i]*0.75, b = mean_sd$tail_max[i]*1.25)
+      hind_foot = rtruncnorm(n = 2000, mean = mean_sd$hind_foot_mean[i], sd = mean_sd$hind_foot_sd[i], a = mean_sd$hind_foot_min[i]*0.75, b = mean_sd$hind_foot_max[i]*1.25)
+      ear = rtruncnorm(n = 2000, mean = mean_sd$ear_mean[i], sd = mean_sd$ear_sd[i], a = mean_sd$ear_min[i]*0.75, b = mean_sd$ear_max[i]*1.25)
       hb_tail_ratio = tail/head_body
       
-      simulated_morphology_others[[i]] <- tibble(species, weight, head_body, tail, hb_tail_ratio, hind_foot, ear)
+      simulated_morphology_others[[i]] <- tibble(species, subfamily, weight, head_body, tail, hb_tail_ratio, hind_foot, ear)
     }
     
-    simulated_morphology_others <- bind_rows(simulated_morphology_others) %>%
-      drop_na() %>%
-      group_by(species) %>%
-      slice_sample(n = 1000, replace = FALSE)
+    simulated_morphology_others <- bind_rows(simulated_morphology_others)
     
     simulated_morphology <- bind_rows(simulated_morphology_granjon, simulated_morphology_others)
     
+    ## Lophuromys are the only rodents in this region with russett coats and light orange abdomens
+    ## Lemniscomys species are identifiable based on the structure of their stripes
+    ## Gerbilliscus species are identifiable based on their body shapes
+    ## Arvicanthis are identifiable but so far have not been trapped in our study
+    ## Cricetomys are identifiable but so far have not been trapped in our study
+    
+    out_of_area <- c("arvicanthis|cricetomys")
+    identified_otherwise <- c("tatera|gerbilliscus|lophuromys|lemniscomys")
+    
+    ## Multinomial model no shrews, gerbils, dormice or arvicanthis
+    
     multinom_train <- simulated_morphology %>%
-      mutate(species = factor(species))
+      mutate(species = factor(species)) %>%
+      filter(!str_detect(species, paste0(out_of_area, "|", identified_otherwise))) %>%
+      select(-sex)
     
-    all_species_m1 <- vglm(species ~ weight + head_body + tail + hb_tail_ratio + hind_foot + ear,
-                           data = multinom_train,
-                           multinomial())
+    multinom_train$species <- droplevels(relevel(multinom_train$species, ref = "mus_minutoides"))
     
-    write_rds(all_species_m1, here("data", "tmp_data", "speciation_model.rds"))
+    split_data <- initial_split(multinom_train, prop = 0.7, strata = "species")
+    train_data <- training(split_data)
+    test_data <- testing(split_data)
     
-    multinom_test <- identified_genus %>%
-      select(morphological_genus_id, photo_identification, sex, weight, head_body, tail, hind_foot, ear) %>%
+    multinom_model_m1 <- multinom(species ~ subfamily + weight + head_body + tail + hb_tail_ratio + hind_foot + ear, data = train_data,
+                                  maxit = 1500)
+    
+    multinom_train$species_predicted <- predict(multinom_model_m1, newdata = multinom_train, response = "class")
+    tab <- table(multinom_train$species, multinom_train$species_predicted)
+    # Accuracy
+    round((sum(diag(tab))/sum(tab)) * 100, 2)
+    
+    test_data$species_predicted <- predict(multinom_model_m1, newdata = test_data, response = "class")
+    tab <- table(test_data$species, test_data$species_predicted)
+    chisq.test(test_data$species, test_data$species_predicted)
+    
+    write_rds(multinom_model_m1, here("data", "tmp_data", "speciation_model.rds"))
+    
+    # Apply to observed data
+    observed_rodents <- identified_genus %>%
       mutate(hb_tail_ratio = tail/head_body) %>%
-      drop_na(weight, head_body, tail, hb_tail_ratio, hind_foot, ear)
+      select(rodent_id, initial_species_id, photo_identification, morphological_genus_id, subfamily, weight, head_body, tail, hb_tail_ratio, hind_foot,
+             ear, length_skull, pelage, abdominal_colouring, coat_feature, ear_size) %>%
+      filter(!str_detect(morphological_genus_id, paste0(out_of_area, "|", identified_otherwise)))
     
-    all <- data.frame(round(predict(all_species_m1, type = "response", multinom_test), 3))
+    observed_rodents$class_allocation <- predict(multinom_model_m1, newdata = observed_rodents, type = "class")
+    probabilities <- data.frame(round(predict(multinom_model_m1, newdata = observed_rodents, type = "probs"), 3))
     
-    combine_multi <- bind_cols(multinom_test, all)
+    observed_rodents <- bind_cols(observed_rodents, probabilities)
     
+    observed_non_predicted <- identified_genus %>%
+      filter(!rodent_id %in% observed_rodents$rodent_id) %>%
+      mutate(hb_tail_ratio = tail/head_body) %>%
+      select(rodent_id, initial_species_id, photo_identification, morphological_genus_id, subfamily,
+             weight, head_body, tail, hb_tail_ratio, hind_foot, ear, length_skull, pelage, abdominal_colouring,
+             coat_feature, ear_size)
     
+    combined_data <- bind_rows(observed_rodents %>%
+                                 mutate(predicted = TRUE),
+                               observed_non_predicted %>%
+                                 mutate(predicted = FALSE)) %>%
+      arrange(rodent_id)
     
-    
-    
-    
-    simulated_morphology <- list()
-    
-    for(i in 1:length(unique(mean_sd$name))) {
-      
-      species = rep(mean_sd$name[i], each = 1000)
-      weight = rnorm(n = 1000, mean = mean_sd$weight_mean[i], sd = mean_sd$weight_sd[i])
-      hb_length = rnorm(n = 1000, mean = mean_sd$head_body_mean[i], sd = mean_sd$head_body_sd[i])
-      tail = rnorm(n = 1000, mean = mean_sd$tail_mean[i], sd = mean_sd$tail_sd[i])
-      hind_foot = rnorm(n = 1000, mean = mean_sd$tail_mean[i], sd = mean_sd$tail_sd[i])
-      ear = rnorm(n = 1000, mean = mean_sd$ear_mean[i], sd = mean_sd$ear_sd[i])
-      skull = rnorm(n = 1000, mean = mean_sd$length_skull_mean[i], sd = mean_sd$length_skull_sd[i])
-      
-      simulated_morphology[[i]] <- tibble(species, weight, hb_length, tail, hind_foot, ear, skull)
-      
-    }
-    
-    simulated_morphology <- bind_rows(simulated_morphology)
-    
-    
-    rodent_speciation_literature <- list(naive_bayes_m1 = nb.m1,
-                                         simulated_data = simulated_morphology,
-                                         training_set = train,
-                                         testing_set = test)
-    
-    write_rds(rodent_speciation_literature, here("data", "speciation", "bayes_classifier.rds"))
+    write_rds(combined_data, here("data", "speciation", "multinomial_classification.rds"))
     
   } else {
     
-    rodent_speciation_literature <- read_rds(here("data", "speciation", "bayes_classifier.rds"))
+    combined_data <- read_rds(here("data", "speciation", "multinomial_classification.rds"))
     
   }
   
-  return(rodent_speciation_literature)
+  return(combined_data)
   
 }
