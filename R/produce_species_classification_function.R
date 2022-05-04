@@ -15,7 +15,7 @@ produce_species_classification <- function(trapped_rodents = rodent_image_specia
                                               initial_photo_match == FALSE & !is.na(photo_genus_id) ~ photo_genus_id,
                                               TRUE ~ "check")) %>%
     left_join(., final_cleaned_rodent %>%
-                select(rodent_uid, "subfamily" = sub_family, sex),
+                select(rodent_uid, "subfamily" = sub_family, sex, age_group),
               by = c("rodent_id" = "rodent_uid"))
   
   # Granjon has a more helpful data structure but is not for all species of interest. Where this is available we use this source
@@ -92,53 +92,150 @@ produce_species_classification <- function(trapped_rodents = rodent_image_specia
     out_of_area <- c("arvicanthis|cricetomys")
     identified_otherwise <- c("tatera|gerbilliscus|lophuromys|lemniscomys")
     
-    ## Multinomial model no shrews, gerbils, dormice or arvicanthis
+    ## Multinomial model for murinae
     
-    multinom_train <- simulated_morphology %>%
+    murinae_multinom_train <- simulated_morphology %>%
       mutate(species = factor(species)) %>%
       filter(!str_detect(species, paste0(out_of_area, "|", identified_otherwise))) %>%
+      filter(str_detect(subfamily, "murinae")) %>%
       select(-sex)
     
-    multinom_train$species <- droplevels(relevel(multinom_train$species, ref = "mus_minutoides"))
+    murinae_multinom_train$species <- droplevels(relevel(murinae_multinom_train$species, ref = "mus_minutoides"))
     
-    split_data <- initial_split(multinom_train, prop = 0.7, strata = "species")
+    split_data <- initial_split(murinae_multinom_train, prop = 0.7, strata = "species")
     train_data <- training(split_data)
     test_data <- testing(split_data)
     
-    multinom_model_m1 <- multinom(species ~ subfamily + weight + head_body + tail + hb_tail_ratio + hind_foot + ear, data = train_data,
-                                  maxit = 1500)
+    murinae_multinom_model_m1 <- multinom(species ~ weight + head_body + tail + hb_tail_ratio + hind_foot + ear, data = train_data,
+                                  maxit = 1000)
     
-    multinom_train$species_predicted <- predict(multinom_model_m1, newdata = multinom_train, response = "class")
-    tab <- table(multinom_train$species, multinom_train$species_predicted)
+    train_data$species_predicted <- predict(murinae_multinom_model_m1, newdata = train_data, response = "class")
+    murine_train <- train_data
+    tab <- table(murine_train$species, murine_train$species_predicted)
     # Accuracy
-    round((sum(diag(tab))/sum(tab)) * 100, 2)
+    murinae_accuracy <- round((sum(diag(tab))/sum(tab)) * 100, 2)
     
-    test_data$species_predicted <- predict(multinom_model_m1, newdata = test_data, response = "class")
+    # Variable importance
+    varImp(murinae_multinom_model_m1)
+    
+    test_data$species_predicted <-  predict(murinae_multinom_model_m1, newdata = test_data, response = "class")
+    murine_test <- test_data
+    
+    murinae_confusion <- bind_rows(murine_train %>%
+                                     group_by(species, species_predicted) %>%
+                                     summarise(n = n()) %>%
+                                     mutate(prop = n/sum(n)) %>%
+                                     mutate(data = "train"),
+                                   murine_test %>%
+                                     group_by(species, species_predicted) %>%
+                                     summarise(n = n()) %>%
+                                     mutate(prop = n/sum(n)) %>%
+                                     mutate(data = "test"))
+    
+    levels(murinae_confusion$species) <- sort(as.character(levels(murinae_confusion$species)))
+    levels(murinae_confusion$species_predicted) <- sort(as.character(levels(murinae_confusion$species_predicted)))
+    
+    murinae_confusion_matrix <- ggplot(murinae_confusion) +
+      geom_tile(aes(x = species, y = species_predicted, fill = prop)) +
+      facet_grid(~ data) +
+      scale_fill_viridis_c() +
+      theme_minimal() +
+      theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
+      labs(title = paste("Murinae, accuracy =", murinae_accuracy))
+    
+    test_data$species_predicted <- predict(murinae_multinom_model_m1, newdata = test_data, response = "class")
     tab <- table(test_data$species, test_data$species_predicted)
     chisq.test(test_data$species, test_data$species_predicted)
     
-    write_rds(multinom_model_m1, here("data", "tmp_data", "speciation_model.rds"))
+    write_rds(murinae_multinom_model_m1, here("data", "tmp_data", "murinae_speciation_model.rds"))
     
     # Apply to observed data
-    observed_rodents <- identified_genus %>%
+    murinae_observed <- identified_genus %>%
       mutate(hb_tail_ratio = tail/head_body) %>%
-      select(rodent_id, initial_species_id, photo_identification, morphological_genus_id, subfamily, weight, head_body, tail, hb_tail_ratio, hind_foot,
+      select(rodent_id, initial_species_id, photo_identification, morphological_genus_id, subfamily, age_group, weight, head_body, tail, hb_tail_ratio, hind_foot,
              ear, length_skull, pelage, abdominal_colouring, coat_feature, ear_size) %>%
-      filter(!str_detect(morphological_genus_id, paste0(out_of_area, "|", identified_otherwise)))
+      filter(!str_detect(morphological_genus_id, paste0(out_of_area, "|", identified_otherwise))) %>%
+      filter(str_detect(subfamily, "murinae"))
     
-    observed_rodents$class_allocation <- predict(multinom_model_m1, newdata = observed_rodents, type = "class")
-    probabilities <- data.frame(round(predict(multinom_model_m1, newdata = observed_rodents, type = "probs"), 3))
+    murinae_observed$class_allocation <- predict(murinae_multinom_model_m1, newdata = murinae_observed, type = "class")
+    probabilities <- data.frame(round(predict(murinae_multinom_model_m1, newdata = murinae_observed, type = "probs"), 3))
     
-    observed_rodents <- bind_cols(observed_rodents, probabilities)
+    murinae_observed <- bind_cols(murinae_observed, probabilities)
     
-    observed_non_predicted <- identified_genus %>%
-      filter(!rodent_id %in% observed_rodents$rodent_id) %>%
+    ## Multinomial model for Crocidurinae
+    crocidurae_multinom_train <- simulated_morphology %>%
+      mutate(species = factor(species)) %>%
+      filter(!str_detect(species, paste0(out_of_area, "|", identified_otherwise))) %>%
+      filter(str_detect(subfamily, "crocidurinae")) %>%
+      select(-sex)
+    
+    crocidurae_multinom_train$species <- droplevels(relevel(crocidurae_multinom_train$species, ref = "crocidura_olivieri"))
+    
+    split_data <- initial_split(crocidurae_multinom_train, prop = 0.7, strata = "species")
+    train_data <- training(split_data)
+    test_data <- testing(split_data)
+    
+    crocidurae_multinom_model_m1 <- multinom(species ~ weight + head_body + tail + hb_tail_ratio + hind_foot + ear, data = train_data,
+                                          maxit = 200)
+    
+    train_data$species_predicted <- predict(crocidurae_multinom_model_m1, newdata = train_data, response = "class")
+    crocidura_train <- train_data
+    tab <- table(crocidura_train$species, crocidura_train$species_predicted)
+    # Accuracy
+    crocidura_accuracy <- round((sum(diag(tab))/sum(tab)) * 100, 2)
+    
+    test_data$species_predicted <-  predict(crocidurae_multinom_model_m1, newdata = test_data, response = "class")
+    crocidura_test <- test_data
+    
+    crocidura_confusion <- bind_rows(crocidura_train %>%
+      group_by(species, species_predicted) %>%
+      summarise(n = n()) %>%
+      mutate(prop = n/sum(n)) %>%
+      mutate(data = "train"),
+      crocidura_test %>%
+        group_by(species, species_predicted) %>%
+        summarise(n = n()) %>%
+        mutate(prop = n/sum(n)) %>%
+        mutate(data = "test"))
+    
+    levels(crocidura_confusion$species) <- sort(as.character(levels(crocidura_confusion$species)))
+    levels(crocidura_confusion$species_predicted) <- sort(as.character(levels(crocidura_confusion$species_predicted)))
+    
+    crocidura_confusion_matrix <- ggplot(crocidura_confusion) +
+      geom_tile(aes(x = species, y = species_predicted, fill = prop)) +
+      facet_grid(~ data) +
+      scale_fill_viridis_c() +
+      theme_minimal() +
+      theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
+      labs(title = paste("Crocidura, accuracy =", crocidura_accuracy))
+    
+    write_rds(crocidurae_multinom_model_m1, here("data", "tmp_data", "crocidura_speciation_model.rds"))
+    
+    # Apply to observed data
+    crocidura_observed <- identified_genus %>%
       mutate(hb_tail_ratio = tail/head_body) %>%
-      select(rodent_id, initial_species_id, photo_identification, morphological_genus_id, subfamily,
+      select(rodent_id, initial_species_id, photo_identification, morphological_genus_id, subfamily, age_group, weight, head_body, tail, hb_tail_ratio, hind_foot,
+             ear, length_skull, pelage, abdominal_colouring, coat_feature, ear_size) %>%
+      filter(!str_detect(morphological_genus_id, paste0(out_of_area, "|", identified_otherwise))) %>%
+      filter(str_detect(subfamily, "crocidurinae"))
+    
+    crocidura_observed$class_allocation <- predict(crocidurae_multinom_model_m1, newdata = crocidura_observed, type = "class")
+    probabilities <- data.frame(round(predict(crocidurae_multinom_model_m1, newdata = crocidura_observed, type = "probs"), 3))
+    
+    crocidura_observed <- bind_cols(crocidura_observed, probabilities)
+    
+    ## Combine Murinae and Crocidura predictions
+    observed_predicted <- bind_rows(murinae_observed, crocidura_observed)
+    
+    ## Add in those we are identifying based on phenotypic characteristics
+    observed_non_predicted <- identified_genus %>%
+      filter(!rodent_id %in% observed_predicted$rodent_id) %>%
+      mutate(hb_tail_ratio = tail/head_body) %>%
+      select(rodent_id, initial_species_id, photo_identification, morphological_genus_id, subfamily, age_group,
              weight, head_body, tail, hb_tail_ratio, hind_foot, ear, length_skull, pelage, abdominal_colouring,
              coat_feature, ear_size)
     
-    combined_data <- bind_rows(observed_rodents %>%
+    combined_data <- bind_rows(observed_predicted %>%
                                  mutate(predicted = TRUE),
                                observed_non_predicted %>%
                                  mutate(predicted = FALSE)) %>%
@@ -152,6 +249,67 @@ produce_species_classification <- function(trapped_rodents = rodent_image_specia
     
   }
   
-  return(combined_data)
+  ## The following plots visualise the classifications and probabilities produced by the model
+  ## For ease of interpretation these have been split into the morphological identified genera
+  plot_murinae <- combined_data %>%
+    filter(predicted == TRUE) %>%
+    filter(subfamily == "murinae") %>%
+    select(rodent_id, morphological_genus_id, age_group, class_allocation, dasymys_rufulus, dephomys_defua, hybomys_planifrons, hybomys_trivirgatus,
+           hylomyscus_baeri, hylomyscus_simus, malacomys_edwardsi, mastomys_erythroleucus, mastomys_natalensis, mus_baoulei, mus_mattheyi, mus_minutoides,
+           mus_musculoides, mus_musculus, mus_setulosus, oenomys_ornatus, praomys_daltoni, praomys_rostratus, praomys_tullbergi, rattus_norvegicus,
+           rattus_rattus) %>%
+    pivot_longer(cols = 5:25, names_to = "species_name", values_to = "species_probability") %>%
+    group_by(morphological_genus_id) %>%
+    group_split()
+  
+  plot_murinae_classification <- lapply(plot_murinae, function(x) { 
+    
+    genus <- unique(x$morphological_genus_id)
+    
+    plot <- x %>%
+      filter(str_detect(morphological_genus_id, genus)) %>%
+      filter(!species_probability == 0) %>%
+      ggplot() +
+      geom_tile(aes(x = species_name, y = rodent_id, fill = species_probability), width = 0.95, height = 0.95) +
+      facet_grid(age_group ~ ., scales = "free", space = "free") +
+      theme_bw() +
+      labs(x = element_blank(),
+           y = "Rodent ID",
+           fill = "Probability",
+           title = str_to_sentence(genus)) +
+      theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+            strip.text.y = element_text(angle = 270))
+    
+    return(plot)
+    
+    })
+  
+  names(plot_murinae_classification) <- bind_rows(plot_murinae) %>%
+    distinct(morphological_genus_id) %>%
+    pull()
+  
+  plot_crocidura <- combined_data %>%
+    filter(predicted == TRUE) %>%
+    filter(subfamily == "crocidurinae") %>%
+    select(rodent_id, morphological_genus_id, age_group, class_allocation, crocidura_olivieri, crocidura_crossei,
+           crocidura_fuscomurina, crocidura_lamottei, crocidura_muricauda, crocidura_poensis, suncus_megalura) %>%
+    pivot_longer(cols = 5:11, names_to = "species_name", values_to = "species_probability") %>%
+    filter(!species_probability == 0) %>%
+    ggplot() +
+    geom_tile(aes(x = species_name, y = rodent_id, fill = species_probability), width = 0.95, height = 0.95) +
+    facet_grid(age_group ~ ., scales = "free", space = "free") +
+    theme_bw() +
+    labs(x = element_blank(),
+         y = "Rodent ID",
+         fill = "Probability",
+         title = "Crocidura") +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+          strip.text.y = element_text(angle = 270))
+  
+  return(list(rodent_classification = combined_data,
+              murinae_confusion = murinae_confusion_matrix,
+              murinae_plots = plot_murinae_classification,
+              crocidurinae_confusion = crocidura_confusion_matrix,
+              crocidurinae_plot = plot_crocidura))
   
 }

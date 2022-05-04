@@ -38,6 +38,33 @@ ODK_paper_combine_rodent <- function(ODK_data = ODK_rodents) {
     mutate(across(any_of(factor_vars), ~as_factor(.)),
            rodent_uid = substr(rodent_uid, 1, 9))
   
+  # Age classification logic
+  # Females with perforate vaginas are adults
+  # Females with =>1 embryo are adults
+  # Females without perforate vaginas are juveniles
+  # Those with missing data are not_known
+  # Males with developed seminal vesicles are adults
+  # Males with testes outside their bodes are adults
+  # Males with undeveloped seminal vesicles are juveniles
+  # Non-crocidura males with internal testes are juveniles
+  # Otherwise rodents are defined as not_known
+  
+  age_classification <- combined_rodents %>%
+    mutate(age_group = case_when(sex == "female" & str_detect(vagina_perforate, "^open|yes") ~ "adult",
+                                 sex == "female" & number_embryos >= 1 ~ "adult",
+                                 sex == "female" & str_detect(vagina_perforate, "not_open|no$") ~ "juvenile",
+                                 sex == "female" ~ "not_known",
+                                 sex == "male" & str_detect(seminal_vesicles, "^developed|yes") ~ "adult",
+                                 sex == "male" & str_detect(testes, "outside") ~ "adult",
+                                 sex == "male" & str_detect(seminal_vesicles, "undeveloped|no$") ~ "juvenile",
+                                 sex == "male" & str_detect(testes, "inside")  & !str_detect(initial_species_id, "crocidura") ~ "juvenile",
+                                 TRUE ~ "not_known")) %>%
+    select(rodent_uid, age_group)
+  
+  combined_rodents <- combined_rodents %>%
+    left_join(., age_classification, by = "rodent_uid") %>%
+    mutate(age_group = factor(age_group, levels = c("juvenile", "adult", "not_known")))
+  
   write_csv(combined_rodents, here("data", "clean_data", "rodents", paste0("rodents_trapped_", Sys.Date(), ".csv")))
   
   return(combined_rodents)

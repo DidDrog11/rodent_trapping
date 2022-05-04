@@ -163,10 +163,45 @@ produce_assemblages <- function(spatial_data = final_cleaned_trap_data$spatial_d
                                                    colocated_species_all_visits_plot),
                                    ncol = 1)
   
+  # Graph based interpretation
+  species_graph <- graph_from_data_frame(colocated_species_same_visit %>%
+                                           filter(!across(any_of(c("reference_species", "colocated_species")),
+                                                          ~ str_detect(.x, "co-located"))) %>%
+                                           select(reference_species, colocated_species, n, proportion),
+                                         directed = TRUE)
+  
+  fr_layout <- layout.fruchterman.reingold(species_graph)
+    
+  species_df <- as.data.frame(fr_layout)
+  species_df$species <- names(V(species_graph))
+  edgelist_df <- as.data.frame(get.edgelist(species_graph)) %>%
+    left_join(., species_df %>%
+                select("from.x" = V1,
+                       "from.y" = V2,
+                       species),
+              by = c("V1" = "species")) %>%
+    left_join(., species_df %>%
+                select("to.x" = V1,
+                       "to.y" = V2,
+                       species),
+              by = c("V2" = "species")) %>%
+    mutate(n = get.edge.attribute(species_graph)$n,
+           proportion = get.edge.attribute(species_graph)$proportion)
+  
+  graph_plot <- ggplot() +
+    geom_segment(data = edgelist_df, aes(x = from.x, xend = to.x, y = from.y, yend = to.y, alpha = proportion, size = n)) +
+    geom_point(data = species_df, aes(x = V1, y = V2), shape = 21, size = 22, colour = "black", fill = "lightgrey") +  # adds a black border around the nodes
+    geom_text(data = species_df, aes(x = V1,y = V2,label = species)) + # add the node labels
+    scale_x_continuous(expand = c(0,1)) +  # expand the x limits 
+    scale_y_continuous(expand = c(0,1)) + # expand the y limits
+    theme_nothing(legend = TRUE)
+  
+  
   return(list(summary_plots = list(same_visit = summarise_assemblages_same_visit_plot,
                                    all_visits = summarise_assemblages_all_visits_plot),
               co_location_plots = list(same_visit = colocated_species_same_visit_plot,
                                        all_visits = colocated_species_all_visits_plot,
-                                       combined_plot = combined_colocation)))
+                                       combined_plot = combined_colocation,
+                                       graph_plot = graph_plot)))
   
 }

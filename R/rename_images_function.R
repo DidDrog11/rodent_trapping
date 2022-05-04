@@ -35,6 +35,11 @@ rename_images <- function(data = all_rodents, new_images = TRUE, delete_old_imag
       matched_both <- bind_rows(matched_dorsal, matched_ventral) %>%
         select(full_name, new_name)
       
+      unmatched <- filenames %>%
+        filter(!full_name %in% matched_both$full_name)
+      
+      if(nrow(unmatched) == 0) message("No unmatched images") else message("Unmatched images require checking")
+      
       file.rename(matched_both$full_name, paste0(here("data", "rodent_images", "rodent_matched//"), matched_both$new_name)) 
       
     } else {
@@ -66,6 +71,11 @@ rename_images <- function(data = all_rodents, new_images = TRUE, delete_old_imag
       
       matched_both <- bind_rows(matched_dorsal, matched_ventral) %>%
         select(full_name, new_name)
+      
+      unmatched <- filenames %>%
+        filter(!full_name %in% matched_both$full_name)
+      
+      if(nrow(unmatched) == 0) message("No unmatched images") else message("Unmatched images require checking")
       
       file.rename(matched_both$full_name, paste0(here("data", "rodent_images", "rodent_matched//"), matched_both$new_name))   
       

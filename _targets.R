@@ -5,7 +5,7 @@ suppressPackageStartupMessages(source(here::here("packages.R")))
 walk(dir_ls(here("R")),  ~try(source(.)))
 
 # If using rodent images set to TRUE
-download_rodent_pictures = FALSE
+download_rodent_pictures = TRUE
 
 # Update the data if required
 get_ODK()
@@ -27,6 +27,10 @@ ODK_combined <- combine_ODK_data(trap = ODK_traps$full_trap_locations, check = O
 # Combine the paper and ODK forms
 all_traps <- ODK_paper_combine(ODK_data = ODK_combined)
 all_rodents <- ODK_paper_combine_rodent(ODK_data = ODK_rodents)
+
+# Site consistency relabel trap grids based on locations, rather than numbers that the study team may have incorrectly put in
+# The numbering used at site setup will be used as the reference
+consistent_traps <- harmonise_sites()
 
 # Rename images stored in data/rodent_images only needed if download_rodent_pictures was set to TRUE, otherwise would have previously been done.
 all_images <- rename_images(new_images = FALSE, delete_old_images = FALSE)
@@ -51,13 +55,14 @@ rodent_speciation <- read_species_characteristics()
 # This includes manually extracted data on pelage, coat descriptives and ear size that haven't been captured in the questionnaires but are obtained by viewing the images
 rodent_image_speciation <- read_xlsx(path = here("data", "speciation", "matched_images.xlsx")) %>%
   mutate(date = as.Date(date))
+# The following rodents need matching
+final_cleaned_rodent_data %>% 
+  filter(!rodent_uid %in% rodent_image_speciation$rodent_id)
 
 # Literature based classification uses three resources, data have been extracted into a spreadsheet
 # We use this to calculate the probability that a rodent has been correctly allocated
 # For species not included in Granjon we produce standard deviations for measurements under the assumption that values are normally distributed within the range
 rodent_speciation_literature <- produce_species_classification()
-
-classified_species <- run_classifier()
 
 # SLE Raster
 sle_raster <- generate_raster()
@@ -72,6 +77,9 @@ as_tibble(freq(rast(sle_raster$raster))) %>%
 
 # Landuse plots
 landuse_plots <- plot_landuse(data = sle_raster)
+
+# Ground-truthed landuse
+ground_truthed_landuse <- obtain_landuse()
 
 # save plots if not previously saved
 save_landuse_plots(landuse_plots)
