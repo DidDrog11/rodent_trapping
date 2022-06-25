@@ -1,4 +1,4 @@
-devtools::install_github("hrbrmstr/waffle")
+# devtools::install_github("hrbrmstr/waffle")
 
 if (!require("pacman")) install.packages("pacman")
 pkgs =

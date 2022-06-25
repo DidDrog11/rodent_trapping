@@ -26,25 +26,25 @@ get_ODK <- function(){
     
     if(download_new == TRUE) {
       
-      rodent_data <- submission_export(local_dir = here("data", "raw_odk"), fid = all_forms[4], media = T) %>%
+      rodent_data <- submission_export(local_dir = here("data", "raw_odk"), fid = "rodent_v1", media = T) %>%
         unzip(., exdir = here("data", "raw_odk", paste0("rodent_data", "_", Sys.Date())))
       
-      trap_sites <- submission_export(local_dir = here("data", "raw_odk"), fid = all_forms[5], media = F) %>%
+      trap_sites <- submission_export(local_dir = here("data", "raw_odk"), fid = "site_setup_v2", media = F) %>%
         unzip(., exdir = here("data", "raw_odk", paste0("trap_sites", "_", Sys.Date())))
       
-      trap_check <- submission_export(local_dir = here("data", "raw_odk"), fid = all_forms[6], media = F) %>%
+      trap_check <- submission_export(local_dir = here("data", "raw_odk"), fid = "trap_check_v1", media = F) %>%
         unzip(., exdir = here("data", "raw_odk", paste0("trap_check", "_", Sys.Date())))
       
     } 
   } else {
     
-    rodent_data <- submission_export(local_dir = here("data", "raw_odk"), fid = all_forms[4], media = F) %>%
+    rodent_data <- submission_export(local_dir = here("data", "raw_odk"), fid = "rodent_v1", media = F) %>%
       unzip(., exdir = here("data", "raw_odk", paste0("rodent_data", "_", Sys.Date())))
     
-    trap_sites <- submission_export(local_dir = here("data", "raw_odk"), fid = all_forms[5], media = F) %>%
+    trap_sites <- submission_export(local_dir = here("data", "raw_odk"), fid = "site_setup_v2", media = F) %>%
       unzip(., exdir = here("data", "raw_odk", paste0("trap_sites", "_", Sys.Date())))
     
-    trap_check <- submission_export(local_dir = here("data", "raw_odk"), fid = all_forms[6], media = F) %>%
+    trap_check <- submission_export(local_dir = here("data", "raw_odk"), fid = "trap_check_v1", media = F) %>%
       unzip(., exdir = here("data", "raw_odk", paste0("trap_check", "_", Sys.Date())))
     
   }

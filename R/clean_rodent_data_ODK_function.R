@@ -45,10 +45,15 @@ clean_rodent_data_ODK <- function(){
            date_entered = as.Date(ymd_hms(form_entry)),
            village_abbreviation = toupper(str_sub(village_name, end = 3)),
            visit = case_when(is.na(visit) & village_name == "bambawo" ~ 1,
+                             month(form_entry) %in% c(6, 7) & year(form_entry) == 2021 & village_name %in% c("lambayama", "baiama") ~ 1,
+                             month(form_entry) %in% c(6, 7) & year(form_entry) == 2021 & village_name %in% c("lalehun", "seilama") ~ 3,
+                             month(form_entry) %in% c(10) & year(form_entry) == 2021 & village_name %in% c("lalehun", "seilama") ~ 4,
+                             month(form_entry) %in% c(10, 11) & year(form_entry) == 2021 & village_name %in% c("lambayama", "baiama") ~ 2,
+                             month(form_entry) %in% c(1) & year(form_entry) == 2022 & village_name %in% c("lalehun", "seilama") ~ 5,
+                             month(form_entry) %in% c(1) & year(form_entry) == 2022 & village_name %in% c("lambayama", "baiama") ~ 3,
+                             month(form_entry) %in% c(4) & year(form_entry) == 2022 & village_name %in% c("lalehun", "seilama") ~ 6,
+                             month(form_entry) %in% c(4) & year(form_entry) == 2022 & village_name %in% c("lambayama", "baiama") ~ 4,
                              visit == 41 ~ 4,
-                             month(form_entry) <= 2 & year(form_entry) == 2022 & village_name %in% c("lalehun", "seilama") ~ 5,
-                             month(form_entry) <= 2 & year(form_entry) == 2022 & village_name %in% c("lambayama", "baiama") ~ 3,
-                             month(form_entry) <= 4 & year(form_entry) == 2022 & village_name %in% c("lalehun", "seilama") ~ 6,
                              TRUE ~ visit),
            genus = case_when(`rodent_details-genus` == "not_listed" ~ `rodent_details-genus_other`,
                              TRUE ~ `rodent_details-genus`),
@@ -67,6 +72,7 @@ clean_rodent_data_ODK <- function(){
                                      `acquisition-eye_sample` == "yes" ~ "yes",
                                    TRUE ~ "no"),
            rodent_number = case_when(rodent_number == 249 ~ 8,
+                                     KEY == "uuid:a11445f8-6ec5-4726-a0f2-f915c22fa148" ~ 13,
                                      TRUE ~ rodent_number)) %>%
     rename("village" = "village_name",
            "study_site" = "trap_details-study_site", 
@@ -91,13 +97,31 @@ clean_rodent_data_ODK <- function(){
            "key" = "KEY") %>%
     filter(key != "uuid:16e6f1d6-6e16-4d70-8aa2-b82698872d69") %>%
     # Create the rodent number based on the label used for blood filter
-    mutate(filter_label_number = str_pad(str_extract(`acquisition-filter_label`, "\\d+[^\\d]*$"), 3, pad = 0), 
+    mutate(filter_label_number = str_pad(str_extract(`acquisition-filter_label`, "\\d+[^\\d]*$"), 3, pad = 0),
+           filter_label_number = case_when(key == "uuid:a11445f8-6ec5-4726-a0f2-f915c22fa148" ~ "013",
+                                           TRUE ~ filter_label_number)
            filter_label = `acquisition-filter_label`,
            rodent_uid = paste0(visit, "_", village_abbreviation, "_", filter_label_number),
            trap_number = case_when(rodent_number == 1 & village == "bambawo" & visit == 1 ~ 9,
                                    rodent_number == 2 & village == "bambawo" & visit == 1 ~ 13,
                                    
                                    rodent_number == 4 & village == "lambayama" & visit == 2 ~ 232,
+                                   key == "uuid:5a5cc97c-55d8-4022-a8e4-296b050f180a" ~ 301,
+                                   key == "uuid:92153960-251f-4946-ad1e-034b02326eea" ~ 298,
+                                   key == "uuid:6c7b1900-4802-4212-a9b9-f105735ff999" ~ 232,
+                                   key == "uuid:05bfcf2d-8935-4b36-a5e7-252c6ae91b6d" ~ 11,
+                                   key == "uuid:494fbf14-c7a6-4d8c-9251-11d87c6a5584" ~ 18,
+                                   key == "uuid:8b0553c5-6f1c-4cfc-94a6-5aa29ce54f17" ~ 31,
+                                   key == "uuid:e89bc936-1505-4ccf-9903-b555c5a1be0e" ~ 34,
+                                   key == "uuid:3a144c76-9fe3-4075-9f60-033163e88963" ~ 40,
+                                   key == "uuid:a318a091-f7ff-4612-ab65-672def33a705" ~ 59,
+                                   key == "uuid:6693d496-2e2a-4c16-a8c2-015302fc9577" ~ 142,
+                                   key == "uuid:08398e35-e7a1-44d7-8637-4a4743c7b411" ~ 229,
+                                   key == "uuid:856d83f6-15e0-4084-a9a8-a61cc8aba13a" ~ 192, #
+                                   key == "uuid:e17b3227-bc71-4d2e-8e04-c2f340ae0de8" ~ 225, #
+                                   key == "uuid:856d83f6-15e0-4084-a9a8-a61cc8aba13a" ~ 228, #
+                                   key == "uuid:5ffee554-6d8c-4c33-ba16-72403c3f5305" ~ 243, #
+                                   key == "uuid:72d60def-49f3-43a0-988f-0b4f3ce9902e" ~ 246, #
                                    TRUE ~ trap_number),
            study_site = case_when(village == "lalehun" & study_site == "not_listed" & visit == 4 ~ 7,
                                   
@@ -129,6 +153,39 @@ clean_rodent_data_ODK <- function(){
                                   rodent_number == 5 & village == "lambayama" & visit == 1 ~ 4,
                                   
                                   rodent_number == 38 & village == "seilama" & visit == 5 ~ 3,
+                                  
+                                  # Wrong site listed for Lalehun
+                                  # Visit 4
+                                  key == "uuid:0428fbca-5684-4046-ae3a-d5e39e10aa78" ~ 7,
+                                  
+                                  # Wrong site listed for Baiama
+                                  # Visit 4
+                                  key == "uuid:6fc707e5-b587-4495-8f50-f42a56bcc953" ~ 7,
+                                  key == "uuid:7900c206-affa-46ad-a48a-30ec373eb5bc" ~ 3,
+                                  key == "uuid:447fb45f-cd6e-4f86-8700-a70988e45ded" ~ 7,
+                                  
+                                  #Visit 2
+                                  key %in% c("uuid:dfb6dce9-1dc8-4c25-a5f7-a376b1af3fd2",
+                                             "uuid:807ba701-dc1b-4fda-9e9d-f570c49a7a80",
+                                             "uuid:1bdb8afa-a884-446b-8c70-40a00c84b8f7") ~ 7,
+                                  
+                                  # Wrong site listed for Lambayama
+                                  # Visit 4
+                                  key %in% c("uuid:79d42e7f-b09c-457b-b917-23ddd79d957b",
+                                             "uuid:92d37977-90bd-4693-934a-0d39235a2cb8",
+                                             "uuid:fa38c704-256d-4f14-85c3-9a9d0388b366",
+                                             "uuid:79d42e7f-b09c-457b-b917-23ddd79d957b",
+                                             "uuid:99887e62-1634-42d9-b775-bb9f6cb0f0eb") ~ 7,
+                                  # Visit 3
+                                  key %in% c("uuid:a91f7490-6ff9-4ce0-a2db-5cab55f8552a",
+                                            "uuid:7a8a6178-11d6-45c4-92e9-f658c1b3d5b9") ~ 7,
+                                  
+                                  # Visit 2
+                                  key %in% c("uuid:ec85ef23-8f9c-4243-903f-c3331ac841d4",
+                                             "uuid:6c7b1900-4802-4212-a9b9-f105735ff999",
+                                             "uuid:82a6c741-3108-4756-b4d8-dd606e4aa04a",
+                                             "uuid:9ecd5ad5-b1db-462d-9a68-23640f3caed6") ~ 7,
+                                  study_site == 6 ~ 7,
                                   
                                   TRUE ~ as.numeric(study_site)),
            study_site = as_factor(study_site),

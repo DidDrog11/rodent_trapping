@@ -1,4 +1,4 @@
-harmonise_sites_function <- function(data = all_traps) {
+harmonise_sites <- function(data = all_traps) {
   
   # convert all indoor traps to grid_number = 7
   data <- data %>%

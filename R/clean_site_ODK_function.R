@@ -31,11 +31,11 @@ clean_site_ODK <- function() {
            study_site = case_when(KEY == "uuid:5bedb731-5e12-49e2-8aef-fca6a1647690" ~ 2, # A trap site was miscoded as 1 instead of 2, this corrects it.
                                   KEY == "uuid:78e1e027-0851-4c47-8077-ccb8e0e2f049" ~ 5,
                                   habitat_type == "village_inside" | str_detect(site_use, "In house|Indoor") ~ 7,
-                                  habitat_type == "village_outside" & !study_site %in% c(1, 3) ~ 6,
+                                  habitat_type == "village_outside" & !study_site %in% c(1, 3) ~ 7,
                                   TRUE ~ study_site),
            habitat_type = case_when(is.na(habitat_type) & village_name == "lambayama" & study_site == 1 ~ "proximal_agriculture",
                                     is.na(habitat_type) & village_name == "lalehun" & study_site == 1 ~ "proximal_agriculture",
-                                    is.na(habitat_type) & village_name == "lalehun" & study_site == 6 ~ "village_outside",
+                                    is.na(habitat_type) & village_name == "lalehun" & study_site == 7 ~ "village_outside",
                                     TRUE ~ habitat_type),
            intensity = case_when(str_detect(habitat_type, "village") ~ "intense",
                                  TRUE ~ intensity),

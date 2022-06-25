@@ -30,7 +30,7 @@ combine_ODK_data <- function(trap = ODK_traps$full_trap_locations, check = ODK_t
               .,
               by = "trap_uid")
   
-  message(paste(nrow(unaligned_rodents), "rodents are unmatched based on trap_uid. Currently 16 rodents are known to be unmatched due to delay in uploading trap data for visit 4 in Seilama and Lalehun"))
+  message(paste(nrow(unaligned_rodents), "rodents are unmatched based on trap_uid."))
   
   return(combined_data)
 }
