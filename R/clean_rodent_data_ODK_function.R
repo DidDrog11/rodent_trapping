@@ -99,7 +99,7 @@ clean_rodent_data_ODK <- function(){
     # Create the rodent number based on the label used for blood filter
     mutate(filter_label_number = str_pad(str_extract(`acquisition-filter_label`, "\\d+[^\\d]*$"), 3, pad = 0),
            filter_label_number = case_when(key == "uuid:a11445f8-6ec5-4726-a0f2-f915c22fa148" ~ "013",
-                                           TRUE ~ filter_label_number)
+                                           TRUE ~ filter_label_number),
            filter_label = `acquisition-filter_label`,
            rodent_uid = paste0(visit, "_", village_abbreviation, "_", filter_label_number),
            trap_number = case_when(rodent_number == 1 & village == "bambawo" & visit == 1 ~ 9,

@@ -17,6 +17,7 @@ bibliography: citations.bib
 categories:
   - Lassa
 ---
+
 ```{r setup, include=FALSE, quietly=TRUE}
 knitr::opts_chunk$set(
 	echo = FALSE,
@@ -62,11 +63,11 @@ Trap sites were geolocated for repeated trapping activities, with changes to lan
 
 ### Land use classification
 
-Land use classification was obtained from a global map of IUCN matched habitat types using 2015 satellite images [@jung_global_2020]. We aggregated land use to forest, vegetation (including shrubland, savanna and grassland), agricultural (arable land, pastures and plantations) and urban areas (rural and urban built-up land). At the trapping sites habitat classifications were ground-truthed to observed land use. Using this composite layer, we calculated the proportion of land classifications in a 50m buffer (**or 100m**) to represent the landscape from which rodents may be sampled from based on their mobility [ref.]. 
+Land use classification was obtained from a global map of IUCN matched habitat types using 2015 satellite images [@jung_global_2020]. We aggregated land use to forest, vegetation (including shrubland, savanna and grassland), agricultural (arable land, pastures and plantations) and urban areas (rural and urban built-up land). At the trapping sites habitat classifications were ground-truthed to observed land use. Using this composite layer, we calculated the proportion of land classifications in a 50m buffer (**or 100m**) to represent the landscape from which rodents may be sampled from based on their mobility [ref.].
 
 ### Morphological species classification
 
-Trapped rodents were sedated with halothane and euthanised prior to obtaining morphological measurements and samples of blood and tissue (**reference to RVC and local ethics approval**) following published guidance [@fichet-calvet_chapter_2014]. Morphological speciation in the field was performed using a dichotomous key produced from two available resources to identify rodents to species or genus (**will place in supplementary**) [@happold_mammals_2013; @monadjem_rodents_2015]. Rodents were sexed based on external and internal genitalia. Age estimation was performed through, description of the rodents reproductive status (identification of perforate or imperforate vagina, scarring from prior embryo development, current pregnancy status or descent of testes and seminal vesicle development) and weighing of dried eye lenses. Carcasses were disposed and processed in the field to eliminate risk of pathogen transmission. 
+Trapped rodents were sedated with halothane and euthanised prior to obtaining morphological measurements and samples of blood and tissue (**reference to RVC and local ethics approval**) following published guidance [@fichet-calvet_chapter_2014]. Morphological speciation in the field was performed using a dichotomous key produced from two available resources to identify rodents to species or genus (**will place in supplementary**) [@happold_mammals_2013; @monadjem_rodents_2015]. Rodents were sexed based on external and internal genitalia. Age estimation was performed through, description of the rodents reproductive status (identification of perforate or imperforate vagina, scarring from prior embryo development, current pregnancy status or descent of testes and seminal vesicle development) and weighing of dried eye lenses. Carcasses were disposed and processed in the field to eliminate risk of pathogen transmission.
 
 ### Molecular species classification
 
@@ -90,8 +91,8 @@ We describe the age-sex population structure of each species trapped and variati
 
 First, we adopted a Bayesian multi-species occupancy framework to analyse rodent trapping data. We implemented a model to estimate occupancy and species richness in each habitat type studied. In the detection component of the model, we included the monthly precipitation during the study visit to account for variation in rodent foraging behaviour due to seasonal effects.
 
-  * Probability of occurrence ~ (species_specific_intercept * Forested) + (species_specific_intercept * Agricultural) + (species_specific_intercept * Housing)
-  * Probability of detection ~ (species_specific_intercept * monthly_precipitation) (**Difficult to tease out whether this is a detection or occurrence factor**)
+-   Probability of occurrence \~ (species_specific_intercept \* Forested) + (species_specific_intercept \* Agricultural) + (species_specific_intercept \* Housing)
+-   Probability of detection \~ (species_specific_intercept \* monthly_precipitation) (**Difficult to tease out whether this is a detection or occurrence factor**)
 
 Using this model, we calculate the effect of landuse as the difference in occupancy probability for each species between each of the four land use classifications. Only estimates for species with at least X records to avoid inference from limited data. Occupancy is interpreted here as the species' probability of being detected through a successful trapping event during the study. We estimate species richness in each habitat type by obtaining the sum of species at a trapping site for each iteration of the Bayesian sampling process to compare rodent assemblage responses to land use classification.
 
@@ -101,42 +102,38 @@ We adopted a Bayesian additive regression tree (BART) approach to predict specie
 
 Using projected land use change/climate change we will produce future potential species distribution models for these species to understand how future projected land use change and climate change may impact the distribution of these species and future hazard of Lassa fever outbreaks.
 
-
-  ---
-  **IGNORE BELOW**
-  ---
+|                  |
+|------------------|
+| **IGNORE BELOW** |
 
 # Methods
 
-What is the expected relationship between land use and species diversity/composition?
-How are generalist and specialist species defined?
-Networks of species.
+What is the expected relationship between land use and species diversity/composition? How are generalist and specialist species defined? Networks of species.
 
 # Results
 
 ## Rodent occurrence and species assemblage structure
 
-Trapping visits to villages occurred at three monthly intervals for at least two years. One village (Bambawo) was removed from the study due to concerns raised by the study team over equipment security. 
+Trapping visits to villages occurred at three monthly intervals for at least two years. One village (Bambawo) was removed from the study due to concerns raised by the study team over equipment security.
 
 ```{r study-activity, layout = "l-page", fig.cap = "Figure 2. Timeline of trapping activity at village sites. Intensity of the colour relates to the number of trap nights obtained during the trapping visit. The blue shaded area represents the rainy season in Eastern Sierra Leone (monthly precipitation >300mm)"}
 
 knitr::include_graphics(here("output", "figures", "timeline_plot.png"))
 
 ```
-  
 
-  * Description of presence/pseudo-absence of species across study site and habitat type by season
-  * Describe the assemblages of different species across study site and habitat type by season
-  
+-   Description of presence/pseudo-absence of species across study site and habitat type by season
+-   Describe the assemblages of different species across study site and habitat type by season
+
 ## Estimating the effect of land use on species occurrence and richness
-  
-  * Model seasonal change in a) relative abundance of all rodents and b) number of species by seasonal indicators and proportions of different land use types as covariates
-  * Species distribution maps will be produced
-  * Difference between observed and expected will be investigated by comparing to observations of other species within these distributions
-  
+
+-   Model seasonal change in a) relative abundance of all rodents and b) number of species by seasonal indicators and proportions of different land use types as covariates
+-   Species distribution maps will be produced
+-   Difference between observed and expected will be investigated by comparing to observations of other species within these distributions
+
 ## Species distribution maps for current land use classifications and potential future change
 
-  * Apply these species distribution models to expected future scenarios
+-   Apply these species distribution models to expected future scenarios
 
 # Discussion
 

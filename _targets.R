@@ -5,7 +5,7 @@ suppressPackageStartupMessages(source(here::here("packages.R")))
 walk(dir_ls(here("R")),  ~try(source(.)))
 
 # If using rodent images set to TRUE
-download_rodent_pictures = TRUE
+download_rodent_pictures = FALSE
 
 # Update the data if required
 get_ODK()
@@ -33,9 +33,9 @@ all_rodents <- ODK_paper_combine_rodent(ODK_data = ODK_rodents)
 consistent_traps <- harmonise_sites()
 
 # Rename images stored in data/rodent_images only needed if download_rodent_pictures was set to TRUE, otherwise would have previously been done.
-all_images <- rename_images(new_images = TRUE, delete_old_images = TRUE)
+all_images <- rename_images(new_images = FALSE, delete_old_images = FALSE)
 
-# 158 expected images are not provided
+# 137 expected images are not provided
 table(is.na(all_images$file))
 
 # Associate trapped rodents with locations
@@ -58,6 +58,9 @@ rodent_image_speciation <- read_xlsx(path = here("data", "speciation", "matched_
 # The following rodents need matching
 final_cleaned_rodent_data %>% 
   filter(!rodent_uid %in% rodent_image_speciation$rodent_id)
+
+# Repositories have been created for chapter 3 and 4. These use this cleaned data, the next function produces these datasets.
+save_for_chapters()
 
 # Literature based classification uses three resources, data have been extracted into a spreadsheet
 # We use this to calculate the probability that a rodent has been correctly allocated

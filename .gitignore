@@ -23,4 +23,6 @@ data/clean_data/
 
 !data/satellite/eastern_province_landuse.rds
 !data/satellite/eastern_province_landuse_labels.rds
+
+!data/clean_data/data_for_export/combined_data.rds
 .DS_Store

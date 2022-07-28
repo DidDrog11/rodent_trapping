@@ -40,7 +40,7 @@ rename_images <- function(data = all_rodents, new_images = TRUE, delete_old_imag
       
       if(nrow(unmatched) == 0) message("No unmatched images") else message("Unmatched images require checking")
       
-      file.rename(matched_both$full_name, paste0(here("data", "rodent_images", "rodent_matched/"), matched_both$new_name)) 
+      file.rename(matched_both$full_name, paste0(here("data", "rodent_images", "rodent_matched//"), matched_both$new_name)) 
       
     } else {
       
