@@ -31,7 +31,7 @@ fix_improbable_coordinates <- function(data = full_trap_locations) {
                          
                          village == "seilama" & visit == 5 & grid_number == 3 & trap_number == 124 ~ 8.123936,
                          
-                         village == "baiama" & visit == 3 & grid_number %in% c(4, 5, 6, 7) & trap_number %in% c(168, 169, 185, 195, 206, 216, 250, 251, 252, 253) ~ (lat/10000) + 7,
+                         village == "baiama" & visit == 3 & grid_number %in% c(4, 5, 6, 7) & trap_number %in% c(206, 216, 250, 251, 252, 253) ~ (lat/10000) + 7,
                          village == "baiama" & visit == 3 & grid_number == 1 & trap_number == 13 ~ 7.82467,
                          village == "baiama" & visit == 3 & grid_number == 1 & trap_number == 14 ~ 7.82475,
                          village == "baiama" & visit == 3 & grid_number == 1 & trap_number == 40 ~ 7.824557,

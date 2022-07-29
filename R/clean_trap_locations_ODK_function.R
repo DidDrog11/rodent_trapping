@@ -97,6 +97,11 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
     mutate(grid_number = case_when(site_use == "Forest" & village == "seilama" & visit == 3 & grid_number == "4" ~ 5,
                                    site_use == "village_inside" ~ 7,
                                    village == "lalehun" & visit == "3" & as.numeric(trap_number) < 99 & as.numeric(trap_number) >= 50 ~ 3,
+                                   village == "lambayama" & visit == "2" & grid_number == "1" ~ 4,
+                                   village == "lambayama" & visit == "2" & grid_number == "2" ~ 1,
+                                   village == "lambayama" & visit == "2" & grid_number == "3" ~ 2,
+                                   village == "lambayama" & visit == "2" & grid_number == "4" ~ 3,
+                                   village == "lambayama" & visit == "4" & trap_number %in% c(148:197) ~ 4,
                                    TRUE ~ grid_number)) %>%
     # sort misrecorded trap numbers
     group_by(village, visit, trap_number, key) %>%
@@ -129,9 +134,9 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
                                    
                                    TRUE ~ trap_number),
            trap_number = as.numeric(trap_number),
-           trap_number = case_when(is.na(trap_number) & visit == "2" & village == "lambayama" & grid_number == 3 ~ 62,
-                                   is.na(trap_number) & visit == "2" & village == "lambayama" & grid_number == 1 & elevation == 152 ~ 195,
-                                   is.na(trap_number) & visit == "2" & village == "lambayama" & grid_number == 1 & elevation == 155 ~ 294,
+           trap_number = case_when(is.na(trap_number) & visit == "2" & village == "lambayama" & grid_number == 2 ~ 62,
+                                   is.na(trap_number) & visit == "2" & village == "lambayama" & grid_number == 4 & elevation == 152 ~ 195,
+                                   is.na(trap_number) & visit == "2" & village == "lambayama" & grid_number == 4 & elevation == 155 ~ 294,
                                    is.na(trap_number) & visit == "2" & village == "lambayama" & grid_number == 6 ~ 237,
                                    
                                    is.na(trap_number) & visit == "2" & village == "baiama" & grid_number == "6" & proximity == "garden" ~ 233,
@@ -212,7 +217,7 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
              village == "baiama" & visit == 1 & trap_number %in% c(2, 3, 4, 5, 6, 7) ~ swapped_lat,
              village == "baiama" & visit == 1 & trap_number == 195 ~ 15.9879,
              
-             village == "baiama" & visit == 2 & trap_number == 195 ~ 15.753,
+             village == "baiama" & visit == 2 & trap_number == 195 ~ 15.975,
              village == "baiama" & visit == 2 & trap_number == 26 ~ 15.017,
              village == "baiama" & visit == 2 & trap_number == 28 ~ 15.019,
              village == "baiama" & visit == 2 & trap_number == 140 ~ 15.7530,
@@ -220,9 +225,17 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
              village == "baiama" & visit == 2 & grid_number %in% c(4, 5, 6, 7) ~ swapped_lat,
              village == "baiama" & visit == 2 & grid_number %in% c(1, 2, 3) ~ (swapped_lat - 11) * 100,
              
+             village == "baiama" & visit == 3 & trap_number == 111 ~ 15.724,
+             village == "baiama" & visit == 3 & trap_number == 121 ~ 15.726,
+             village == "baiama" & visit == 3 & trap_number == 122 ~ 15.750,
+             village == "baiama" & visit == 3 & trap_number == 130 ~ 15.733,
+             village == "baiama" & visit == 3 & trap_number == 231 ~ 16.0647,
+             
              village == "baiama" & visit == 3 & grid_number %in% c(1, 2, 3) ~ (swapped_lat - 11) * 100,
              
              village == "baiama" & visit == 4 & grid_number == 2 & trap_number == 50 ~ 15.245,
+             village == "baiama" & visit == 4 & grid_number == 2 & trap_number == 55 ~ 15.242,
+             village == "baiama" & visit == 4 & grid_number == 2 & trap_number == 98 ~ 15.234,
              
              village == "baiama" & visit == 4 & grid_number %in% c(2, 3) ~ (swapped_lat - 11) * 100,
              
@@ -278,12 +291,13 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
              
              village == "lalehun" & visit == 5 & grid_number %in% c(4, 5) ~ (swapped_lon-8)*100,
              
-             village == "lalehun" & visit == 6 & grid_number== 4 & trap_number == 191 ~ (swapped_lon-88)*100,
-             village == "lalehun" & visit == 6 & grid_number %in% c(2, 3, 4, 5) ~ (swapped_lon-8)*100,
-             
              village == "lalehun" & visit == 6 & grid_number== 7 & trap_number %in% c(4, 311, 312, 313) ~ elevation,
              village == "lalehun" & visit == 6 & grid_number== 7 & trap_number %in% c(303, 304, 305, 306) ~ 11.829,
              village == "lalehun" & visit == 6 & grid_number== 1 & trap_number == 12 ~ 11.784,
+             village == "lalehun" & visit == 6 & trap_number == 54 ~ 11.920,
+             
+             village == "lalehun" & visit == 6 & grid_number== 4 & trap_number == 191 ~ (swapped_lon-88)*100,
+             village == "lalehun" & visit == 6 & grid_number %in% c(2, 3, 4, 5) ~ (swapped_lon-8)*100,
              
              village == "seilama" & visit == 3 & trap_number == 208 ~ 7.424,
              village == "seilama" & visit == 3 & trap_number == 203 ~ 7.412,
@@ -310,10 +324,19 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
              village == "baiama" & visit == 2 & grid_number %in% c(1, 2) ~ (swapped_lon- 7) * 100,
              village == "baiama" & visit == 2 & grid_number %in% c(3) ~ (swapped_lon - 8) * 100,
              
-             village == "baiama" & visit == 3 & grid_number %in% c(1, 2, 3) ~ (swapped_lon - 7) * 100,
              village == "baiama" & visit == 3 & grid_number == 4 & trap_number == 150 ~ 50.1842,
+             village == "baiama" & visit == 3 & trap_number == 168 ~ 50.1906,
+             village == "baiama" & visit == 3 & trap_number == 169 ~ 50.1907,
+             village == "baiama" & visit == 3 & trap_number == 185 ~ 50.1909,
+             village == "baiama" & visit == 3 & trap_number == 195 ~ 50.1972,
+             village == "baiama" & visit == 3 & trap_number == 213 ~ 50.189,
              
-             village == "baiama" & visit == 4 & grid_number == 2 & trap_number == 50 ~ 49.752,
+             village == "baiama" & visit == 3 & grid_number %in% c(1, 2, 3) ~ (swapped_lon - 7) * 100,
+             
+             village == "baiama" & visit == 4 & grid_number == 2 & trap_number == 50 ~ 49.785,
+             village == "baiama" & visit == 4 & grid_number == 1 & lat_dec == 49 ~ 49.472,
+             village == "baiama" & visit == 4 & grid_number == 1 & trap_number == 66 ~ 49.794,
+             village == "baiama" & visit == 4 & grid_number == 3 & trap_number == 147 ~ 49.835,
              
              village == "baiama" & visit == 4 & grid_number %in% c(2, 3) ~ (swapped_lon - 7) * 100,
              village == "baiama" & visit == 4 & grid_number == 4 & trap_number %in% c(149, 152) ~ lat_dec/1000,
@@ -367,7 +390,7 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
            job = case_when(job == "other" ~ str_to_lower(job_other),
                            TRUE ~ job)) %>%
     mutate(grid_number = case_when(habitat_type == "village_inside" | str_detect(site_use, "In house|Indoor") ~ 7,
-                                   habitat_type == "village_outside" & !grid_number %in% c(1, 3) ~ 7,
+                                   habitat_type == "village_outside" & !grid_number %in% c(1, 3, 4) ~ 7,
                                    TRUE ~ grid_number)) %>% # recode study site to 6 and 7 being within the village grouped as 7
     mutate(SubmissionDate = ymd(as.Date(SubmissionDate)),
            date_set = ymd(as.Date(date_set)),
@@ -406,7 +429,7 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
            grid_number == 1)
   missing_baiama_4_1$trap_number <- 9:49
   
-  missing_trap_nos <- anti_join(missing_trap_nos, missing_baiama_4_1)
+  missing_trap_nos <- anti_join(missing_trap_nos, missing_baiama_4_1, by = c("village", "visit", "grid_number", "lat_dec", "lon_dec"))
   
   full_trap_locations <- full_trap_locations %>%
     left_join(missing_baiama_4_1 %>%
