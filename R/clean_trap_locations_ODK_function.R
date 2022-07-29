@@ -410,7 +410,7 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
   
   full_trap_locations <- full_trap_locations %>%
     left_join(missing_baiama_4_1 %>%
-                   select(village, visit, grid_number, trap_number, lon_dec, lat_dec), by = c("village", "visit", "grid_number", "lon_dec", "lat_dec")) %>%
+                   select(village, visit, grid_number, trap_number, lon_dec, lat_dec, key), by = c("village", "visit", "grid_number", "lon_dec", "lat_dec", "key")) %>%
     mutate(trap_number = coalesce(trap_number.x, trap_number.y)) %>%
     select(-trap_number.x, -trap_number.y)
   
