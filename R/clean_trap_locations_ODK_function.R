@@ -399,7 +399,22 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
   missing_trap_nos <- full_trap_locations %>%
     filter(is.na(trap_number))
   
-  message(cat(ifelse(nrow(missing_trap_nos) == 0, "There are no missing trap numbers,",
+  # Trap numbers are missing from the Baiama site 1 visit 4 I assume these are 9 to 49
+  missing_baiama_4_1 <- missing_trap_nos %>%
+    filter(village == "baiama" &
+           visit == 4 &
+           grid_number == 1)
+  missing_baiama_4_1$trap_number <- 9:49
+  
+  missing_trap_nos <- anti_join(missing_trap_nos, missing_baiama_4_1)
+  
+  full_trap_locations <- full_trap_locations %>%
+    left_join(missing_baiama_4_1 %>%
+                   select(village, visit, grid_number, trap_number, lon_dec, lat_dec), by = c("village", "visit", "grid_number", "lon_dec", "lat_dec")) %>%
+    mutate(trap_number = coalesce(trap_number.x, trap_number.y)) %>%
+    select(-trap_number.x, -trap_number.y)
+  
+  message(cat(ifelse(nrow(missing_trap_nos) == 0, "There are no uncorrected missing trap numbers,",
                      paste(
                        paste0("There are ", nrow(missing_trap_nos), " missing trap numbers:")))))
   
