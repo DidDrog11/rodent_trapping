@@ -48,6 +48,9 @@ final_cleaned_trap_data$spatial_data <- st_as_sf(final_cleaned_trap_data$clean_s
 
 write_rds(final_cleaned_trap_data$spatial_data, here("data", "clean_data", "spatial_traps", "trap_spatial.rds"))
 
+# Repositories have been created for chapter 3 and 4. These use this cleaned data, the next function produces these datasets.
+save_for_chapters()
+
 # Rodent speciation values
 rodent_speciation <- read_species_characteristics()
 
@@ -58,9 +61,6 @@ rodent_image_speciation <- read_xlsx(path = here("data", "speciation", "matched_
 # The following rodents need matching
 final_cleaned_rodent_data %>% 
   filter(!rodent_uid %in% rodent_image_speciation$rodent_id)
-
-# Repositories have been created for chapter 3 and 4. These use this cleaned data, the next function produces these datasets.
-save_for_chapters()
 
 # Literature based classification uses three resources, data have been extracted into a spreadsheet
 # We use this to calculate the probability that a rodent has been correctly allocated
