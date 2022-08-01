@@ -39,6 +39,8 @@ all_images <- rename_images(new_images = FALSE, delete_old_images = FALSE)
 table(is.na(all_images$file))
 
 # Associate trapped rodents with locations
+# Assign habitats based on initial classification
+# Assign current use based on data entry for the that visit
 final_cleaned_trap_data <- final_cleaning(trap_data = all_traps, rodent_data = all_rodents, site_data = ODK_sites$site_habitats)
 final_cleaned_rodent_data <- final_cleaning_rodents(rodent_data = all_rodents)
 
