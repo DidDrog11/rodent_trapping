@@ -17,7 +17,7 @@ final_cleaning <- function(trap_data = all_traps, rodent_data = all_rodents, sit
               by = c("village", "visit", "grid_number")) %>%
     mutate(research_visit = case_when(village %in% c("bambawo", "lambayama", "baiama") ~ as.numeric(visit) + 1,
                                       village %in% c("lalehun", "seilama") ~ as.numeric(visit) - 1),
-           research_visit = factor(research_visit, labels = c("Pilot", "1", "2", "3", "4", "5"))) %>%
+           research_visit = factor(research_visit, labels = c("Pilot", "1", "2", "3", "4", "5", "6", "7"))) %>%
     mutate(habitat_group = case_when(village == "bambawo" & grid_number == "1" ~ "forest/fallow",
                                      village == "bambawo" & grid_number == "2" ~ "distal_agriculture",
                                      village == "bambawo" & grid_number == "3" ~ "forest/fallow",
