@@ -10,7 +10,7 @@ clean_rodent_data_ODK <- function(){
       
     } else {
       
-      all_files <- all_files <- list.files(tail(sort(list.files(here("data", "raw_odk"), pattern = "rodent_data_", full.names = TRUE)), 1), full.names = TRUE)[1]
+      all_files <- list.files(tail(sort(list.files(here("data", "raw_odk"), pattern = "rodent_data_", full.names = TRUE)), 1), full.names = TRUE)[1]
       
     } 
   } else {
@@ -64,6 +64,7 @@ clean_rodent_data_ODK <- function(){
                              month(form_entry) %in% c(1) & year(form_entry) == 2022 & village_name %in% c("lambayama", "baiama") ~ 3,
                              month(form_entry) %in% c(4) & year(form_entry) == 2022 & village_name %in% c("lalehun", "seilama") ~ 6,
                              month(form_entry) %in% c(4) & year(form_entry) == 2022 & village_name %in% c("lambayama", "baiama") ~ 4,
+                             month(form_entry) %in% c(8) & year(form_entry) == 2022  ~ 7,
                              visit == 41 ~ 4,
                              TRUE ~ visit),
            genus = case_when(`rodent_details-genus` == "not_listed" ~ `rodent_details-genus_other`,
@@ -170,10 +171,17 @@ clean_rodent_data_ODK <- function(){
                                   key == "uuid:0428fbca-5684-4046-ae3a-d5e39e10aa78" ~ 7,
                                   
                                   # Wrong site listed for Baiama
+                                  # Visit 7
+                                  key %in% c("uuid:02a4d50a-345e-41e2-90ae-f5a5e35abfc9",
+                                             "uuid:6c26d66d-2f2d-4fc5-a2a9-a04122941902",
+                                             "uuid:77d21152-3b44-4064-b416-12b8740cf25f",
+                                             "uuid:b1309980-c4ca-49f4-aabe-4b15613af033",
+                                             "uuid:35971111-f6d7-4f22-af79-01f3eba3d073") ~ 7,
+                                  
                                   # Visit 4
-                                  key == "uuid:6fc707e5-b587-4495-8f50-f42a56bcc953" ~ 7,
                                   key == "uuid:7900c206-affa-46ad-a48a-30ec373eb5bc" ~ 3,
-                                  key == "uuid:447fb45f-cd6e-4f86-8700-a70988e45ded" ~ 7,
+                                  key %in% c("uuid:6fc707e5-b587-4495-8f50-f42a56bcc953",
+                                             "uuid:447fb45f-cd6e-4f86-8700-a70988e45ded") ~ 7,
                                   
                                   #Visit 2
                                   key %in% c("uuid:dfb6dce9-1dc8-4c25-a5f7-a376b1af3fd2",
@@ -181,12 +189,17 @@ clean_rodent_data_ODK <- function(){
                                              "uuid:1bdb8afa-a884-446b-8c70-40a00c84b8f7") ~ 7,
                                   
                                   # Wrong site listed for Lambayama
+                                  
                                   # Visit 4
                                   key %in% c("uuid:79d42e7f-b09c-457b-b917-23ddd79d957b",
                                              "uuid:92d37977-90bd-4693-934a-0d39235a2cb8",
                                              "uuid:fa38c704-256d-4f14-85c3-9a9d0388b366",
                                              "uuid:79d42e7f-b09c-457b-b917-23ddd79d957b",
                                              "uuid:99887e62-1634-42d9-b775-bb9f6cb0f0eb") ~ 7,
+                                  
+                                  key %in% c("uuid:79d42e7f-b09c-457b-b917-23ddd79d957b",
+                                             "uuid:fa38c704-256d-4f14-85c3-9a9d0388b366",
+                                             "uuid:92d37977-90bd-4693-934a-0d39235a2cb8") ~ 4,
                                   # Visit 3
                                   key %in% c("uuid:a91f7490-6ff9-4ce0-a2db-5cab55f8552a",
                                             "uuid:7a8a6178-11d6-45c4-92e9-f658c1b3d5b9") ~ 7,
@@ -196,6 +209,13 @@ clean_rodent_data_ODK <- function(){
                                              "uuid:6c7b1900-4802-4212-a9b9-f105735ff999",
                                              "uuid:82a6c741-3108-4756-b4d8-dd606e4aa04a",
                                              "uuid:9ecd5ad5-b1db-462d-9a68-23640f3caed6") ~ 7,
+                                  
+                                  key %in% c("uuid:c3b66aae-0645-498b-9d32-692f0186b566",
+                                             "uuid:c9cfa3f3-85d9-41a6-98e4-1507c7eca703",
+                                             "uuid:b416b322-798c-4a64-846b-0df6611f7c31",
+                                             "uuid:15b9adb2-c5b9-4c35-806d-23b4e903fdc9",
+                                             "uuid:6bbbbb3b-64af-4e56-81d8-f083b6aed5e4") ~ 4,
+                                  
                                   study_site == 6 ~ 7,
                                   
                                   TRUE ~ as.numeric(study_site)),

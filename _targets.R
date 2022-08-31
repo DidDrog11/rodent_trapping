@@ -5,7 +5,7 @@ suppressPackageStartupMessages(source(here::here("packages.R")))
 walk(dir_ls(here("R")),  ~try(source(.)))
 
 # If using rodent images set to TRUE
-download_rodent_pictures = FALSE
+download_rodent_pictures = TRUE
 
 # Update the data if required
 get_ODK()
@@ -33,7 +33,7 @@ all_rodents <- ODK_paper_combine_rodent(ODK_data = ODK_rodents)
 consistent_traps <- harmonise_sites()
 
 # Rename images stored in data/rodent_images only needed if download_rodent_pictures was set to TRUE, otherwise would have previously been done.
-all_images <- rename_images(new_images = FALSE, delete_old_images = FALSE)
+all_images <- rename_images(new_images = TRUE, delete_old_images = TRUE)
 
 # 137 expected images are not provided
 table(is.na(all_images$file))
