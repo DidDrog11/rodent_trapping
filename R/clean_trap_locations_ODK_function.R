@@ -93,6 +93,9 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
            habitat = case_when(habitat_type == "village_inside" ~ "houses",
                                TRUE ~ habitat)) %>%
     ungroup() %>%
+    # missing visit number for Baiama
+    mutate(visit = case_when(village == "baiama" & is.na(visit) ~ 7,
+                             TRUE ~ visit)) %>%
     # sort misrecorded study_sites 
     mutate(grid_number = case_when(site_use == "Forest" & village == "seilama" & visit == 3 & grid_number == "4" ~ 5,
                                    site_use == "village_inside" ~ 7,
@@ -171,8 +174,6 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
                                    is.na(trap_number) & key == "uuid:4eab9b5f-1235-4e78-b7aa-f363e8afbb98" ~ 236,
                                    is.na(trap_number) & key == "uuid:5888a838-d656-40af-bd53-cd065ad4aaf8" & proximity == "garden" ~ 245,
                                    is.na(trap_number) & key == "uuid:5888a838-d656-40af-bd53-cd065ad4aaf8" & proximity == "road" ~ 233,
-                                   is.na(trap_number) & key == "uuid:18f14b9a-9dac-4f1f-bbfa-344edacd3848" & trap_land_type == "Grass,road" ~ 294,
-                                   is.na(trap_number) & key == "uuid:18f14b9a-9dac-4f1f-bbfa-344edacd3848" & trap_land_type == "Grass, burnt_land,road" ~ 295,
                                    
                                    TRUE ~ as.numeric(trap_number))) %>%
     mutate(lon_degree = 11,
@@ -526,22 +527,23 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
                        sep = "\n"))))
   
   missing_trap_nos <- full_trap_locations %>%
-    filter(is.na(trap_number))
+    filter(is.na(trap_number)) %>%
+    filter(!(visit == 4 & village == "baiama" & grid_number == 1))
+  
+  full_trap_locations$trap_number[is.na(full_trap_locations$trap_number) & full_trap_locations$key == "uuid:18f14b9a-9dac-4f1f-bbfa-344edacd3848" & full_trap_locations$trap_land_type == "Grass,road"] = 294
+  full_trap_locations$trap_number[is.na(full_trap_locations$trap_number) & full_trap_locations$key == "uuid:18f14b9a-9dac-4f1f-bbfa-344edacd3848" & full_trap_locations$trap_land_type == "Grass, burnt_land,road"] = 295
   
   # Trap numbers are missing from the Baiama site 1 visit 4 I assume these are 9 to 49
-  missing_baiama_4_1 <- missing_trap_nos %>%
-    filter(village == "baiama" &
-           visit == 4 &
-           grid_number == 1)
-  missing_baiama_4_1$trap_number <- 9:49
+  missing_baiama_4_1 <- full_trap_locations %>%
+    filter(visit == 4 & village == "baiama" & grid_number == 1) %>%
+    ungroup() %>%
+    mutate(trap_number = row_number())
   
   missing_trap_nos <- anti_join(missing_trap_nos, missing_baiama_4_1, by = c("village", "visit", "grid_number", "lat_dec", "lon_dec"))
   
   correcting_missing_tn <- full_trap_locations %>%
-    left_join(missing_baiama_4_1 %>%
-                   select(village, visit, grid_number, trap_number, lon_dec, lat_dec, key), by = c("village", "visit", "grid_number", "lon_dec", "lat_dec", "key")) %>%
-    mutate(trap_number = coalesce(trap_number.x, trap_number.y)) %>%
-    select(-trap_number.x, -trap_number.y)
+    filter(!(visit == 4 & village == "baiama" & grid_number == 1)) %>%
+    bind_rows(missing_baiama_4_1)
   
   message(cat(ifelse(nrow(missing_trap_nos) == 0, "There are no uncorrected missing trap numbers,",
                      paste(
@@ -564,10 +566,7 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
                            TRUE ~ lat)) # make some final corrections to coordinates
   
   message("Traps expanded for 4 nights at each site.")
-  
-  # fix improbable coordinates here
-  full_trap_locations <- fix_improbable_coordinates(data =  full_trap_locations)
-  
+
   improbable_coordinates <- full_trap_locations %>%
     distinct(village, visit, trap_number, .keep_all = T) %>%
     filter(lon <= -14 | lon >= -10 | lat  >= 9 | lat <= 7)
@@ -596,7 +595,7 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
                            coord_check %>%
                              filter(village == "lambayama") %>%
                              .[st_as_sf(village_bbox[["lambayama"]]), , op = st_disjoint]) %>%
-    filter(!(village == "baiama" & visit %in% c(2, 3, 4) & grid_number %in% c("5", "6", "7"))) # these sites were set up after visit 1
+    filter(!(village == "baiama" & visit %in% c(2, 3, 4, 5, 6, 7) & grid_number %in% c("5", "6", "7"))) # these sites were set up after visit 1
   
   message(
     cat(
