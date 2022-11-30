@@ -1,5 +1,13 @@
 clean_site_ODK <- function() {
   
+  # Expected results are 1 entry for each trap site in each village at each visit.
+  # Visit 1 was completed on paper for Seilama and Lalehun, so they should only start at visit 2
+  # Bambawo was stopped after visit 1
+  # The different numbers confused the field team so Baiama and Lambayama went from visit 4 to visit 7, i.e. 5 and 6 are missing
+  # Sites 6 and 7 are combined
+  # There should not be two entries for a single site
+  
+  
   all_files <- list.files(here("data", "raw_odk", paste0("trap_sites", "_", Sys.Date())), full.names = T)
   
   if(identical(all_files, character(0))) all_files <- list.files(tail(sort(list.files(here("data", "raw_odk"), pattern = "trap_sites_", full.names = TRUE)), 1), full.names = TRUE)
@@ -10,7 +18,7 @@ clean_site_ODK <- function() {
   
   trap_sites <- read_csv(all_files[4], show_col_types = FALSE) %>%
     filter(ReviewState != "rejected" | is.na(ReviewState)) %>%
-    filter(!KEY %in% c("uuid:4161d048-299d-42b8-a758-480ba044cea9", "uuid:3db1d7ec-ca8c-407c-900a-b7d4e48c3d3f")) %>%
+    filter(!KEY %in% c("uuid:4161d048-299d-42b8-a758-480ba044cea9", "uuid:3db1d7ec-ca8c-407c-900a-b7d4e48c3d3f", "uuid:1d3d91e3-6668-4cf5-a3d9-81d5ba02b41a")) %>%
     mutate(SubmissionDate = ymd(as.Date(SubmissionDate)),
            form_entry = ymd(as.Date(form_entry)),
            other_village_name = case_when(other_village_name == "Lambeyama" ~ "Lambayama", # Correct the spelling of a village site
@@ -27,12 +35,14 @@ clean_site_ODK <- function() {
                                     month(form_entry) <= 2 & year(form_entry) == 2022 & village_name %in% c("lalehun", "seilama") ~ 5,
                                     month(form_entry) <= 3 & year(form_entry) == 2022 & village_name %in% c("lambayama", "baiama") ~ 3,
                                     KEY == "uuid:1f75e3b2-478e-4b5d-a475-de5aaed6593c" ~ 7,
+                                    KEY == "uuid:0d0621a7-768a-41b8-a563-31f7d31c9e47" ~ 7, # This form was begun too early but is associated with visit 7
                                     month(form_entry) >= 4 & month(form_entry) <= 7 & year(form_entry) == 2022 & village_name %in% c("lalehun", "seilama") ~ 6,
                                     month(form_entry) >= 4 & month(form_entry) <= 7 & year(form_entry) == 2022 & village_name %in% c("lambayama", "baiama") ~ 4,
                                     month(form_entry) >= 8 & month(form_entry) <= 9 & year(form_entry) == 2022 & village_name %in% c("lalehun", "seilama", "lambayama", "baiama") ~ 7,
                                     TRUE ~ visit_number),
-           study_site = case_when(KEY == "uuid:5bedb731-5e12-49e2-8aef-fca6a1647690" ~ 2, # A trap site was miscoded as 1 instead of 2, this corrects it.
+           study_site = case_when(KEY == "uuid:5bedb731-5e12-49e2-8aef-fca6a1647690" ~ 2, # A study site was miscoded as 1 instead of 2, this corrects it.
                                   KEY == "uuid:78e1e027-0851-4c47-8077-ccb8e0e2f049" ~ 5,
+                                  KEY == "uuid:ed678515-2168-4644-8452-0a501168c333" ~ 4,
                                   habitat_type == "village_inside" | str_detect(site_use, "In house|Indoor") ~ 7,
                                   habitat_type == "village_outside" & !study_site %in% c(1, 3) ~ 7,
                                   TRUE ~ study_site),

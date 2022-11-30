@@ -135,7 +135,22 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
                                    
                                    trap_number == "267_2" & visit == "4" & village == "lalehun" ~ "270",
                                    
+                                   trap_number == "246_2" & visit == "7" & village == "lalehun" ~ "247",
+                                   
                                    trap_number == "117979" & visit == "7" & village == "lambayama" ~ "196",
+                                   
+                                   trap_number == "294" & visit == "7" & village == "seilama" ~ "293",
+                                   trap_number == "294_2" & visit == "7" & village == "seilama" ~ "294",
+                                   trap_number == "237_2" & visit == "7" & village == "seilama" ~ "245",
+                                   
+                                   trap_number == "17_2" & visit == "8" & village == "seilama" ~ "18",
+                                   trap_number == "29" & visit == "8" & village == "seilama" ~ "28",
+                                   trap_number == "29_2" & visit == "8" & village == "seilama" ~ "29",
+                                   trap_number == "35_2" & visit == "8" & village == "seilama" ~ "38",
+                                   trap_number == "278_2" & visit == "8" & village == "seilama" ~ "293",
+                                   
+                                   trap_number == "203" & visit == "8" & village == "lambayama" ~ "202",
+                                   trap_number == "203_2" & visit == "8" & village == "lambayama" ~ "203",
                                    
                                    TRUE ~ trap_number),
            trap_number = as.numeric(trap_number),
@@ -204,6 +219,7 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
              village == "lalehun" & visit == 5 & trap_number == 34  ~ 4.7646,
              village == "lalehun" & visit == 5 & trap_number == 187  ~ 4.6902,
              village == "lalehun" & visit == 5 & trap_number == 86  ~ 4.7399,
+             village == "lalehun" & visit == 5 & trap_number == 186  ~ 4.6925,
              
              village == "lalehun" & visit == 5 & grid_number %in% c(5, 4) ~ (swapped_lat - 11) * 100,
              
@@ -219,10 +235,20 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
              village == "lalehun" & visit == 7 & trap_number == 92  ~ 4.743,
              village == "lalehun" & visit == 7 & trap_number == 97  ~ 4.7370,
              village == "lalehun" & visit == 7 & trap_number == 121  ~ 4.821,
+             village == "lalehun" & visit == 7 & trap_number == 131  ~ 4.837,
+             village == "lalehun" & visit == 7 & trap_number == 148  ~ 4.6834,
              village == "lalehun" & visit == 7 & trap_number == 151  ~ 4.6925,
              village == "lalehun" & visit == 7 & trap_number == 221  ~ 4.8146,
+             village == "lalehun" & visit == 7 & trap_number == 246  ~ 4.7929,
              
              village == "lalehun" & visit == 7 & grid_number %in% c(2, 3, 4, 5) ~ (swapped_lat - 11) * 100,
+             
+             village == "lalehun" & visit == 8 & trap_number == 26  ~ 4.7623,
+             village == "lalehun" & visit == 8 & trap_number == 43  ~ 4.7518,
+             village == "lalehun" & visit == 8 & trap_number == 70  ~ 4.762,
+             village == "lalehun" & visit == 8 & trap_number == 282  ~ 4.7708,
+             
+             village == "lalehun" & visit == 8 & grid_number %in% c(2) ~ (swapped_lat - 11) * 100,
              
              village == "seilama" & visit == 3 & trap_number == 228 ~ 11.866,
              village == "seilama" & visit == 3 & trap_number == 12 ~ 11.5320,
@@ -247,6 +273,21 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
              village == "seilama" & visit == 6 & trap_number == 65 ~ 11.651,
              village == "seilama" & visit == 6 & trap_number == 89 ~ 11.657,
              village == "seilama" & visit == 6 & trap_number == 223 ~ 11.862,
+             
+             village == "seilama" & visit == 7 & trap_number == 1 ~ 11.5261,
+             village == "seilama" & visit == 7 & trap_number == 31 ~ 11.5484,
+             village == "seilama" & visit == 7 & trap_number == 66 ~ 11.658,
+             village == "seilama" & visit == 7 & trap_number == 118 ~ 11.671,
+             village == "seilama" & visit == 7 & trap_number == 193 ~ 11.627,
+             village == "seilama" & visit == 7 & trap_number == 197 ~ 11.8862,
+             
+             village == "seilama" & visit == 7 & grid_number %in% c(2, 3, 4) ~ (swapped_lat - 11) * 100,
+             
+             village == "seilama" & visit == 8 & trap_number == 26 ~ 11.5406,
+             village == "seilama" & visit == 8 & trap_number == 184 ~ 11.655,
+             village == "seilama" & visit == 8 & trap_number == 285 ~ 11.6275,
+             
+             village == "seilama" & visit == 8 & grid_number %in% c(2, 4, 5) ~ (swapped_lat - 11) * 100,
              
              village == "baiama" & visit == 1 & trap_number %in% c(2, 3, 4, 5, 6, 7) ~ swapped_lat,
              village == "baiama" & visit == 1 & trap_number == 195 ~ 15.9879,
@@ -280,6 +321,9 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
              village == "baiama" & visit == 7 & trap_number == 189 ~ 15.9761,
              
              village == "baiama" & visit == 7 & grid_number %in% c(1, 2, 3) ~ (swapped_lat - 11) * 100,
+             
+             village == "baiama" & visit == 8 & trap_number == 51 ~ 15.2327,
+             village == "baiama" & visit == 8 & trap_number == 94 ~ 15.2182,
              
              village == "lambayama" & visit == 1 & trap_number == 50 ~ 11.6820,
              
@@ -328,6 +372,7 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
              village == "lalehun" & visit == 3 & trap_number == 218 ~ 11.628,
              village == "lalehun" & visit == 3 & trap_number == 10 ~ 11.791,
              village == "lalehun" & visit == 3 & trap_number == 35 ~ 11.7751,
+             village == "lalehun" & visit == 3 & trap_number == 90 ~ 11.9191,
              
              village == "lalehun" & visit == 3 & lat_dec <= 9 ~ (lat_dec-8)*100,
              
@@ -348,6 +393,7 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
              village == "lalehun" & visit == 5 & trap_number == 130 ~ 11.9318,
              village == "lalehun" & visit == 5 & trap_number == 131 ~ 11.9342,
              village == "lalehun" & visit == 5 & trap_number == 167 ~ 11.6566,
+             village == "lalehun" & visit == 5 & trap_number == 180 ~ 11.6639,
              village == "lalehun" & visit == 5 & trap_number == 275 ~ 11.8632,
              
              village == "lalehun" & visit == 5 & grid_number %in% c(4, 5) ~ (swapped_lon-8)*100,
@@ -363,10 +409,16 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
              
              village == "lalehun" & visit == 7 & trap_number == 10 ~ 11.7955,
              village == "lalehun" & visit == 7 & trap_number == 92 ~ 11.925,
+             village == "lalehun" & visit == 7 & trap_number == 140 ~ 11.946,
+             village == "lalehun" & visit == 7 & trap_number == 144 ~ 11.961,
              village == "lalehun" & visit == 7 & trap_number == 121 ~ 11.931,
              village == "lalehun" & visit == 7 & trap_number == 151  ~ 11.64,
              
              village == "lalehun" & visit == 7 & grid_number %in% c(2, 3, 4, 5) ~ (swapped_lon-8)*100,
+             
+             village == "lalehun" & visit == 8 & trap_number == 43  ~ 11.7833,
+             
+             village == "lalehun" & visit == 8 & grid_number %in% c(2) ~ (swapped_lon-8)*100,
              
              village == "seilama" & visit == 3 & trap_number == 208 ~ 7.424,
              village == "seilama" & visit == 3 & trap_number == 203 ~ 7.412,
@@ -388,6 +440,18 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
              village == "seilama" & visit == 6 & trap_number == 272 ~ 7.357,
              village == "seilama" & visit == 6 & trap_number == 278 ~ 7.338,
              village == "seilama" & visit == 6 & trap_number == 280 ~ 7.331,
+             
+             village == "seilama" & visit == 7 & trap_number == 1 ~ 7.3261,
+             village == "seilama" & visit == 7 & trap_number == 150 ~ 7.248,
+             village == "seilama" & visit == 7 & trap_number == 197 ~ 7.4233,
+             village == "seilama" & visit == 7 & trap_number == 203 ~ 7.4146,
+             village == "seilama" & visit == 7 & trap_number == 277 ~ 7.3592,
+             
+             village == "seilama" & visit == 7 & grid_number %in% c(2, 3, 4) ~ (swapped_lon - 8) * 100,
+             
+             village == "seilama" & visit == 8 & grid_number == 3 ~ lat_dec - 1,
+             
+             village == "seilama" & visit == 8 & grid_number %in% c(2, 4, 5) ~ (swapped_lon - 8) * 100,
              
              village == "baiama" & visit == 1 & trap_number %in% c(2, 3, 4, 5, 6, 7) ~ swapped_lon,
              
@@ -426,6 +490,8 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
              village == "baiama" & visit == 7 & trap_number == 242 ~ 50.2229,
              
              village == "baiama" & visit == 7 & grid_number %in% c(1, 2, 3) ~ (swapped_lon - 7) * 100,
+             
+             village == "baiama" & visit == 8 & trap_number == 79 ~ 49.7945,
             
              village == "lambayama" & visit == 1 & trap_number == 50 ~ 51.0729,
              village == "lambayama" & visit == 1 & trap_number == 153 ~ 50.9851,
@@ -441,7 +507,7 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
              village == "lambayama" & visit == 3 & trap_number %in% c(271:274) ~ 51.0953,
              village == "lambayama" & visit == 3 & trap_number == 214 ~ 51.0079,
              village == "lambayama" & visit == 3 & trap_number == 216 ~ 50.9945,
-             village == "lambayama" & visit == 3 & trap_number == 217 ~ 50.9769,
+             village == "lambayama" & visit == 3 & trap_number == 217 ~ 50.9969,
              
              village == "lambayama" & visit == 3 & grid_number %in% c(1, 2, 3) ~ (swapped_lon - 7) * 100,
              
@@ -474,6 +540,8 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
              village == "lambayama" & visit == 7 & lat_dec == 51.9980 ~ 50.9980,
              
              village == "lambayama" & visit == 7 & grid_number %in% c(1, 2, 3) ~ (swapped_lon - 7) * 100,
+             
+             village == "lambayama" & visit == 8 & trap_number == 228 ~ 50.9995,
              
              village == "bambawo" & visit == 1 & trap_number == 53 ~ 0.5458,
              
