@@ -55,7 +55,9 @@ clean_rodent_data_ODK <- function(){
                                     TRUE ~ village_name),
            date_entered = as.Date(ymd_hms(form_entry)),
            village_abbreviation = toupper(str_sub(village_name, end = 3)),
-           visit = case_when(is.na(visit) & village_name == "bambawo" ~ 1,
+           visit = case_when(KEY == "uuid:44df6c7a-ab7c-4ed5-8223-2e583395fb17" ~ 8, # grid missing for visit, rodent allocated to different visit in same season
+                             KEY == "uuid:856d83f6-15e0-4084-a9a8-a61cc8aba13a" ~ 5, # grid missing allocated to next visit
+                             is.na(visit) & village_name == "bambawo" ~ 1,
                              month(form_entry) %in% c(6, 7) & year(form_entry) == 2021 & village_name %in% c("lambayama", "baiama") ~ 1,
                              month(form_entry) %in% c(6, 7) & year(form_entry) == 2021 & village_name %in% c("lalehun", "seilama") ~ 3,
                              month(form_entry) %in% c(10) & year(form_entry) == 2021 & village_name %in% c("lalehun", "seilama") ~ 4,
@@ -134,6 +136,13 @@ clean_rodent_data_ODK <- function(){
                                    key == "uuid:856d83f6-15e0-4084-a9a8-a61cc8aba13a" ~ 228, #
                                    key == "uuid:5ffee554-6d8c-4c33-ba16-72403c3f5305" ~ 243, #
                                    key == "uuid:72d60def-49f3-43a0-988f-0b4f3ce9902e" ~ 246, #
+                                   key == "uuid:73063e63-4fe1-49b2-b3b3-54335745a093" ~ 335,
+                                   key == "uuid:541b64c1-eedd-4220-ba3c-faf7c9c79c43" ~ 264, # Grid data missing, allocated to closest known trap
+                                   key == "uuid:e17b3227-bc71-4d2e-8e04-c2f340ae0de8" ~ 255, # Grid data missing, allocated to closest known trap
+                                   key == "uuid:856d83f6-15e0-4084-a9a8-a61cc8aba13a" ~ 202, # Grid missing, allocated to trap at next session
+                                   key == "uuid:5ffee554-6d8c-4c33-ba16-72403c3f5305" ~ 253, # Grid data missing, allocated to closest known trap
+                                   key == "uuid:92153960-251f-4946-ad1e-034b02326eea" ~ 293, # Grid data missing, allocated to closest known trap
+                                   key == "uuid:5a5cc97c-55d8-4022-a8e4-296b050f180a" ~ 281, # Grid data missing, allocated to closest known trap
                                    TRUE ~ trap_number),
            study_site = case_when(village == "lalehun" & study_site == "not_listed" & visit == 4 ~ 7,
                                   
@@ -176,7 +185,8 @@ clean_rodent_data_ODK <- function(){
                                              "uuid:6c26d66d-2f2d-4fc5-a2a9-a04122941902",
                                              "uuid:77d21152-3b44-4064-b416-12b8740cf25f",
                                              "uuid:b1309980-c4ca-49f4-aabe-4b15613af033",
-                                             "uuid:35971111-f6d7-4f22-af79-01f3eba3d073") ~ 7,
+                                             "uuid:35971111-f6d7-4f22-af79-01f3eba3d073",
+                                             "uuid:fc940bc6-210e-41a6-badb-7523294a81e0") ~ 7,
                                   
                                   # Visit 4
                                   key == "uuid:7900c206-affa-46ad-a48a-30ec373eb5bc" ~ 3,
@@ -194,12 +204,7 @@ clean_rodent_data_ODK <- function(){
                                   key %in% c("uuid:79d42e7f-b09c-457b-b917-23ddd79d957b",
                                              "uuid:92d37977-90bd-4693-934a-0d39235a2cb8",
                                              "uuid:fa38c704-256d-4f14-85c3-9a9d0388b366",
-                                             "uuid:79d42e7f-b09c-457b-b917-23ddd79d957b",
-                                             "uuid:99887e62-1634-42d9-b775-bb9f6cb0f0eb") ~ 7,
-                                  
-                                  key %in% c("uuid:79d42e7f-b09c-457b-b917-23ddd79d957b",
-                                             "uuid:fa38c704-256d-4f14-85c3-9a9d0388b366",
-                                             "uuid:92d37977-90bd-4693-934a-0d39235a2cb8") ~ 4,
+                                             "uuid:99887e62-1634-42d9-b775-bb9f6cb0f0eb") ~ 4,
                                   # Visit 3
                                   key %in% c("uuid:a91f7490-6ff9-4ce0-a2db-5cab55f8552a",
                                             "uuid:7a8a6178-11d6-45c4-92e9-f658c1b3d5b9") ~ 7,
@@ -219,6 +224,11 @@ clean_rodent_data_ODK <- function(){
                                   study_site == 6 ~ 7,
                                   
                                   TRUE ~ as.numeric(study_site)),
+           trap_night = case_when(key == "uuid:73063e63-4fe1-49b2-b3b3-54335745a093" ~ 4,
+                                  TRUE ~ trap_night),
+           initial_species_id = case_when(key == "uuid:73063e63-4fe1-49b2-b3b3-54335745a093" ~ "mastomys_spp",
+                                          key == "uuid:1a49c72c-8ff7-4570-b710-3802c3b7ab34" ~ "mus_spp",
+                                          TRUE ~ initial_species_id),
            study_site = as_factor(study_site),
            trap_uid = paste0(village, "_", visit, "_", trap_night, "_", study_site, "_", trap_number)) %>%
            dplyr::select(-any_of(not_needed_vars), -starts_with("site_images"))
