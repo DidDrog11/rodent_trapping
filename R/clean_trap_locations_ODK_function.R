@@ -411,6 +411,7 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
              village == "lalehun" & visit == 7 & trap_number == 92 ~ 11.925,
              village == "lalehun" & visit == 7 & trap_number == 140 ~ 11.946,
              village == "lalehun" & visit == 7 & trap_number == 144 ~ 11.961,
+             village == "lalehun" & visit == 7 & trap_number == 148  ~ 11.6537,
              village == "lalehun" & visit == 7 & trap_number == 121 ~ 11.931,
              village == "lalehun" & visit == 7 & trap_number == 151  ~ 11.64,
              
