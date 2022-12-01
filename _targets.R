@@ -5,7 +5,7 @@ suppressPackageStartupMessages(source(here::here("packages.R")))
 walk(dir_ls(here("R")),  ~try(source(.)))
 
 # If using rodent images set to TRUE
-download_rodent_pictures = TRUE
+download_rodent_pictures = FALSE
 
 # Update the data if required
 get_ODK()
@@ -19,10 +19,12 @@ ODK_traps <- clean_trap_locations_ODK()
 # check using mapview::mapview(ODK_traps$coord_error$spatial)
 
 ODK_trap_check <- clean_trap_check_ODK()
+# Visit dates need to be added within the function before running
 ODK_rodents <- clean_rodent_data_ODK()
 
 # Combine the ODK forms
 ODK_combined <- combine_ODK_data(trap = ODK_traps$full_trap_locations, check = ODK_trap_check, rodent = ODK_rodents)
+# 20 rodents currently unmatched
 
 # Combine the paper and ODK forms
 all_traps <- ODK_paper_combine(ODK_data = ODK_combined)

@@ -47,28 +47,24 @@ clean_rodent_data_ODK <- function(){
                        "SubmitterID", "SubmitterName", "AttachmentsPresent", "AttachmentsExpected", 
                        "Status", "ReviewState", "DeviceID", "Edits", "village_abbreviation", "date_set")
   
+  # Visits have been confusing for the field team. Set up dataframe to handle visits based on when the forms were submitted.
+  visit_dates <- tibble(year = c(rep(2021, 11), rep(2022, 17)),
+                        month = c(6, 6, 7, rep(7, 3), rep(10, 4), 11, rep(1, 4), 2, rep(4, 4), rep(8, 3), 10, rep(10, 2), rep(11, 2)),
+                        village = c(rep("bambawo", 1), rep("lambayama", 2), "baiama", "lalehun", "seilama", "lalehun", "seilama", "baiama", rep("lambayama", 2), "lalehun", "seilama", "baiama", rep("lambayama", 2), "lalehun", "seilama", "baiama","lambayama", "lalehun", "baiama", "lambayama", "seilama", "lalehun", "lambayama", "baiama", "seilama"),
+                        visit = c(rep(1, 4), rep(3, 2), rep(4, 2), rep(2, 3), rep(5, 2), rep(3, 3), rep(6, 2), rep(4, 2), rep(7, 4), rep(8, 4)))
+  
   
   rodents <- read_csv(all_files[1], show_col_types = FALSE) %>%
     filter(ReviewState != "rejected" | is.na(ReviewState)) %>%
-    mutate(village_name = case_when(is.na(village_name) & rodent_number == 38 ~ "seilama",
+    select(-visit) %>%
+    mutate(year = year(form_entry),
+           month = month(form_entry),
+           village_name = case_when(is.na(village_name) & rodent_number == 38 ~ "seilama",
                                     KEY == "uuid:d33d36a5-37ce-4453-bcde-46ef75d23974" ~ "lambayama",
-                                    TRUE ~ village_name),
-           date_entered = as.Date(ymd_hms(form_entry)),
+                                    TRUE ~ village_name)) %>%
+    left_join(visit_dates, by = c("year", "month", "village_name" = "village")) %>%
+    mutate(date_entered = as.Date(ymd_hms(form_entry)),
            village_abbreviation = toupper(str_sub(village_name, end = 3)),
-           visit = case_when(KEY == "uuid:44df6c7a-ab7c-4ed5-8223-2e583395fb17" ~ 8, # grid missing for visit, rodent allocated to different visit in same season
-                             KEY == "uuid:856d83f6-15e0-4084-a9a8-a61cc8aba13a" ~ 5, # grid missing allocated to next visit
-                             is.na(visit) & village_name == "bambawo" ~ 1,
-                             month(form_entry) %in% c(6, 7) & year(form_entry) == 2021 & village_name %in% c("lambayama", "baiama") ~ 1,
-                             month(form_entry) %in% c(6, 7) & year(form_entry) == 2021 & village_name %in% c("lalehun", "seilama") ~ 3,
-                             month(form_entry) %in% c(10) & year(form_entry) == 2021 & village_name %in% c("lalehun", "seilama") ~ 4,
-                             month(form_entry) %in% c(10, 11) & year(form_entry) == 2021 & village_name %in% c("lambayama", "baiama") ~ 2,
-                             month(form_entry) %in% c(1) & year(form_entry) == 2022 & village_name %in% c("lalehun", "seilama") ~ 5,
-                             month(form_entry) %in% c(1) & year(form_entry) == 2022 & village_name %in% c("lambayama", "baiama") ~ 3,
-                             month(form_entry) %in% c(4) & year(form_entry) == 2022 & village_name %in% c("lalehun", "seilama") ~ 6,
-                             month(form_entry) %in% c(4) & year(form_entry) == 2022 & village_name %in% c("lambayama", "baiama") ~ 4,
-                             month(form_entry) %in% c(8) & year(form_entry) == 2022  ~ 7,
-                             visit == 41 ~ 4,
-                             TRUE ~ visit),
            genus = case_when(`rodent_details-genus` == "not_listed" ~ `rodent_details-genus_other`,
                              TRUE ~ `rodent_details-genus`),
            initial_species_id = recode(`rodent_details-species`, !!!correct_species_error),
@@ -87,7 +83,12 @@ clean_rodent_data_ODK <- function(){
                                    TRUE ~ "no"),
            rodent_number = case_when(rodent_number == 249 ~ 8,
                                      KEY == "uuid:a11445f8-6ec5-4726-a0f2-f915c22fa148" ~ 13,
-                                     TRUE ~ rodent_number)) %>%
+                                     TRUE ~ rodent_number),
+           `acquisition-filter_label` = case_when(KEY == "uuid:bcc44e48-6b8d-44f0-80d0-385ceac32e74" ~ "8SEI99",
+                                                KEY == "uuid:1ccfe871-e244-402d-8c40-bd29babb0e1a" ~ "8LAL99",
+                                                KEY == "uuid:7e8c83b6-3a3b-4bf2-82bb-9fae83365097" ~ "5LAL99",
+                                                KEY == "uuid:02a4d50a-345e-41e2-90ae-f5a5e35abfc9" ~ "7BAI99",
+                                                TRUE ~ `acquisition-filter_label`)) %>% # give duplicates 99 to separate them but acknowledge need checking
     rename("village" = "village_name",
            "study_site" = "trap_details-study_site", 
            "trap_number" = "trap_details-trap_number_int",

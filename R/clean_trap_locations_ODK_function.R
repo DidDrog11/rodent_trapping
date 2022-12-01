@@ -111,6 +111,13 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
     mutate(trap_number = paste(trap_number, row_number(), sep = "_"),
            trap_number = str_remove(trap_number, "_1"),
            trap_number = case_when(trap_number == "77_2" & visit == "1" & village == "lambayama" ~ "78", # Some trap sites have been misrecorded
+                                   trap_number == "237" & visit == "2" & village == "lambayama" & grid_number == 5 ~ "236",
+                                   trap_number == "117979" & visit == "7" & village == "lambayama" ~ "196",
+                                   trap_number == "236" & visit == "7" & village == "lambayama" ~ "235",
+                                   trap_number == "236_2" & visit == "7" & village == "lambayama" ~ "236",
+                                   trap_number == "244_2" & visit == "7" & village == "lambayama" ~ "246",
+                                   trap_number == "203" & visit == "8" & village == "lambayama" ~ "202",
+                                   trap_number == "203_2" & visit == "8" & village == "lambayama" ~ "203",
                                    
                                    trap_number == "85_2" & visit == "1" & village == "bambawo" ~ "95",
                                    trap_number == "184_2" & visit == "1" & village == "bambawo" ~ "187",
@@ -118,27 +125,21 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
                                    trap_number == "146" & visit == "1" & village == "baiama" ~ "145",
                                    trap_number == "146_2" & visit == "1" & village == "baiama" ~ "146",
                                    trap_number == "141_2" & visit == "1" & village == "baiama" ~ "101",
-                                   
                                    trap_number == "2002" & visit == "2" & village == "baiama" ~ "202",
-                                   
-                                   trap_number == "237" & visit == "2" & village == "lambayama" & grid_number == 5 ~ "236",
                                    
                                    trap_number == "14" & visit == "3" & village == "lalehun" ~ "13",
                                    trap_number == "14_2" & visit == "3" & village == "lalehun" ~ "14",
                                    trap_number == "20_2" & visit == "3" & village == "lalehun" ~ "26",
                                    trap_number == "221_2" & visit == "3" & village == "lalehun" ~ "295",
+                                   trap_number == "267_2" & visit == "4" & village == "lalehun" ~ "270",
+                                   trap_number == "246_2" & visit == "7" & village == "lalehun" ~ "247",
+                                   trap_number == "249" & visit == "8" & village == "lalehun" ~ "248",
+                                   trap_number == "249_2" & visit == "8" & village == "lalehun" ~ "249",
+                                   trap_number == "272_2" & visit == "8" & village == "lalehun" ~ "273",
                                    
                                    trap_number == "123" & visit == "3" & village == "seilama" ~ "23",
                                    trap_number == "123_2" & visit == "3" & village == "seilama" ~ "123",
-                                   
                                    trap_number == "296_2" & visit == "4" & village == "seilama" ~ "297",
-                                   
-                                   trap_number == "267_2" & visit == "4" & village == "lalehun" ~ "270",
-                                   
-                                   trap_number == "246_2" & visit == "7" & village == "lalehun" ~ "247",
-                                   
-                                   trap_number == "117979" & visit == "7" & village == "lambayama" ~ "196",
-                                   
                                    trap_number == "294" & visit == "7" & village == "seilama" ~ "293",
                                    trap_number == "294_2" & visit == "7" & village == "seilama" ~ "294",
                                    trap_number == "237_2" & visit == "7" & village == "seilama" ~ "245",
@@ -149,40 +150,29 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
                                    trap_number == "35_2" & visit == "8" & village == "seilama" ~ "38",
                                    trap_number == "278_2" & visit == "8" & village == "seilama" ~ "293",
                                    
-                                   trap_number == "203" & visit == "8" & village == "lambayama" ~ "202",
-                                   trap_number == "203_2" & visit == "8" & village == "lambayama" ~ "203",
-                                   
                                    TRUE ~ trap_number),
            trap_number = as.numeric(trap_number),
            trap_number = case_when(is.na(trap_number) & visit == "2" & village == "lambayama" & grid_number == 2 ~ 62,
                                    is.na(trap_number) & visit == "2" & village == "lambayama" & grid_number == 4 & elevation == 152 ~ 195,
                                    is.na(trap_number) & visit == "2" & village == "lambayama" & grid_number == 4 & elevation == 155 ~ 294,
                                    is.na(trap_number) & visit == "2" & village == "lambayama" & grid_number == 6 ~ 237,
-                                   
-                                   is.na(trap_number) & visit == "2" & village == "baiama" & grid_number == "6" & proximity == "garden" ~ 233,
-                                   is.na(trap_number) & visit == "2" & village == "baiama" & grid_number == "6" & proximity == "road" ~ 245,
-                                   
-                                   is.na(trap_number) & visit == "5" & village == "seilama" & grid_number == "6" ~ 270,
-                                   
-                                   is.na(trap_number) & visit == "5" & village == "lalehun" & grid_number == "4" ~ 175,
-                                   is.na(trap_number) & visit == "6" & village == "lalehun" & grid_number == "7" ~ 343,
-                                   
-                                   is.na(trap_number) & visit == "3" & village == "baiama" & grid_number == "4" ~ 150,
-                                   is.na(trap_number) & visit == "3" & village == "baiama" & grid_number == "2" ~ 97,
-                                   
-                                   is.na(trap_number) & visit == "4" & village == "baiama" & grid_number == "4" ~ 197,
-                                   
+                                   is.na(trap_number) & visit == "4" & village == "lambayama" & grid_number == "6" ~ 294,
                                    is.na(trap_number) & visit == "3" & village == "lambayama" & grid_number == "4" & proximity == "garden" ~ 170,
                                    is.na(trap_number) & visit == "3" & village == "lambayama" & grid_number == "4" & proximity == "house" ~ 179,
                                    
+                                   is.na(trap_number) & visit == "2" & village == "baiama" & grid_number == "6" & proximity == "garden" ~ 233,
+                                   is.na(trap_number) & visit == "2" & village == "baiama" & grid_number == "6" & proximity == "road" ~ 245,
+                                   is.na(trap_number) & visit == "3" & village == "baiama" & grid_number == "4" ~ 150,
+                                   is.na(trap_number) & visit == "3" & village == "baiama" & grid_number == "2" ~ 97,
+                                   is.na(trap_number) & visit == "4" & village == "baiama" & grid_number == "4" ~ 197,
                                    is.na(trap_number) & visit == "4" & village == "baiama" & grid_number == "7" ~ 264,
                                    
-                                   is.na(trap_number) & visit == "4" & village == "lambayama" & grid_number == "6" ~ 294,
-                                   
+                                   is.na(trap_number) & visit == "5" & village == "seilama" & grid_number == "6" ~ 270,
                                    is.na(trap_number) & visit == "6" & village == "seilama" & grid_number == "5" ~ 220,
                                    is.na(trap_number) & visit == "6" & village == "seilama" & grid_number == "3" ~ 147,
                                    
-                                   is.na(trap_number) & visit == "6" & village == "lalehun" & grid_number == "6" ~ 293,
+                                   is.na(trap_number) & visit == "5" & village == "lalehun" & grid_number == "4" ~ 175,
+                                   is.na(trap_number) & visit == "6" & village == "lalehun" & grid_number == "7" ~ 343,is.na(trap_number) & visit == "6" & village == "lalehun" & grid_number == "6" ~ 293,
                                    
                                    is.na(trap_number) & key == "uuid:7d2cbdd3-c9fe-4d6b-af1b-933d389ebff5" ~ 197,
                                    is.na(trap_number) & key == "uuid:0ceb1121-b5e9-4675-87eb-383fe0273075" ~ 270,
