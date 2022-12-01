@@ -229,6 +229,12 @@ clean_rodent_data_ODK <- function(){
                                   TRUE ~ trap_night),
            initial_species_id = case_when(key == "uuid:73063e63-4fe1-49b2-b3b3-54335745a093" ~ "mastomys_spp",
                                           key == "uuid:1a49c72c-8ff7-4570-b710-3802c3b7ab34" ~ "mus_spp",
+                                          key == "uuid:13a4fc09-644c-41d9-931a-9846d8be402d" ~ "lemniscomys_spp",
+                                          key == "uuid:79d42e7f-b09c-457b-b917-23ddd79d957b" ~ "mus_spp",
+                                          key == "uuid:fa38c704-256d-4f14-85c3-9a9d0388b366" ~ "mus_spp",
+                                          key == "uuid:49dc1505-6dc2-435f-853d-a21f6ac29d2a" ~ "mastomys_spp",
+                                          key == "uuid:82a1eb5c-04f4-45e0-b4bd-37f4212b6725" ~ "lemniscomys_spp",
+                                          key == "uuid:c7235270-50de-4193-879b-c46e73e81e53" ~ "mastomys_spp",
                                           TRUE ~ initial_species_id),
            study_site = as_factor(study_site),
            trap_uid = paste0(village, "_", visit, "_", trap_night, "_", study_site, "_", trap_number)) %>%
