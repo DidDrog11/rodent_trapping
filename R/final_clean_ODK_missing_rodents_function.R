@@ -37,7 +37,7 @@ final_cleaning <- function(trap_data = all_traps, rodent_data = all_rodents, sit
                                      village == "bambawo" & grid_number == "4" ~ "proximal_agriculture",
                                      village == "baiama" & grid_number == "1" ~ "forest/fallow",
                                      village == "baiama" & grid_number == "2" & visit %in% c("1", "3") ~ "forest/fallow",
-                                     village == "baiama" & grid_number == "2" & visit %in% c("2", "4") ~ "distal_agriculture",
+                                     village == "baiama" & grid_number == "2" & visit %in% c("2", "4") ~ "distal_agriculture", # site became agricultural after clearing
                                      village == "baiama" & grid_number == "3" ~ "distal_agriculture",
                                      village == "baiama" & grid_number == "4" ~ "proximal_agriculture",
                                      village == "baiama" & grid_number == "7" ~ "village",

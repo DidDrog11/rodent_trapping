@@ -526,6 +526,7 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
              village == "lambayama" & visit == 7 & trap_number == 232 ~ 50.9962,
              village == "lambayama" & visit == 7 & trap_number == 233 ~ 50.9933,
              village == "lambayama" & visit == 7 & trap_number == 234 ~ 50.9948,
+             village == "lambayama" & visit == 7 & trap_number == 235 ~ 50.9963,
              village == "lambayama" & visit == 7 & trap_number == 236 ~ 50.9963,
              village == "lambayama" & visit == 7 & trap_number == 237 ~ 50.9995,
              village == "lambayama" & visit == 7 & lat_dec == 51.9980 ~ 50.9980,
