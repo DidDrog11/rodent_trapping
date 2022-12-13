@@ -87,7 +87,7 @@ clean_rodent_data_ODK <- function(){
            `acquisition-filter_label` = case_when(KEY == "uuid:bcc44e48-6b8d-44f0-80d0-385ceac32e74" ~ "8SEI99",
                                                 KEY == "uuid:1ccfe871-e244-402d-8c40-bd29babb0e1a" ~ "8LAL99",
                                                 KEY == "uuid:7e8c83b6-3a3b-4bf2-82bb-9fae83365097" ~ "5LAL99",
-                                                KEY == "uuid:02a4d50a-345e-41e2-90ae-f5a5e35abfc9" ~ "7BAI99",
+                                                KEY == "uuid:02a4d50a-345e-41e2-90ae-f5a5e35abfc9" ~ "7BAI09", # was duplicate but 9 was missed out
                                                 TRUE ~ `acquisition-filter_label`)) %>% # give duplicates 99 to separate them but acknowledge need checking
     rename("village" = "village_name",
            "study_site" = "trap_details-study_site", 
