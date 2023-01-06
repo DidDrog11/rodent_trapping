@@ -314,6 +314,9 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
              
              village == "baiama" & visit == 8 & trap_number == 51 ~ 15.2327,
              village == "baiama" & visit == 8 & trap_number == 94 ~ 15.2182,
+             village == "baiama" & visit == 8 & trap_number == 15 ~ 15.009,
+             
+             village == "baiama" & visit == 8 & grid_number %in% c(1) ~ (swapped_lat - 11) * 100,
              
              village == "lambayama" & visit == 1 & trap_number == 50 ~ 11.6820,
              
@@ -483,6 +486,8 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
              village == "baiama" & visit == 7 & grid_number %in% c(1, 2, 3) ~ (swapped_lon - 7) * 100,
              
              village == "baiama" & visit == 8 & trap_number == 79 ~ 49.7945,
+             
+             village == "baiama" & visit == 8 & grid_number %in% c(1) ~ (swapped_lon - 7) * 100,
             
              village == "lambayama" & visit == 1 & trap_number == 50 ~ 51.0729,
              village == "lambayama" & visit == 1 & trap_number == 153 ~ 50.9851,

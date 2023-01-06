@@ -47,12 +47,6 @@ clean_rodent_data_ODK <- function(){
                        "SubmitterID", "SubmitterName", "AttachmentsPresent", "AttachmentsExpected", 
                        "Status", "ReviewState", "DeviceID", "Edits", "village_abbreviation", "date_set")
   
-  # Visits have been confusing for the field team. Set up dataframe to handle visits based on when the forms were submitted.
-  visit_dates <- tibble(year = c(rep(2021, 11), rep(2022, 17)),
-                        month = c(6, 6, 7, rep(7, 3), rep(10, 4), 11, rep(1, 4), 2, rep(4, 4), rep(8, 3), 10, rep(10, 2), rep(11, 2)),
-                        village = c(rep("bambawo", 1), rep("lambayama", 2), "baiama", "lalehun", "seilama", "lalehun", "seilama", "baiama", rep("lambayama", 2), "lalehun", "seilama", "baiama", rep("lambayama", 2), "lalehun", "seilama", "baiama","lambayama", "lalehun", "baiama", "lambayama", "seilama", "lalehun", "lambayama", "baiama", "seilama"),
-                        visit = c(rep(1, 4), rep(3, 2), rep(4, 2), rep(2, 3), rep(5, 2), rep(3, 3), rep(6, 2), rep(4, 2), rep(7, 4), rep(8, 4)))
-  
   
   rodents <- read_csv(all_files[1], show_col_types = FALSE) %>%
     filter(ReviewState != "rejected" | is.na(ReviewState)) %>%
@@ -85,7 +79,7 @@ clean_rodent_data_ODK <- function(){
                                      KEY == "uuid:a11445f8-6ec5-4726-a0f2-f915c22fa148" ~ 13,
                                      TRUE ~ rodent_number),
            `acquisition-filter_label` = case_when(KEY == "uuid:bcc44e48-6b8d-44f0-80d0-385ceac32e74" ~ "8SEI99",
-                                                KEY == "uuid:1ccfe871-e244-402d-8c40-bd29babb0e1a" ~ "8LAL99",
+                                                KEY == "uuid:1ccfe871-e244-402d-8c40-bd29babb0e1a" ~ "8LAL11", # was duplicate but 11 was missed out
                                                 KEY == "uuid:7e8c83b6-3a3b-4bf2-82bb-9fae83365097" ~ "5LAL99",
                                                 KEY == "uuid:02a4d50a-345e-41e2-90ae-f5a5e35abfc9" ~ "7BAI09", # was duplicate but 9 was missed out
                                                 TRUE ~ `acquisition-filter_label`)) %>% # give duplicates 99 to separate them but acknowledge need checking
