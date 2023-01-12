@@ -20,17 +20,17 @@ rename_images <- function(data = all_rodents, new_images = TRUE, delete_old_imag
       
       matched_dorsal <- data %>%
         select(rodent_uid, dorsal_image_id) %>%
+        drop_na(dorsal_image_id) %>%
         left_join(., filenames, by = c("dorsal_image_id" = "base_name")) %>%
         mutate(new_name = paste0(rodent_uid, "a.jpg")) %>%
-        rename(current_filename = dorsal_image_id) %>%
-        drop_na()
+        rename(current_filename = dorsal_image_id)
       
       matched_ventral <- data %>%
-        select(rodent_uid, ventral_image_id)%>%
+        select(rodent_uid, ventral_image_id) %>%
+        drop_na(ventral_image_id) %>%
         left_join(., filenames, by = c("ventral_image_id" = "base_name")) %>%
         mutate(new_name = paste0(rodent_uid, "b.jpg")) %>%
-        rename(current_filename = ventral_image_id) %>%
-        drop_na()
+        rename(current_filename = ventral_image_id)
       
       matched_both <- bind_rows(matched_dorsal, matched_ventral) %>%
         select(full_name, new_name)

@@ -78,10 +78,12 @@ clean_rodent_data_ODK <- function(){
            rodent_number = case_when(rodent_number == 249 ~ 8,
                                      KEY == "uuid:a11445f8-6ec5-4726-a0f2-f915c22fa148" ~ 13,
                                      TRUE ~ rodent_number),
-           `acquisition-filter_label` = case_when(KEY == "uuid:bcc44e48-6b8d-44f0-80d0-385ceac32e74" ~ "8SEI99",
+           `acquisition-filter_label` = case_when(KEY == "uuid:bcc44e48-6b8d-44f0-80d0-385ceac32e74" ~ "8SEI2",
                                                 KEY == "uuid:1ccfe871-e244-402d-8c40-bd29babb0e1a" ~ "8LAL11", # was duplicate but 11 was missed out
                                                 KEY == "uuid:7e8c83b6-3a3b-4bf2-82bb-9fae83365097" ~ "5LAL99",
                                                 KEY == "uuid:02a4d50a-345e-41e2-90ae-f5a5e35abfc9" ~ "7BAI09", # was duplicate but 9 was missed out
+                                                KEY == "uuid:826e1bbc-5f5d-4ec7-926f-5c2166285eac" ~ "8BAI13", # was duplicate but but form filled in after other rodent named 11
+                                                KEY == "uuid:cea27a61-5e18-455a-a8a5-1c03127db6b3" ~ "8BAI14", # was duplicate but but form filled in after other rodent named 12
                                                 TRUE ~ `acquisition-filter_label`)) %>% # give duplicates 99 to separate them but acknowledge need checking
     rename("village" = "village_name",
            "study_site" = "trap_details-study_site", 

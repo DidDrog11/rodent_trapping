@@ -11,7 +11,7 @@ visit_dates <- tibble(year = c(rep(2021, 11), rep(2022, 17)),
                       visit = c(rep(1, 4), rep(3, 2), rep(4, 2), rep(2, 3), rep(5, 2), rep(3, 3), rep(6, 2), rep(4, 2), rep(7, 4), rep(8, 4)))
 
 # If using rodent images set to TRUE
-download_rodent_pictures = FALSE
+download_rodent_pictures = TRUE
 
 # Update the data if required
 get_ODK()
@@ -43,7 +43,7 @@ consistent_traps <- harmonise_sites()
 # Rename images stored in data/rodent_images only needed if download_rodent_pictures was set to TRUE, otherwise would have previously been done.
 all_images <- rename_images(new_images = TRUE, delete_old_images = TRUE)
 
-# 137 expected images are not provided
+# 92 expected images are not provided
 table(is.na(all_images$file))
 
 # Associate trapped rodents with locations
@@ -51,6 +51,13 @@ table(is.na(all_images$file))
 # Assign current use based on data entry for the that visit
 final_cleaned_trap_data <- final_cleaning(trap_data = all_traps, rodent_data = all_rodents, site_data = ODK_sites$site_habitats)
 final_cleaned_rodent_data <- final_cleaning_rodents(rodent_data = all_rodents)
+
+# Sequencing of rodents is being completed and processed in a different repository SL_rodent_PCR (https://github.com/DidDrog11/SL_rodent_PCR)
+rodent_sequences <- add_molecular_identification(data = final_cleaned_rodent_data)
+
+need_checking <- rodent_sequences[[1]]
+
+final_rodent_data <- rodent_sequences[[2]]
 
 # Spatial dataframe of trap site locations
 final_cleaned_trap_data$spatial_data <- st_as_sf(final_cleaned_trap_data$clean_sites, coords = c("lon", "lat")) %>%
