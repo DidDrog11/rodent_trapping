@@ -231,6 +231,8 @@ clean_rodent_data_ODK <- function(){
                                           key == "uuid:49dc1505-6dc2-435f-853d-a21f6ac29d2a" ~ "mastomys_spp",
                                           key == "uuid:82a1eb5c-04f4-45e0-b4bd-37f4212b6725" ~ "lemniscomys_spp",
                                           key == "uuid:c7235270-50de-4193-879b-c46e73e81e53" ~ "mastomys_spp",
+                                          dorsal_image_id == "1634212722084.jpg" ~ "lemniscomys_spp",
+                                          dorsal_image_id == "1668435915755.jpg" ~ "malacomys_spp",
                                           TRUE ~ initial_species_id),
            study_site = as_factor(study_site),
            trap_uid = paste0(village, "_", visit, "_", trap_night, "_", study_site, "_", trap_number)) %>%
