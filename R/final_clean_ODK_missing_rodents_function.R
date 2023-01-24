@@ -93,10 +93,15 @@ final_cleaning <- function(trap_data = all_traps, rodent_data = all_rodents, sit
                                     TRUE ~ site_habitat)) %>%
     write_csv(here("data", "clean_data", "trap_sites", paste0("trap_sites_", Sys.Date(), ".csv"))) #Read the data file from excel document and save within the repo as csv
   
+  deduplicate_clean_sites <- clean_sites %>%
+    distinct(date_set, village, visit, trap_night, grid_number, trap_number, rodent_uid, .keep_all = TRUE) %>%
+    group_by(village, visit, grid_number, trap_number) %>%
+    mutate(n = n())
+  
   missing_rodents <- rodent_data %>%
     filter(!rodent_uid %in% clean_sites$rodent_uid)
   
-  clean_data <- list("clean_sites" = clean_sites,
+  clean_data <- list("clean_sites" = deduplicate_clean_sites,
                      "missing_rodents" = missing_rodents)
   
   message(

@@ -112,10 +112,13 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
            trap_number = str_remove(trap_number, "_1"),
            trap_number = case_when(trap_number == "77_2" & visit == "1" & village == "lambayama" ~ "78", # Some trap sites have been misrecorded
                                    trap_number == "237" & visit == "2" & village == "lambayama" & grid_number == 5 ~ "236",
+                                   key == "uuid:16e261ed-a712-4e6e-a2be-3a7706265985" & str_detect(trap_number, "169") ~ "269",
+                                   key == "uuid:16e261ed-a712-4e6e-a2be-3a7706265985" & str_detect(trap_number, "194") ~ "294",
                                    trap_number == "117979" & visit == "7" & village == "lambayama" ~ "196",
+                                   trap_number == "140_1" & visit == "7" & village == "lambayama" ~ "140",
                                    trap_number == "236" & visit == "7" & village == "lambayama" ~ "235",
                                    trap_number == "236_2" & visit == "7" & village == "lambayama" ~ "236",
-                                   trap_number == "244_2" & visit == "7" & village == "lambayama" ~ "246",
+                                   trap_number == "244_2" & visit == "7" & village == "lambayama" ~ "227",
                                    trap_number == "203" & visit == "8" & village == "lambayama" ~ "202",
                                    trap_number == "203_2" & visit == "8" & village == "lambayama" ~ "203",
                                    
@@ -132,6 +135,7 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
                                    trap_number == "20_2" & visit == "3" & village == "lalehun" ~ "26",
                                    trap_number == "221_2" & visit == "3" & village == "lalehun" ~ "295",
                                    trap_number == "267_2" & visit == "4" & village == "lalehun" ~ "270",
+                                   trap_number == "283_2" & visit == "4" & village == "lalehun" ~ "293",
                                    trap_number == "246_2" & visit == "7" & village == "lalehun" ~ "247",
                                    trap_number == "249" & visit == "8" & village == "lalehun" ~ "248",
                                    trap_number == "249_2" & visit == "8" & village == "lalehun" ~ "249",
@@ -156,7 +160,6 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
                                    is.na(trap_number) & visit == "2" & village == "lambayama" & grid_number == 4 & elevation == 152 ~ 195,
                                    is.na(trap_number) & visit == "2" & village == "lambayama" & grid_number == 4 & elevation == 155 ~ 294,
                                    is.na(trap_number) & visit == "2" & village == "lambayama" & grid_number == 6 ~ 237,
-                                   is.na(trap_number) & visit == "4" & village == "lambayama" & grid_number == "6" ~ 294,
                                    is.na(trap_number) & visit == "3" & village == "lambayama" & grid_number == "4" & proximity == "garden" ~ 170,
                                    is.na(trap_number) & visit == "3" & village == "lambayama" & grid_number == "4" & proximity == "house" ~ 179,
                                    
@@ -172,7 +175,8 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
                                    is.na(trap_number) & visit == "6" & village == "seilama" & grid_number == "3" ~ 147,
                                    
                                    is.na(trap_number) & visit == "5" & village == "lalehun" & grid_number == "4" ~ 175,
-                                   is.na(trap_number) & visit == "6" & village == "lalehun" & grid_number == "7" ~ 343,is.na(trap_number) & visit == "6" & village == "lalehun" & grid_number == "6" ~ 293,
+                                   is.na(trap_number) & visit == "6" & village == "lalehun" & key == "uuid:6d61a211-7987-4e94-a297-2ff4b7248bf6" ~ 293,
+                                   is.na(trap_number) & visit == "6" & village == "lalehun" & key == "uuid:baef336e-bb76-44f8-8829-78fe32592009" ~ 343,
                                    
                                    is.na(trap_number) & key == "uuid:7d2cbdd3-c9fe-4d6b-af1b-933d389ebff5" ~ 197,
                                    is.na(trap_number) & key == "uuid:0ceb1121-b5e9-4675-87eb-383fe0273075" ~ 270,

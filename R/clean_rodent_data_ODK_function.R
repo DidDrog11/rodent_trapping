@@ -140,6 +140,7 @@ clean_rodent_data_ODK <- function(){
                                    key == "uuid:5ffee554-6d8c-4c33-ba16-72403c3f5305" ~ 253, # Grid data missing, allocated to closest known trap
                                    key == "uuid:92153960-251f-4946-ad1e-034b02326eea" ~ 293, # Grid data missing, allocated to closest known trap
                                    key == "uuid:5a5cc97c-55d8-4022-a8e4-296b050f180a" ~ 281, # Grid data missing, allocated to closest known trap
+                                   key == "uuid:e8aaa6e9-1891-48be-88cd-9c608c4c8aff" ~ 107, # Two rodents allocated to the same trap, which wasn't true
                                    TRUE ~ trap_number),
            study_site = case_when(village == "lalehun" & study_site == "not_listed" & visit == 4 ~ 7,
                                   
