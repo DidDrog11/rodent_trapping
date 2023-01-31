@@ -1,6 +1,10 @@
 combine_ODK_data <- function(trap = ODK_traps$full_trap_locations, check = ODK_trap_check, rodents = ODK_rodents) {
   
+  missing_traps <- read_csv(here("data", "raw_odk", "ODK_missing_grids.csv")) %>%
+    mutate(grid_number = factor(grid_number))
+  
   combined_data <- trap %>%
+    bind_rows(missing_traps) %>%
     left_join(., rodents %>%
                 dplyr::select(trap_uid, rodent_uid),
               by = "trap_uid") %>%
@@ -24,7 +28,7 @@ combine_ODK_data <- function(trap = ODK_traps$full_trap_locations, check = ODK_t
                                       !is.na(rodent_uid) ~ "yes",
                                       TRUE ~ "no"))
   
-  unaligned_rodents <- trap %>%
+  unaligned_rodents <- combined_data %>%
     anti_join(rodents %>%
                 dplyr::select(trap_uid, rodent_uid),
               .,
