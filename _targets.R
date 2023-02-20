@@ -1,14 +1,14 @@
 # Use tar_make() to run this script
-
 # Load packages and functions
 suppressPackageStartupMessages(source(here::here("packages.R")))
-walk(dir_ls(here("R")),  ~try(source(.)))
+# Load in functions and dictionaries, ignoring miscellaneous scripts
+walk(dir_ls(here("R"))[str_detect(dir_ls(here("R")), "_function.R|dictionary|project_wide")],  ~try(source(.)))
 
 # Visits have been confusing for the field team. Set up dataframe to handle visits based on when the forms were submitted.
-visit_dates <- tibble(year = c(rep(2021, 11), rep(2022, 17)),
-                      month = c(6, 6, 7, rep(7, 3), rep(10, 4), 11, rep(1, 4), 2, rep(4, 4), rep(8, 3), 10, rep(10, 2), rep(11, 2)),
-                      village = c(rep("bambawo", 1), rep("lambayama", 2), "baiama", "lalehun", "seilama", "lalehun", "seilama", "baiama", rep("lambayama", 2), "lalehun", "seilama", "baiama", rep("lambayama", 2), "lalehun", "seilama", "baiama","lambayama", "lalehun", "baiama", "lambayama", "seilama", "lalehun", "lambayama", "baiama", "seilama"),
-                      visit = c(rep(1, 4), rep(3, 2), rep(4, 2), rep(2, 3), rep(5, 2), rep(3, 3), rep(6, 2), rep(4, 2), rep(7, 4), rep(8, 4)))
+visit_dates <- tibble(year = c(rep(2021, 11), rep(2022, 17), rep(2023, 5)),
+                      month = c(6, 6, 7, rep(7, 3), rep(10, 4), 11, rep(1, 4), 2, rep(4, 4), rep(8, 3), 10, rep(10, 2), rep(11, 2), 1, rep(2, 4)),
+                      village = c(rep("bambawo", 1), rep("lambayama", 2), "baiama", "lalehun", "seilama", "lalehun", "seilama", "baiama", rep("lambayama", 2), "lalehun", "seilama", "baiama", rep("lambayama", 2), "lalehun", "seilama", "baiama","lambayama", "lalehun", "baiama", "lambayama", "seilama", "lalehun", "lambayama", "baiama", "seilama", "lalehun", "lalehun", "seilama", "baiama", "lambayama"),
+                      visit = c(rep(1, 4), rep(3, 2), rep(4, 2), rep(2, 3), rep(5, 2), rep(3, 3), rep(6, 2), rep(4, 2), rep(7, 4), rep(8, 4), rep(9, 5)))
 
 # If using rodent images set to TRUE
 download_rodent_pictures = FALSE
