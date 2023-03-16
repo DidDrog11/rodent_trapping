@@ -20,6 +20,7 @@ ODK_paper_combine_rodent <- function(ODK_data = ODK_rodents) {
            pairs_teats = as.numeric(pairs_teats),
            number_embryos = as.numeric(number_embryos),
            study_site = case_when(site_id == "3b" ~ "3",
+                                  site_id == "6" ~ "7",
                                   TRUE ~ as.character(site_id)),
            study_site = as_factor(as.integer(study_site)),
            village = case_when(str_detect(rodent_id, "LAL") ~ "lalehun",

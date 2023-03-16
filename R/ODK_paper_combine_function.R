@@ -17,6 +17,7 @@ ODK_paper_combine <- function(ODK_data = ODK_combined) {
            date_set = as.Date(date_set) + (as.numeric(trap_night)-1),
            across(any_of(factor_vars), ~ as_factor(.)),
            grid_number = case_when(grid_number %in% c("3a", "3b") ~ "3",
+                                   grid_number == 6 ~ "7",
                                    TRUE ~ as.character(grid_number)),
            grid_number = as_factor(as.integer(grid_number)),
            visit = as.numeric(visit),

@@ -37,7 +37,7 @@ ODK_rodents <- clean_rodent_data_ODK()
 
 # Combine the ODK forms
 ODK_combined <- combine_ODK_data(trap = ODK_traps$full_trap_locations, check = ODK_trap_check, rodent = ODK_rodents)
-# 20 rodents currently unmatched
+# 0 rodents currently unmatched
 
 # Combine the paper and ODK forms
 all_traps <- ODK_paper_combine(ODK_data = ODK_combined)
@@ -45,7 +45,14 @@ all_rodents <- ODK_paper_combine_rodent(ODK_data = ODK_rodents)
 
 # Site consistency relabel trap grids based on locations, rather than numbers that the study team may have incorrectly put in
 # The numbering used at site setup will be used as the reference
-consistent_traps <- harmonise_sites()
+# consistent_traps <- harmonise_sites()
+
+# Assess final locations and grid numbers
+test_locations <- st_as_sf(all_traps %>%
+                             distinct(village, visit, grid_number, trap_number, .keep_all = TRUE),
+                           coords = c("lon", "lat"),
+                           crs = project_crs)
+mapview::mapview(test_locations, z = "grid_number")
 
 # Rename images stored in data/rodent_images only needed if download_rodent_pictures was set to TRUE, otherwise would have previously been done.
 all_images <- rename_images(new_images = FALSE, delete_old_images = TRUE)

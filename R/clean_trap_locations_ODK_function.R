@@ -133,7 +133,8 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
     # Remove duplicated entries that do not contain data
     filter(!key %in% c("uuid:fb73e831-1048-4a65-883b-489d03ad0383", #Grid number 1 Seilama visit 6
                        "uuid:e81caa23-6d1d-431d-a6cf-2f0a700a1353", #Grid number 2 Lalehun visit 7 this data appears to be missing but this entry does not contain useful data
-                       "uuid:273a50c3-82e5-4346-b8fa-162307ad4d3f" #Grid number 1 Seilama visit 3, data is duplicated
+                       "uuid:273a50c3-82e5-4346-b8fa-162307ad4d3f", #Grid number 1 Seilama visit 3, data is duplicated
+                       "uuid:16e261ed-a712-4e6e-a2be-3a7706265985" #Contains two traps, unclear whether this was a mistake
                        ))
   
   fix_trap_numbers <- prep_trap_numbers %>%
@@ -202,7 +203,7 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
                                       key == "uuid:fb8b9501-30d9-48ef-b2b2-4cadbd643ce2" & trap_number_duplicates == "264_2" ~ 345,
                                       key == "uuid:fb8b9501-30d9-48ef-b2b2-4cadbd643ce2" & trap_number_duplicates == "265_2" ~ 346,
                                       key == "uuid:fb8b9501-30d9-48ef-b2b2-4cadbd643ce2" & trap_number_duplicates == "266_2" ~ 347,
-                                      key == "uuid:5888a838-d656-40af-bd53-cd065ad4aaf8" & trap_number_duplicates == "2002_1" ~ 245,
+                                      key == "uuid:5888a838-d656-40af-bd53-cd065ad4aaf8" & trap_number_duplicates == "2002_1" ~ 202,
                                       key == "uuid:ba6bf1ba-15bc-43cc-a605-61146a99c69e" & trap_number_duplicates == "117979_1" ~ 196,
                                       !is.na(trap_number_duplicates) ~ as.numeric(str_remove_all(trap_number_duplicates, "_1")))) %>%
     drop_na(all_of(c("lon_dec", "lat_dec", "trap_number"))) %>% # remove those missing trap numbers and coordinates, it is likely they miscounted the number of entries required
@@ -344,7 +345,7 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
              village == "seilama" & visit == 9 & trap_number == 264 ~ 11.598,
              village == "seilama" & visit == 9 & trap_number == 279 ~ 11.630,
              
-             village == "seilama" & visit == 9 & grid_number %in% c(3, 5) ~ (swapped_lat - 11) * 100,
+             village == "seilama" & visit == 9 & grid_number %in% c(3, 4, 5) ~ (swapped_lat - 11) * 100,
              
              village == "baiama" & visit == 3 & trap_number %in% c(2, 3, 4, 5, 6, 7) ~ swapped_lat,
              village == "baiama" & visit == 3 & trap_number == 195 ~ 15.9879,
@@ -530,7 +531,7 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
              village == "seilama" & visit == 9 & trap_number == 92 ~ 7.391,
              village == "seilama" & visit == 9 & trap_number %in% c(299:302) ~ 7.331,
              
-             village == "seilama" & visit == 9 & grid_number %in% c(3, 5) ~ (swapped_lon - 8) * 100,
+             village == "seilama" & visit == 9 & grid_number %in% c(3, 4, 5) ~ (swapped_lon - 8) * 100,
              
              village == "baiama" & visit == 3 & trap_number %in% c(2, 3, 4, 5, 6, 7) ~ swapped_lon,
              

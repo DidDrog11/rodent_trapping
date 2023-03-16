@@ -3,7 +3,7 @@ add_molecular_identification <- function(data) {
   combined_data <- readRDS(gzcon(url("https://github.com/DidDrog11/SL_rodent_PCR/raw/main/data/output/rodent_sequences.rds")))
   
   require_checking <- combined_data$require_checking %>%
-    select(rodent_uid, blastn, blastn_identity, field_identification = clean_names)
+    select(rodent_uid, blastn, blastn_identity, field_id)
   
   rodent_sequences <- combined_data$rodent_sequences %>%
     select(rodent_uid, species = blastn, sequence_identity = blastn_identity)

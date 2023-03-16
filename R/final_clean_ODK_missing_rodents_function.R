@@ -11,26 +11,10 @@ final_cleaning <- function(trap_data = all_traps, rodent_data = all_rodents, sit
            rodent_trapped = case_when(rodent_trapped == "yes" ~ "yes",
                                       TRUE ~ "no")) %>%
     left_join(., site_data %>%
-                mutate(visit_number = as_factor(visit_number),
-                       site = as_factor(site)) %>%
-                select(site_habitat = habitat, village, visit = visit_number, grid_number = site),
+                mutate(visit = as_factor(visit),
+                       study_site = as_factor(study_site)) %>%
+                select(site_habitat = habitat, village, visit, grid_number = study_site),
               by = c("village", "visit", "grid_number")) %>%
-    mutate(research_visit = case_when(village %in% c("lalehun", "seilama") & visit == "1" ~ 0,
-                                      village %in% c("lalehun", "seilama") & visit == "2" ~ 1,
-                                      village %in% c("lalehun", "seilama") & visit == "3" ~ 2,
-                                      village %in% c("lalehun", "seilama") & visit == "4" ~ 3,
-                                      village %in% c("lalehun", "seilama") & visit == "5" ~ 4,
-                                      village %in% c("lalehun", "seilama") & visit == "6" ~ 5,
-                                      village %in% c("lalehun", "seilama") & visit == "7" ~ 6,
-                                      village %in% c("lalehun", "seilama") & visit == "8" ~ 7,
-                                      village %in% c("bambawo", "baiama", "lambayama") & visit == "1" ~ 2,
-                                      village %in% c("bambawo", "baiama", "lambayama") & visit == "2" ~ 3,
-                                      village %in% c("bambawo", "baiama", "lambayama") & visit == "3" ~ 4,
-                                      village %in% c("bambawo", "baiama", "lambayama") & visit == "4" ~ 5,
-                                      village %in% c("bambawo", "baiama", "lambayama") & visit == "7" ~ 6,
-                                      village %in% c("bambawo", "baiama", "lambayama") & visit == "8" ~ 7,
-                                      TRUE ~ as.numeric(visit)),
-           research_visit = factor(research_visit, levels = c(0, 1, 2, 3, 4, 5, 6, 7), labels = c("Pilot", "1", "2", "3", "4", "5", "6", "7"))) %>%
     mutate(habitat_group = case_when(village == "bambawo" & grid_number == "1" ~ "forest/fallow",
                                      village == "bambawo" & grid_number == "2" ~ "distal_agriculture",
                                      village == "bambawo" & grid_number == "3" ~ "forest/fallow",
