@@ -4,14 +4,11 @@
 suppressPackageStartupMessages(source(here::here("packages.R")))
 walk(dir_ls(here("R")),  ~try(source(.)))
 
-# Visits have been confusing for the field team. Set up dataframe to handle visits based on when the forms were submitted.
-visit_dates <- tibble(year = c(rep(2021, 11), rep(2022, 17)),
-                      month = c(6, 6, 7, rep(7, 3), rep(10, 4), 11, rep(1, 4), 2, rep(4, 4), rep(8, 3), 10, rep(10, 2), rep(11, 2)),
-                      village = c(rep("bambawo", 1), rep("lambayama", 2), "baiama", "lalehun", "seilama", "lalehun", "seilama", "baiama", rep("lambayama", 2), "lalehun", "seilama", "baiama", rep("lambayama", 2), "lalehun", "seilama", "baiama","lambayama", "lalehun", "baiama", "lambayama", "seilama", "lalehun", "lambayama", "baiama", "seilama"),
-                      visit = c(rep(1, 4), rep(3, 2), rep(4, 2), rep(2, 3), rep(5, 2), rep(3, 3), rep(6, 2), rep(4, 2), rep(7, 4), rep(8, 4)))
+# Visits have been confusing for the field team. Read in an .xlsx file which contains the year, month, day, village and visit number to use as a reference based on when files were uploaded to central.
+visit_dates <- read_xlsx(here("data", "visit_dates.xlsx"))
 
 # If using rodent images set to TRUE
-download_rodent_pictures = FALSE
+download_rodent_pictures = TRUE
 
 # Update the data if required
 get_ODK()
@@ -23,6 +20,16 @@ ODK_sites <- clean_site_ODK()
 ODK_traps <- clean_trap_locations_ODK()
 # fix the obvious errors, i.e. swapped lat/lon and including the degrees before changing the improbables manually in specific the function
 # check using mapview::mapview(ODK_traps$coord_error$spatial)
+
+# Impute locations of traps with missing data using an .xlsx file to identify the grids and visits needed to be imputed
+# Imputation will occur using the closest location of that trap number in time, i.e., last value carried forward
+impute_grids <- read_xlsx(here("data", "missing_grids.xlsx"))
+imputed_traps <- impute_traps()
+
+# To add the imputed traps uncomment this line, but check the necessity of including them in missing_grids.xlsx first
+# Currently locations of 1027 traps are imputed
+ODK_traps$full_trap_locations <- bind_rows(ODK_traps$full_trap_locations,
+                                           imputed_traps)
 
 ODK_trap_check <- clean_trap_check_ODK()
 # Visit dates need to be added within the function before running

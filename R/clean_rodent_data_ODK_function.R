@@ -32,7 +32,7 @@ clean_rodent_data_ODK <- function(){
                                     "unclear_lophurorus", "unclear_proamysrus")
   
   not_needed_vars <- c("SubmissionDate", "village_name", "rodent_numbering", 
-                       "rodent_number", "trap_details-study_site", "trap_details-site_number_input", 
+                       "trap_details-study_site", "trap_details-site_number_input", 
                        "trap_details-trap_number_int", "trap_details-trap_night", "trap_details-notes", 
                        "rodent_details-genus", "rodent_details-genus_other", "rodent_details-species", 
                        "rodent_details-species_other", "rodent_details-photo_dorsal", 
@@ -48,15 +48,19 @@ clean_rodent_data_ODK <- function(){
                        "Status", "ReviewState", "DeviceID", "Edits", "village_abbreviation", "date_set")
   
   
-  rodents <- read_csv(all_files[1], show_col_types = FALSE) %>%
+  prep_rodent <- read_csv(all_files[1], show_col_types = FALSE) %>%
     filter(ReviewState != "rejected" | is.na(ReviewState)) %>%
     select(-visit) %>%
     mutate(year = year(form_entry),
            month = month(form_entry),
+           day = dt_case_when(village_name == "seilama" & month == 10 & year == 2022 ~ day(form_entry),
+                              TRUE ~ as.integer(NA)),
            village_name = case_when(is.na(village_name) & rodent_number == 38 ~ "seilama",
                                     KEY == "uuid:d33d36a5-37ce-4453-bcde-46ef75d23974" ~ "lambayama",
                                     TRUE ~ village_name)) %>%
-    left_join(visit_dates, by = c("year", "month", "village_name" = "village")) %>%
+    left_join(visit_dates %>%
+                mutate(day = as.integer(day)),
+              by = c("year", "month", "day", "village_name"  = "village")) %>%
     mutate(date_entered = as.Date(ymd_hms(form_entry)),
            village_abbreviation = toupper(str_sub(village_name, end = 3)),
            genus = case_when(`rodent_details-genus` == "not_listed" ~ `rodent_details-genus_other`,
@@ -84,7 +88,10 @@ clean_rodent_data_ODK <- function(){
                                                 KEY == "uuid:02a4d50a-345e-41e2-90ae-f5a5e35abfc9" ~ "7BAI09", # was duplicate but 9 was missed out
                                                 KEY == "uuid:826e1bbc-5f5d-4ec7-926f-5c2166285eac" ~ "8BAI13", # was duplicate but but form filled in after other rodent named 11
                                                 KEY == "uuid:cea27a61-5e18-455a-a8a5-1c03127db6b3" ~ "8BAI14", # was duplicate but but form filled in after other rodent named 12
-                                                TRUE ~ `acquisition-filter_label`)) %>% # give duplicates 99 to separate them but acknowledge need checking
+                                                KEY == "uuid:6210166f-61c5-40b3-b3de-8e28724f8294" ~ "9SEI18", # number of rodent was 18
+                                                KEY == "uuid:d6a54331-7f73-41fb-9ef2-21e5981474ec" ~ "9LAL10", # number of rodent was 10
+                                                TRUE ~ `acquisition-filter_label`)) %>%
+    drop_na(rodent_number) %>%
     rename("village" = "village_name",
            "study_site" = "trap_details-study_site", 
            "trap_number" = "trap_details-trap_number_int",
@@ -105,43 +112,69 @@ clean_rodent_data_ODK <- function(){
            "teats_visible" = "rodent_details-teats_visible", 
            "pairs_teats" = "rodent_details-number_teats", 
            "number_embryos" = "rodent_details-embryos",
+           "filter_label" = `acquisition-filter_label`,
            "key" = "KEY") %>%
-    filter(key != "uuid:16e6f1d6-6e16-4d70-8aa2-b82698872d69") %>%
+    select(-any_of(not_needed_vars), -any_of(c("year", "month", "day"))) %>%
+    filter(!key %in% c("uuid:c0c7923b-c7be-49b0-9997-f0dd202a7802" #Duplicated entry based on photo)
+                       ))
+  
+  sample_inventory <- read_xlsx(here("data", "sample_inventory_2023-03-01.xlsx"))
+  
+  n_missing <- sample_inventory %>%
+    filter(ODK == "F") %>%
+    nrow()
+  
+  message(paste0("Missing ODK entries have been compared to the sample inventory from March 2023, there are ", n_missing, " missing entries"))
+  
+  fix_rodent_number <- prep_rodent %>%
     # Create the rodent number based on the label used for blood filter
-    mutate(filter_label_number = str_pad(str_extract(`acquisition-filter_label`, "\\d+[^\\d]*$"), 3, pad = 0),
+    mutate(filter_label_number = str_pad(str_extract(filter_label, "\\d+[^\\d]*$"), 3, pad = 0),
            filter_label_number = case_when(key == "uuid:a11445f8-6ec5-4726-a0f2-f915c22fa148" ~ "013",
                                            TRUE ~ filter_label_number),
-           filter_label = `acquisition-filter_label`,
-           rodent_uid = paste0(visit, "_", village_abbreviation, "_", filter_label_number),
-           trap_number = case_when(rodent_number == 1 & village == "bambawo" & visit == 1 ~ 9,
-                                   rodent_number == 2 & village == "bambawo" & visit == 1 ~ 13,
-                                   
-                                   rodent_number == 4 & village == "lambayama" & visit == 2 ~ 232,
-                                   key == "uuid:5a5cc97c-55d8-4022-a8e4-296b050f180a" ~ 301,
-                                   key == "uuid:92153960-251f-4946-ad1e-034b02326eea" ~ 298,
-                                   key == "uuid:6c7b1900-4802-4212-a9b9-f105735ff999" ~ 232,
-                                   key == "uuid:05bfcf2d-8935-4b36-a5e7-252c6ae91b6d" ~ 11,
-                                   key == "uuid:494fbf14-c7a6-4d8c-9251-11d87c6a5584" ~ 18,
-                                   key == "uuid:8b0553c5-6f1c-4cfc-94a6-5aa29ce54f17" ~ 31,
-                                   key == "uuid:e89bc936-1505-4ccf-9903-b555c5a1be0e" ~ 34,
-                                   key == "uuid:3a144c76-9fe3-4075-9f60-033163e88963" ~ 40,
-                                   key == "uuid:a318a091-f7ff-4612-ab65-672def33a705" ~ 59,
-                                   key == "uuid:6693d496-2e2a-4c16-a8c2-015302fc9577" ~ 142,
-                                   key == "uuid:08398e35-e7a1-44d7-8637-4a4743c7b411" ~ 229,
-                                   key == "uuid:856d83f6-15e0-4084-a9a8-a61cc8aba13a" ~ 192, #
-                                   key == "uuid:e17b3227-bc71-4d2e-8e04-c2f340ae0de8" ~ 225, #
-                                   key == "uuid:856d83f6-15e0-4084-a9a8-a61cc8aba13a" ~ 228, #
-                                   key == "uuid:5ffee554-6d8c-4c33-ba16-72403c3f5305" ~ 243, #
-                                   key == "uuid:72d60def-49f3-43a0-988f-0b4f3ce9902e" ~ 246, #
-                                   key == "uuid:73063e63-4fe1-49b2-b3b3-54335745a093" ~ 335,
-                                   key == "uuid:541b64c1-eedd-4220-ba3c-faf7c9c79c43" ~ 264, # Grid data missing, allocated to closest known trap
-                                   key == "uuid:e17b3227-bc71-4d2e-8e04-c2f340ae0de8" ~ 255, # Grid data missing, allocated to closest known trap
-                                   key == "uuid:856d83f6-15e0-4084-a9a8-a61cc8aba13a" ~ 202, # Grid missing, allocated to trap at next session
-                                   key == "uuid:5ffee554-6d8c-4c33-ba16-72403c3f5305" ~ 253, # Grid data missing, allocated to closest known trap
-                                   key == "uuid:92153960-251f-4946-ad1e-034b02326eea" ~ 293, # Grid data missing, allocated to closest known trap
-                                   key == "uuid:5a5cc97c-55d8-4022-a8e4-296b050f180a" ~ 281, # Grid data missing, allocated to closest known trap
-                                   key == "uuid:e8aaa6e9-1891-48be-88cd-9c608c4c8aff" ~ 107, # Two rodents allocated to the same trap, which wasn't true
-                                   TRUE ~ trap_number),
+           rodent_uid = paste0(visit, "_", str_to_upper(str_sub(village, end = 3)), "_", filter_label_number),
+           rodent_number = as.numeric(filter_label_number))
+  
+  trap_in_trap_data <- fix_rodent_number %>%
+    select(rodent_number, rodent_uid, village, visit, study_site, trap_number, key) %>%
+    mutate(grid_number = factor(study_site)) %>%
+    select(-study_site) %>%
+    left_join(ODK_traps$full_trap_locations %>%
+                distinct(village, visit, grid_number, trap_number) %>%
+                mutate(in_trap = TRUE),
+              by = c("village", "visit", "trap_number"))
+  
+  no_associated_trap <- trap_in_trap_data %>%
+    filter(is.na(in_trap))
+  # 17 rodents do not have trap numbers in the trap dataset
+  # The majority of these are from Lalehun visit 4 all but two of them list the grid they came from
+  
+  assigning_trap <- no_associated_trap %>%
+    mutate(trap_number = dt_case_when(key == "uuid:73063e63-4fe1-49b2-b3b3-54335745a093" ~ 330, # Previous and subsequent rodent came from traps around this number
+                                      key == "uuid:5a5cc97c-55d8-4022-a8e4-296b050f180a" ~ 283,
+                                      key == "uuid:92153960-251f-4946-ad1e-034b02326eea" ~ 298, # Written in the notes
+                                      key == "uuid:5ffee554-6d8c-4c33-ba16-72403c3f5305" ~ 254,
+                                      key == "uuid:72d60def-49f3-43a0-988f-0b4f3ce9902e" ~ 250,
+                                      key == "uuid:856d83f6-15e0-4084-a9a8-a61cc8aba13a" ~ 231,
+                                      key == "uuid:6693d496-2e2a-4c16-a8c2-015302fc9577" ~ 135,
+                                      key == "uuid:a318a091-f7ff-4612-ab65-672def33a705" ~ 78,
+                                      key == "uuid:3a144c76-9fe3-4075-9f60-033163e88963" ~ 26,
+                                      key == "uuid:e17b3227-bc71-4d2e-8e04-c2f340ae0de8" ~ 240,
+                                      key == "uuid:e89bc936-1505-4ccf-9903-b555c5a1be0e" ~ 5,
+                                      key == "uuid:8b0553c5-6f1c-4cfc-94a6-5aa29ce54f17" ~ 9,
+                                      key == "uuid:494fbf14-c7a6-4d8c-9251-11d87c6a5584" ~ 19,
+                                      key == "uuid:05bfcf2d-8935-4b36-a5e7-252c6ae91b6d" ~ 29,
+                                      key == "uuid:541b64c1-eedd-4220-ba3c-faf7c9c79c43" ~ 273,
+                                      key == "uuid:458d1e7e-9e40-4df5-b3d4-236d665d5e91" ~ 13,
+                                      key == "uuid:4b2556c4-528c-4e25-a5df-7a8eb22ac989" ~ 9,
+                                      TRUE ~ as.numeric(NA))) %>%
+    select(key, assigned_trap_number = trap_number)
+  
+  missing_traps <- fix_rodent_number %>%
+    left_join(assigning_trap, by = c("key")) %>%
+    mutate(trap_number = dt_case_when(is.na(assigned_trap_number) ~ trap_number,
+                                      TRUE ~ assigned_trap_number)) %>%
+    # Assign grid based on the locations of traps
+    ,
            study_site = case_when(village == "lalehun" & study_site == "not_listed" & visit == 4 ~ 7,
                                   
                                   rodent_number == 10 & village == "bambawo" & visit == 1 ~ 3,

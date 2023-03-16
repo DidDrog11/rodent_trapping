@@ -31,6 +31,7 @@ pkgs =
     "stringr",
     "targets",
     "terra",
+    "tidyfast",
     "tidyverse",
     "tmap",
     "tmaptools",
