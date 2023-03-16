@@ -1,8 +1,8 @@
 # Use tar_make() to run this script
-
 # Load packages and functions
 suppressPackageStartupMessages(source(here::here("packages.R")))
-walk(dir_ls(here("R")),  ~try(source(.)))
+# Load in functions and dictionaries, ignoring miscellaneous scripts
+walk(dir_ls(here("R"))[str_detect(dir_ls(here("R")), "_function.R|dictionary|project_wide")],  ~try(source(.)))
 
 # Visits have been confusing for the field team. Read in an .xlsx file which contains the year, month, day, village and visit number to use as a reference based on when files were uploaded to central.
 visit_dates <- read_xlsx(here("data", "visit_dates.xlsx"))
