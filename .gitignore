@@ -2,6 +2,8 @@
 .Rhistory
 .RData
 .Ruserdata
+.DS_Store
+.Renviron
 
 reports/figures/
 
@@ -14,6 +16,7 @@ data/tmp_data
 data/raw_odk/
 data/clean_data/
 
+
 # allow
 !data/spatial/lal_bbox.rds
 !data/spatial/sei_bbox.rds
@@ -25,4 +28,3 @@ data/clean_data/
 !data/satellite/eastern_province_landuse_labels.rds
 
 !data/data_for_export/combined_data.rds
-.DS_Store

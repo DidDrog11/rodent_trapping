@@ -24,7 +24,6 @@ pkgs =
     "readxl",
     "RhpcBLASctl",
     "rsample",
-    "ruODK",
     "sf",
     "slickR",
     "snakecase",
@@ -41,3 +40,8 @@ pkgs =
   )
 pacman::p_load(pkgs, character.only = T)
 
+remotes::install_github(
+  "ropensci/ruODK@main", 
+  dependencies = TRUE, 
+  upgrade = "ask",
+  build_vignettes = FALSE)
