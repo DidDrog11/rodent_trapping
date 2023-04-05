@@ -43,6 +43,7 @@ clean_site_ODK <- function() {
                                                         str_detect(habitat_type, "agriculture") & str_detect(`non_village-crop_type_new_site`, "none|None") ~ "fallow",
                                                         is.na(`non_village-crop_type_new_site`) & str_detect(habitat_type, "agriculture") ~ site_use,
                                                         TRUE ~ `non_village-crop_type_new_site`)) %>%
+    drop_na(village_name) %>%
     group_by(village_name, visit_number) %>%
     mutate(date_set = ymd(min(form_entry))) %>%
     rename("crop_type" = "non_village-crop_type_new_site",
@@ -61,7 +62,8 @@ clean_site_ODK <- function() {
                            TRUE ~ as.integer(NA))) %>%
     left_join(visit_dates %>%
                 mutate(day = as.integer(day)), by = c("year", "month", "day", "village")) %>%
-    select(form_entry, village, visit)
+    select(form_entry, village, visit) %>%
+    distinct()
   
   trap_sites <- trap_sites %>%
     ungroup() %>%

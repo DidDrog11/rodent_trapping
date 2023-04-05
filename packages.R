@@ -45,3 +45,5 @@ remotes::install_github(
   dependencies = TRUE, 
   upgrade = "ask",
   build_vignettes = FALSE)
+
+library("ruODK")
