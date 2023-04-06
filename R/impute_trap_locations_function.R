@@ -11,7 +11,7 @@ impute_traps <- function() {
     mutate(grid_number = factor(grid_number)) 
   
   imputed_traps <- unrecorded_traps %>%
-    left_join(known_traps, by = c("village", "grid_number", "trap_number")) %>%
+    left_join(known_traps, by = c("village", "grid_number", "trap_number"), relationship = "many-to-many") %>%
     mutate(difference_visits = abs(visit.x - visit.y)) %>%
     group_by(village, visit.x, grid_number, trap_number) %>%
     arrange(difference_visits) %>%

@@ -134,8 +134,25 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
     filter(!key %in% c("uuid:fb73e831-1048-4a65-883b-489d03ad0383", #Grid number 1 Seilama visit 6
                        "uuid:e81caa23-6d1d-431d-a6cf-2f0a700a1353", #Grid number 2 Lalehun visit 7 this data appears to be missing but this entry does not contain useful data
                        "uuid:273a50c3-82e5-4346-b8fa-162307ad4d3f", #Grid number 1 Seilama visit 3, data is duplicated
-                       "uuid:16e261ed-a712-4e6e-a2be-3a7706265985" #Contains two traps, unclear whether this was a mistake
-                       ))
+                       "uuid:16e261ed-a712-4e6e-a2be-3a7706265985", #Contains two traps, unclear whether this was a mistake
+                       "uuid:88c3c5bb-3d43-45d4-b77b-e06fb011d704", # Grid 5 Seilama visit 4, no trap data
+                       "uuid:50d8c3fc-9d92-455f-b079-39ea097b2879",
+                       "uuid:eba75906-d935-47aa-9922-2e01f1cafa73",
+                       "uuid:832983ff-0500-42d9-94b3-e12f4cf3432f", # Grids 4, 5 and 7 Lalehun visit 4, no trap data
+                       "uuid:a88b065f-bf90-4ca6-a5ff-b83512774cd8", # Lalehun visit 2 grid 5 was collected on paper
+                       "uuid:baae3f5a-7e17-4a6b-869e-e1b3d3e59535", # As was grid 6
+                       "uuid:99929980-5bf2-4852-a748-29aad213ca5d", # Duplicate of above
+                       "uuid:fdee86a1-60e2-452d-93e9-5eea899f6bda",
+                       "uuid:96ba17dc-9d66-4432-bb78-cd84cfc514f1"
+                       )) %>%
+    filter(!(key %in% c("uuid:e3dd03fa-9fdc-44e0-a4a9-f4d9471b9b95",
+                        "uuid:1fc265fd-0953-4919-b138-1dd1695001b1",
+                        "uuid:3a2029b8-bb47-4d28-a6e8-10247d8608cb",
+                        "uuid:3ca04e00-549b-4e01-9b61-ac2dfd56c2ca",
+                        "uuid:9a81b76f-2a33-43d1-95c2-91ac4f954441",
+                        "uuid:459531db-0653-43fb-aba2-1fffe05c9afc",
+                        "uuid:8427d4ab-7c98-4df9-a922-60f24f06462c"
+                        ) & is.na(elevation))) # Remove single rows where they have miscounted the number of traps
   
   fix_trap_numbers <- prep_trap_numbers %>%
     group_by(key, village, visit, trap_number) %>%
@@ -151,6 +168,7 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
                                       key == "uuid:18f14b9a-9dac-4f1f-bbfa-344edacd3848" & trap_number_duplicates == "236_2" ~ 236,
                                       key == "uuid:18f14b9a-9dac-4f1f-bbfa-344edacd3848" & trap_number_duplicates == "244_1" ~ 240,
                                       key == "uuid:18f14b9a-9dac-4f1f-bbfa-344edacd3848" & trap_number_duplicates == "244_2" ~ 244,
+                                      key == "uuid:18f14b9a-9dac-4f1f-bbfa-344edacd3848" & trap_number_duplicates == "140_1" & habitat_type == "village_outside" ~ 227,
                                       key == "uuid:1b0f5761-d581-406b-8fd4-d5585fce4f33" & trap_number_duplicates == "116_2" ~ 147, #Two 116's, 147 is missing, no rodents trapped in either of the 116
                                       key == "uuid:1fc265fd-0953-4919-b138-1dd1695001b1" & trap_number_duplicates == "Not numbered" ~ 294,
                                       key == "uuid:2374d745-45e3-42b7-b651-7733295b3142" & trap_number_duplicates == "278_2" ~ 293,
@@ -159,6 +177,7 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
                                       key == "uuid:459531db-0653-43fb-aba2-1fffe05c9afc" & trap_number_duplicates == "77_2" ~ 78,
                                       key == "uuid:45fcea23-9ec3-4b58-915a-75ee31a08402" & trap_number_duplicates == "14_1" ~ 13,
                                       key == "uuid:45fcea23-9ec3-4b58-915a-75ee31a08402" & trap_number_duplicates == "14_2" ~ 14, #Two 14's but 13 is missing
+                                      key == "uuid:45fcea23-9ec3-4b58-915a-75ee31a08402" & trap_number_duplicates == "20_2" ~ 99,
                                       key == "uuid:479fc079-636b-47ae-812a-bd6b8abeabcb" & trap_number_duplicates == "265_1" ~ 264,
                                       key == "uuid:479fc079-636b-47ae-812a-bd6b8abeabcb" & trap_number_duplicates == "265_2" ~ 265,
                                       key == "uuid:4b3738fd-e6d1-4d55-bc77-fa52074287b8" & trap_number_duplicates == "141_2" ~ 101, #Two 141's but 101 is missing
@@ -174,7 +193,7 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
                                       key == "uuid:6fa6c154-b5e1-40cc-9db2-f8944bdd9280" & trap_number_duplicates == "17_2" ~ 18, #Two 17's but 18 is missing 
                                       key == "uuid:6fa6c154-b5e1-40cc-9db2-f8944bdd9280" & trap_number_duplicates == "29_1" ~ 28, #Two 29's but 28 is missing 
                                       key == "uuid:6fa6c154-b5e1-40cc-9db2-f8944bdd9280" & trap_number_duplicates == "29_2" ~ 29,
-                                      key == "uuid:6fa6c154-b5e1-40cc-9db2-f8944bdd9280" & trap_number_duplicates == "29_2" ~ 38, #Two 35's but 38 is missing 
+                                      key == "uuid:6fa6c154-b5e1-40cc-9db2-f8944bdd9280" & trap_number_duplicates == "35_2" ~ 38, #Two 35's but 38 is missing 
                                       key == "uuid:7d2cbdd3-c9fe-4d6b-af1b-933d389ebff5" & trap_number_duplicates == "173_2" ~ 174, #Two 17's but 18 is missing 
                                       key == "uuid:89d746e8-8093-41a3-b4e1-547dc27e04a1" & trap_number_duplicates == "221_1" ~ 220, #Two 221's but 220 is missing 
                                       key == "uuid:89d746e8-8093-41a3-b4e1-547dc27e04a1" & trap_number_duplicates == "221_2" ~ 221,
@@ -205,24 +224,26 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
                                       key == "uuid:fb8b9501-30d9-48ef-b2b2-4cadbd643ce2" & trap_number_duplicates == "266_2" ~ 347,
                                       key == "uuid:5888a838-d656-40af-bd53-cd065ad4aaf8" & trap_number_duplicates == "2002_1" ~ 202,
                                       key == "uuid:ba6bf1ba-15bc-43cc-a605-61146a99c69e" & trap_number_duplicates == "117979_1" ~ 196,
-                                      !is.na(trap_number_duplicates) ~ as.numeric(str_remove_all(trap_number_duplicates, "_1")))) %>%
+                                      str_detect(trap_number_duplicates, "_") ~ trap_number)) %>%
     drop_na(all_of(c("lon_dec", "lat_dec", "trap_number"))) %>% # remove those missing trap numbers and coordinates, it is likely they miscounted the number of entries required
     select(-trap_number_duplicates)
   
   fix_grids <- fix_trap_numbers %>%
-    mutate(grid_number = dt_case_when(site_use == "Forest" & village == "seilama" & visit == 3 & grid_number == "4" ~ 5,
-                                      village == "lalehun" & visit == "3" & as.numeric(trap_number) < 99 & as.numeric(trap_number) >= 50 ~ 3,
-                                      village == "lambayama" & visit == "4" & grid_number == "1" ~ 4,
-                                      village == "lambayama" & visit == "4" & grid_number == "2" ~ 1,
-                                      village == "lambayama" & visit == "4" & grid_number == "3" ~ 2,
-                                      village == "lambayama" & visit == "4" & grid_number == "4" ~ 3,
-                                      village == "lambayama" & visit == "4" & trap_number %in% c(148:197) ~ 4,
-                                      village == "lambayama" & visit == "6" & trap_number %in% c(148:196) ~ 4,
-                                      village == "lalehun" & visit == "9" & trap_number %in% c(148:196) ~ 5,
-                                      village == "lalehun" & visit == "9" & trap_number %in% c(197:245) ~ 4,
-                                      village == "seilama" & visit == "9" & trap_number %in% c(148:196) ~ 4,
-                                      site_use == "village_inside" ~ 7,
-                                      TRUE ~ grid_number))
+    mutate(fix_grid_number = dt_case_when(site_use == "Forest" & village == "seilama" & visit == 3 & grid_number == "4" ~ 5,
+                                          village == "lalehun" & visit == "3" & as.numeric(trap_number) < 99 & as.numeric(trap_number) >= 50 ~ 3,
+                                          village == "lambayama" & visit == "4" & grid_number == "1" ~ 4,
+                                          village == "lambayama" & visit == "4" & grid_number == "2" ~ 1,
+                                          village == "lambayama" & visit == "4" & grid_number == "3" ~ 2,
+                                          village == "lambayama" & visit == "4" & grid_number == "4" ~ 3,
+                                          village == "lambayama" & visit == "4" & trap_number %in% c(148:196) ~ 4,
+                                          village == "lambayama" & visit == "6" & trap_number %in% c(148:196) ~ 4,
+                                          village == "lalehun" & visit == "9" & trap_number %in% c(148:196) ~ 5,
+                                          village == "lalehun" & visit == "9" & trap_number %in% c(197:245) ~ 4,
+                                          village == "seilama" & visit == "9" & trap_number %in% c(148:196) ~ 4,
+                                          site_use == "village_inside" ~ 7,
+                                          TRUE ~ grid_number)) %>%
+    mutate(grid_number = coalesce(fix_grid_number, grid_number)) %>%
+    select(-fix_grid_number)
   
   fix_locations <- fix_grids %>%
     mutate(lon_degree = 11,
@@ -386,6 +407,8 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
              
              village == "baiama" & visit == 8 & grid_number %in% c(1) ~ (swapped_lat - 11) * 100,
              
+             village == "baiama" & visit == 9 ~ (swapped_lat - 11) * 100,
+             
              village == "lambayama" & visit == 3 & trap_number == 50 ~ 11.6820,
              
              village == "lambayama" & visit == 4 & trap_number == 50 ~ 11.6765,
@@ -422,7 +445,10 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
              
              village == "lambayama" & visit == 7 & grid_number %in% c(1, 2, 3) ~ (swapped_lat - 11) * 100,
              
+             village == "lambayama" & visit == 9 & trap_number == 197 ~ 11.78,
+             
              village == "lambayama" & visit == 9 & grid_number %in% c(1, 2, 3) ~ (swapped_lat - 11) * 100,
+             village == "lambayama" & visit == 9 & grid_number %in% c(7) & trap_number %in% c(197:245)  ~ (swapped_lat - 11) * 100,
              
              village == "bambawo" & visit == 1 & trap_number == 191 ~ 8.5905,
              
@@ -575,6 +601,8 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
              
              village == "baiama" & visit == 8 & grid_number %in% c(1) ~ (swapped_lon - 7) * 100,
              
+             village == "baiama" & visit == 9 ~ (swapped_lon - 7) * 100,
+             
              village == "lambayama" & visit == 3 & trap_number == 50 ~ 51.0729,
              village == "lambayama" & visit == 3 & trap_number == 153 ~ 50.9851,
              
@@ -645,7 +673,8 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
              village == "lambayama" & visit == 9 & trap_number %in% c(97) ~ 51.071,
              
              village == "lambayama" & visit == 9 & grid_number %in% c(1, 2, 3) ~ (swapped_lon - 7) * 100,
-             village == "lambayama" & visit == 9 & grid_number %in% c(7) ~ lat_dec + 1,
+             village == "lambayama" & visit == 9 & grid_number %in% c(7) & trap_number %in% c(197:245)  ~ (swapped_lon - 7) * 100,
+             village == "lambayama" & visit == 9 & grid_number %in% c(7) & trap_number %in% c(246:295) ~ lat_dec + 1,
              
              village == "bambawo" & visit == 3 & trap_number == 53 ~ 0.5458,
              
@@ -689,8 +718,13 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
   dplyr::select(SubmissionDate, date_set, village, visit, grid_number, trap_number, site_use, intensity, crop_type, habitat,
                 proximity, trap_land_type, lon, lon_dec, lon_DdM, lat, lat_dec, lat_DdM, elevation, key, site_key, number_of_adults, job, number_of_children, roof, walls,
                 floor, containers, sleeping, trap_image)
+  
+  mapview::mapview(st_as_sf(fix_locations, coords = c("lon", "lat"), crs = project_crs), z = "grid_number")
 
-  trap_nos <- filter(fix_locations, grepl("_2", trap_number))
+  trap_nos <- fix_locations %>%
+    group_by(village, visit, grid_number, trap_number) %>% 
+    mutate(tn = n()) %>%
+    filter(tn > 1)
   
   message(cat(ifelse(nrow(trap_nos) == 0, "There are no duplicated trap numbers.",
                      paste(

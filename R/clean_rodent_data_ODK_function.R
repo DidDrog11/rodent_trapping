@@ -50,17 +50,28 @@ clean_rodent_data_ODK <- function(){
   
   prep_rodent <- read_csv(all_files[1], show_col_types = FALSE) %>%
     filter(ReviewState != "rejected" | is.na(ReviewState)) %>%
-    select(-visit) %>%
     mutate(year = year(form_entry),
            month = month(form_entry),
            day = dt_case_when(village_name == "seilama" & month == 10 & year == 2022 ~ day(form_entry),
                               TRUE ~ as.integer(NA)),
            village_name = case_when(is.na(village_name) & rodent_number == 38 ~ "seilama",
                                     KEY == "uuid:d33d36a5-37ce-4453-bcde-46ef75d23974" ~ "lambayama",
-                                    TRUE ~ village_name)) %>%
+                                    TRUE ~ village_name)) 
+  
+  re_added_rodents <- prep_rodent %>%
+    filter(as_date(form_entry) == as_date("2023-03-22") | KEY %in% c("uuid:e20a32e8-95db-411d-9827-d271e3b267eb",
+                                                                     "uuid:3de79455-2d80-4af0-9cac-94e768092406",
+                                                                     "uuid:45e1e578-50e8-4e47-a004-dd390c189c89"))
+  
+  remove_re_added_rodents <- prep_rodent %>%
+    filter(!KEY %in% re_added_rodents$KEY)
+  
+  field_collection <- remove_re_added_rodents %>%
     left_join(visit_dates %>%
-                mutate(day = as.integer(day)),
+                mutate(day = as.integer(day)) %>%
+                rename(visit_date = visit),
               by = c("year", "month", "day", "village_name"  = "village")) %>%
+    mutate(visit = coalesce(visit_date, visit)) %>%
     mutate(date_entered = as.Date(ymd_hms(form_entry)),
            village_abbreviation = toupper(str_sub(village_name, end = 3)),
            genus = case_when(`rodent_details-genus` == "not_listed" ~ `rodent_details-genus_other`,
@@ -115,10 +126,10 @@ clean_rodent_data_ODK <- function(){
            "number_embryos" = "rodent_details-embryos",
            "filter_label" = `acquisition-filter_label`,
            "key" = "KEY") %>%
-    select(-any_of(not_needed_vars), -any_of(c("year", "month", "day"))) %>%
+    select(-any_of(not_needed_vars), -any_of(c("year", "month", "day")), -visit_date) %>%
     filter(!key %in% c("uuid:c0c7923b-c7be-49b0-9997-f0dd202a7802" #Duplicated entry based on photo)
                        ))
-  
+  # Update this file manually if missing rodents have been added
   sample_inventory <- read_xlsx(here("data", "sample_inventory_2023-03-01.xlsx"))
   
   n_missing <- sample_inventory %>%
@@ -127,7 +138,7 @@ clean_rodent_data_ODK <- function(){
   
   message(paste0("Missing ODK entries have been compared to the sample inventory from March 2023, there are ", n_missing, " missing entries"))
   
-  fix_rodent_number <- prep_rodent %>%
+  fix_rodent_number <- field_collection %>%
     # Create the rodent number based on the label used for blood filter
     mutate(filter_label_number = str_pad(str_extract(filter_label, "\\d+[^\\d]*$"), 3, pad = 0),
            filter_label_number = case_when(key == "uuid:a11445f8-6ec5-4726-a0f2-f915c22fa148" ~ "013",
@@ -174,8 +185,7 @@ clean_rodent_data_ODK <- function(){
                                                key == "uuid:7900c206-affa-46ad-a48a-30ec373eb5bc" ~ 203, # Trap number given is in the wrong grid, assigned to correct grid
                                                key == "uuid:16e6f1d6-6e16-4d70-8aa2-b82698872d69" ~ 208, # Assigned to the same traps
                                                key == "uuid:6c7b1900-4802-4212-a9b9-f105735ff999" ~ 158, # Trap number given is in the wrong grid, assigned to correct grid
-                                               key == "uuid:ef7809c6-993c-4549-b8a2-46ba1f9c6852" ~ 216, # Traps are single capture, assign this rodent to a neighbouring trap
-                                               TRUE ~ as.numeric(NA))) %>%
+                                               key == "uuid:ef7809c6-993c-4549-b8a2-46ba1f9c6852" ~ 216))  %>% # Traps are single capture, assign this rodent to a neighbouring trap
     select(key, trap_number, assigned_trap_number)
   
   still_missing_trap <- assigning_trap %>%
@@ -216,6 +226,16 @@ clean_rodent_data_ODK <- function(){
     mutate(grid_number = as_factor(grid_number),
            trap_uid = paste0(village, "_", visit, "_", trap_night, "_", grid_number, "_", trap_number)) %>%
            dplyr::select(-any_of(not_needed_vars), -starts_with("site_images"))
+  
+  check_rodent_uid <- final_rodent %>%
+    distinct(rodent_uid) %>%
+    nrow() == nrow(final_rodent)
+  
+  check_trap_uid <- final_rodent %>%
+    distinct(trap_uid) %>%
+    nrow() == nrow(final_rodent)
+  
+  message(paste0("There are ", nrow(final_rodent), " rodents in the `final_rodent` dataset.\n The number of unique rodent IDs being equal to the number of rows is: ", check_rodent_uid, ".", "\nThe number of unique trap IDs of these rodents being equal to the number of rows is: ", check_trap_uid))
   
   return(final_rodent)
   

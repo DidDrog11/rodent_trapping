@@ -19,7 +19,7 @@ ODK_sites <- clean_site_ODK()
 # If coordinates have been incorrectly input into the forms, correct in the following function
 ODK_traps <- clean_trap_locations_ODK()
 # fix the obvious errors, i.e. swapped lat/lon and including the degrees before changing the improbables manually in specific the function
-# check using mapview::mapview(ODK_traps$coord_error$spatial)
+# check using mapview::mapview(ODK_traps$full_trap_locations_spatial, z = "grid_number")
 
 # Impute locations of traps with missing data using an .xlsx file to identify the grids and visits needed to be imputed
 # Imputation will occur using the closest location of that trap number in time, i.e., last value carried forward
