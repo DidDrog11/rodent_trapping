@@ -24,6 +24,8 @@ ODK_traps <- clean_trap_locations_ODK()
 # Impute locations of traps with missing data using an .xlsx file to identify the grids and visits needed to be imputed
 # Imputation will occur using the closest location of that trap number in time, i.e., last value carried forward
 impute_grids <- read_xlsx(here("data", "missing_grids.xlsx"))
+# The traps are slightly off for a lot of the visit 10 grids, these will be corrected using the imputation where necessary
+# This was because a different GPS device was used which is older and apparently has some offset
 imputed_traps <- impute_traps()
 
 # To add the imputed traps uncomment this line, but check the necessity of including them in missing_grids.xlsx first
@@ -37,7 +39,7 @@ ODK_rodents <- clean_rodent_data_ODK()
 
 # Combine the ODK forms
 ODK_combined <- combine_ODK_data(trap = ODK_traps$full_trap_locations, check = ODK_trap_check, rodent = ODK_rodents)
-# 0 rodents currently unmatched
+# 9 rodents currently unmatched
 
 # Combine the paper and ODK forms
 all_traps <- ODK_paper_combine(ODK_data = ODK_combined)
@@ -55,7 +57,7 @@ test_locations <- st_as_sf(all_traps %>%
 mapview::mapview(test_locations, z = "grid_number")
 
 # Rename images stored in data/rodent_images only needed if download_rodent_pictures was set to TRUE, otherwise would have previously been done.
-all_images <- rename_images(new_images = FALSE, delete_old_images = TRUE)
+all_images <- rename_images(new_images = TRUE, delete_old_images = TRUE)
 
 # 92 expected images are not provided
 table(is.na(all_images$file))

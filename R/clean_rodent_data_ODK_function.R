@@ -102,6 +102,8 @@ clean_rodent_data_ODK <- function(){
                                                 KEY == "uuid:6210166f-61c5-40b3-b3de-8e28724f8294" ~ "9SEI18", # number of rodent was 18
                                                 KEY == "uuid:d6a54331-7f73-41fb-9ef2-21e5981474ec" ~ "9LAL10", # number of rodent was 10
                                                 KEY == "uuid:460457f1-3cb1-4d47-a27d-16ed8082c4be" ~ "3BAM15",
+                                                KEY == "uuid:576f0fea-e5a7-461a-b3f3-59f15b9520bf" ~ "10SEI10", # correctly numbered on photo
+                                                KEY == "uuid:509a2456-89cb-4c8f-a9ad-4223af71a7a2" ~ "10LAL09", # correctly numbered on photo
                                                 TRUE ~ `acquisition-filter_label`)) %>%
     drop_na(rodent_number) %>%
     rename("village" = "village_name",
@@ -130,13 +132,13 @@ clean_rodent_data_ODK <- function(){
     filter(!key %in% c("uuid:c0c7923b-c7be-49b0-9997-f0dd202a7802" #Duplicated entry based on photo)
                        ))
   # Update this file manually if missing rodents have been added
-  sample_inventory <- read_xlsx(here("data", "sample_inventory_2023-03-01.xlsx"))
+  sample_inventory <- read_xlsx(here("data", "sample_inventory_2023-05-15.xlsx"))
   
   n_missing <- sample_inventory %>%
     filter(ODK == "F") %>%
     nrow()
   
-  message(paste0("Missing ODK entries have been compared to the sample inventory from March 2023, there are ", n_missing, " missing entries"))
+  message(paste0("Missing ODK entries have been compared to the sample inventory from May 2023, there are ", n_missing, " missing entries"))
   
   fix_rodent_number <- field_collection %>%
     # Create the rodent number based on the label used for blood filter

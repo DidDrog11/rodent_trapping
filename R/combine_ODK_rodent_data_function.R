@@ -36,8 +36,7 @@ ODK_paper_combine_rodent <- function(ODK_data = ODK_rodents) {
                                   mutate(source_data = "Paper"),
                                 ODK_data %>%
                                   mutate(source_data = "ODK")) %>%
-    mutate(across(any_of(factor_vars), ~as_factor(.)),
-           rodent_uid = substr(rodent_uid, 1, 9))
+    mutate(across(any_of(factor_vars), ~as_factor(.)))
   
   # Age classification logic
   # Females with perforate vaginas are adults
