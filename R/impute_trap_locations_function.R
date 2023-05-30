@@ -1,6 +1,7 @@
-impute_traps <- function() {
+impute_traps <- function(replace_visit) {
   
   known_traps <- ODK_traps$full_trap_locations %>%
+    filter(!visit %in% replace_visit) %>%
     select(village, visit, grid_number, trap_number, lon, lat) %>%
     distinct()
   
@@ -16,7 +17,11 @@ impute_traps <- function() {
     group_by(village, visit.x, grid_number, trap_number) %>%
     arrange(difference_visits) %>%
     slice(1) %>%
-    select(village, visit = visit.x, grid_number, trap_number, lon, lat)
+    select(village, visit = visit.x, grid_number, trap_number, lon, lat) %>%
+    ungroup() %>%
+    arrange(village, visit, grid_number, trap_number) %>%
+    fill(lon, .direction = "down") %>%
+    fill(lat, .direction = "down")
   
   add_date <- ODK_traps$full_trap_locations %>%
     select(date_set, village, visit, trap_night) %>%
@@ -29,10 +34,10 @@ impute_traps <- function() {
                                    TRUE ~ date_set))
   
   add_habitat <- ODK_traps$full_trap_locations %>%
-    select(village, trap_number, site_use, intensity, crop_type, habitat, proximity, trap_land_type) %>%
+    select(village, grid_number, trap_number, site_use, intensity, crop_type, habitat, proximity, trap_land_type) %>%
     drop_na(habitat) %>%
-    distinct(village, trap_number, .keep_all = TRUE) %>%
-    right_join(add_date, by = c("village", "trap_number"))
+    distinct(village, grid_number, trap_number, .keep_all = TRUE) %>%
+    right_join(add_date, by = c("village", "grid_number", "trap_number"))
   
   add_trap_night <- add_habitat %>%
     mutate(trap_night = 4) %>%

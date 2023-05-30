@@ -102,6 +102,7 @@ clean_rodent_data_ODK <- function(){
                                                 KEY == "uuid:6210166f-61c5-40b3-b3de-8e28724f8294" ~ "9SEI18", # number of rodent was 18
                                                 KEY == "uuid:d6a54331-7f73-41fb-9ef2-21e5981474ec" ~ "9LAL10", # number of rodent was 10
                                                 KEY == "uuid:460457f1-3cb1-4d47-a27d-16ed8082c4be" ~ "3BAM15",
+                                                KEY == "uuid:0aca61a5-1a22-4bf6-b964-b963d72be202" ~ "7LAL13",
                                                 KEY == "uuid:576f0fea-e5a7-461a-b3f3-59f15b9520bf" ~ "10SEI10", # correctly numbered on photo
                                                 KEY == "uuid:509a2456-89cb-4c8f-a9ad-4223af71a7a2" ~ "10LAL09", # correctly numbered on photo
                                                 TRUE ~ `acquisition-filter_label`)) %>%
