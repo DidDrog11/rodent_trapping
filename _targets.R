@@ -8,7 +8,7 @@ walk(dir_ls(here("R"))[str_detect(dir_ls(here("R")), "_function.R|dictionary|pro
 visit_dates <- read_xlsx(here("data", "visit_dates.xlsx"))
 
 # If using rodent images set to TRUE
-download_rodent_pictures = TRUE
+download_rodent_pictures = FALSE
 
 # Update the data if required
 get_ODK()
@@ -27,7 +27,9 @@ ODK_traps <- clean_trap_locations_ODK()
 # This was because a different GPS device was used which is older and apparently has some offset that is not trivial to correct for
 impute_grids <- read_xlsx(here("data", "missing_grids.xlsx"))
 
-imputed_traps <- impute_traps(replace_visit = 10)
+replace_visit = 10
+
+imputed_traps <- impute_traps(replace_visit = replace_visit)
 
 # To add the imputed traps uncomment this line, but check the necessity of including them in missing_grids.xlsx first
 # Currently locations of 2051 traps are imputed
