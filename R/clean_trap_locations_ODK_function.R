@@ -267,7 +267,9 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
              village == "lalehun" & visit == 4 & trap_number == 1 ~ 4.7653,
              village == "lalehun" & visit == 4 & trap_number == 45 ~ 4.7544,
              village == "lalehun" & visit == 4 & trap_number == 27 ~ 4.7653,
+             village == "lalehun" & visit == 4 & trap_number == 32 ~ 4.7602,
              village == "lalehun" & visit == 4 & trap_number == 84 ~ 4.7430,
+             village == "lalehun" & visit == 4 & trap_number == 124 ~ 4.830,
              village == "lalehun" & visit == 4 & trap_number == 144 ~ 4.826,
              village == "lalehun" & visit == 4 & trap_number == 174 ~ 4.686,
              village == "lalehun" & visit == 4 & trap_number == 176 ~ 4.684,
@@ -320,6 +322,7 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
              village == "lalehun" & visit == 9 & trap_number == 51  ~ 4.773,
              village == "lalehun" & visit == 9 & trap_number == 98  ~ 4.73,
              village == "lalehun" & visit == 9 & trap_number == 103  ~ 4.8130,
+             village == "lalehun" & visit == 9 & trap_number == 113  ~ 4.817,
              village == "lalehun" & visit == 9 & trap_number == 239  ~ 4.6901,
              village == "lalehun" & visit == 9 & trap_number == 247  ~ 4.8030,
              
@@ -370,6 +373,7 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
              village == "seilama" & visit == 7 & grid_number %in% c(2, 3, 4) ~ (swapped_lat - 11) * 100,
              
              village == "seilama" & visit == 8 & trap_number == 26 ~ 11.5406,
+             village == "seilama" & visit == 8 & trap_number == 141 ~ 11.674,
              village == "seilama" & visit == 8 & trap_number == 184 ~ 11.655,
              village == "seilama" & visit == 8 & trap_number == 285 ~ 11.6275,
              
@@ -504,6 +508,7 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
              village == "lalehun" & visit == 4 & trap_number == 27 ~ 11.7797,
              village == "lalehun" & visit == 4 & trap_number == 45 ~ 11.7787,
              village == "lalehun" & visit == 4 & trap_number == 1 ~ 11.8006,
+             village == "lalehun" & visit == 4 & trap_number == 124 ~ 11.938,
              village == "lalehun" & visit == 4 & trap_number == 142 ~ 11.962,
              
              village == "lalehun" & visit == 4 & lat_dec <= 12 & lat_dec >= 8 ~ (swapped_lon-8)*100,
@@ -548,6 +553,7 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
              
              village == "lalehun" & visit == 9 & trap_number == 75  ~ 11.925,
              village == "lalehun" & visit == 9 & trap_number == 86  ~ 11.932,
+             village == "lalehun" & visit == 9 & trap_number == 113  ~ 11.940,
              village == "lalehun" & visit == 9 & trap_number == 266  ~ 11.842,
              
              village == "lalehun" & visit == 9 & grid_number %in% c(2, 3, 4, 5) ~ (swapped_lon-8)*100,
@@ -602,6 +608,13 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
              village == "seilama" & visit == 9 & trap_number == 58 ~ 7.375,
              village == "seilama" & visit == 9 & trap_number == 68 ~ 7.386,
              village == "seilama" & visit == 9 & trap_number == 92 ~ 7.391,
+             village == "seilama" & visit == 9 & trap_number == 141 ~ 7.424,
+             village == "seilama" & visit == 9 & trap_number == 142 ~ 7.425,
+             village == "seilama" & visit == 9 & trap_number == 143 ~ 7.427,
+             village == "seilama" & visit == 9 & trap_number == 144 ~ 7.429,
+             village == "seilama" & visit == 9 & trap_number == 145 ~ 7.430,
+             village == "seilama" & visit == 9 & trap_number == 146 ~ 7.432,
+             village == "seilama" & visit == 9 & trap_number == 147 ~ 7.434,
              village == "seilama" & visit == 9 & trap_number %in% c(299:302) ~ 7.331,
              
              village == "seilama" & visit == 9 & grid_number %in% c(3, 4, 5) ~ (swapped_lon - 8) * 100,
