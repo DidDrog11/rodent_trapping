@@ -311,6 +311,7 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
              village == "lalehun" & visit == 7 & grid_number %in% c(2, 3, 4, 5) ~ (swapped_lat - 11) * 100,
              
              village == "lalehun" & visit == 8 & trap_number == 26  ~ 4.7623,
+             village == "lalehun" & visit == 8 & trap_number == 32  ~ 4.7602,
              village == "lalehun" & visit == 8 & trap_number == 43  ~ 4.7518,
              village == "lalehun" & visit == 8 & trap_number == 70  ~ 4.762,
              village == "lalehun" & visit == 8 & trap_number == 282  ~ 4.7708,
@@ -405,7 +406,7 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
              village == "baiama" & visit == 4 & trap_number == 195 ~ 15.975,
              village == "baiama" & visit == 4 & trap_number == 26 ~ 15.017,
              village == "baiama" & visit == 4 & trap_number == 28 ~ 15.019,
-             village == "baiama" & visit == 4 & trap_number == 109 ~ 15.736,
+             village == "baiama" & visit == 4 & trap_number == 109 ~ 15.732,
              village == "baiama" & visit == 4 & trap_number == 111 ~ 15.724,
              village == "baiama" & visit == 4 & trap_number == 121 ~ 15.726,
              village == "baiama" & visit == 4 & trap_number == 122 ~ 15.750,
@@ -630,6 +631,7 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
              
              village == "baiama" & visit == 3 & trap_number %in% c(2, 3, 4, 5, 6, 7) ~ swapped_lon,
              
+             village == "baiama" & visit == 4 & trap_number == 109 ~ 49.822,
              village == "baiama" & visit == 4 & trap_number == 185 ~ 50.1830,
              
              village == "baiama" & visit == 4 & grid_number %in% c(4, 5, 6, 7) ~ swapped_lon,
@@ -669,6 +671,10 @@ clean_trap_locations_ODK <- function(trap_sites = ODK_sites$trap_sites){
              village == "baiama" & visit == 8 & trap_number == 79 ~ 49.7945,
              
              village == "baiama" & visit == 8 & grid_number %in% c(1) ~ (swapped_lon - 7) * 100,
+             
+             village == "baiama" & visit == 9 & trap_number == 71 ~ 49.802,
+             village == "baiama" & visit == 9 & trap_number == 72 ~ 49.803,
+             village == "baiama" & visit == 9 & trap_number == 73 ~ 49.804,
              
              village == "baiama" & visit == 9 ~ (swapped_lon - 7) * 100,
              

@@ -8,7 +8,7 @@ walk(dir_ls(here("R"))[str_detect(dir_ls(here("R")), "_function.R|dictionary|pro
 visit_dates <- read_xlsx(here("data", "visit_dates.xlsx"))
 
 # If using rodent images set to TRUE
-download_rodent_pictures = FALSE
+download_rodent_pictures = TRUE
 
 # Update the data if required
 get_ODK()
@@ -43,7 +43,7 @@ ODK_rodents <- clean_rodent_data_ODK()
 
 # Combine the ODK forms
 ODK_combined <- combine_ODK_data(trap = ODK_traps$full_trap_locations, check = ODK_trap_check, rodent = ODK_rodents)
-# 9 rodents currently unmatched
+# 0 rodents currently unmatched
 
 # Combine the paper and ODK forms
 all_traps <- ODK_paper_combine(ODK_data = ODK_combined)
