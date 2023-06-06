@@ -1,4 +1,4 @@
-get_ODK <- function(){
+get_ODK <- function(force_update){
   
   t <- tempdir()
   
@@ -7,7 +7,11 @@ get_ODK <- function(){
   
   all_forms <- form_list()$name
   
-  if(file.exists(here("data", "raw_odk", "last_submission.rds"))) {
+  if (force_update == TRUE) {
+    
+    download_new = TRUE
+    
+  } else if(file.exists(here("data", "raw_odk", "last_submission.rds"))) {
     last_submission <- read_rds(here("data", "raw_odk", "last_submission.rds"))
     
     recent_submission <- max(form_list()$last_submission, na.rm = TRUE)
@@ -20,7 +24,7 @@ get_ODK <- function(){
     
     download_new = TRUE
     
-  }
+  } 
   
   if(download_rodent_pictures == TRUE) {
     

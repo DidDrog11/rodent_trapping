@@ -11,7 +11,7 @@ visit_dates <- read_xlsx(here("data", "visit_dates.xlsx"))
 download_rodent_pictures = TRUE
 
 # Update the data if required
-get_ODK()
+get_ODK(force_update = FALSE)
 
 # Update the local data
 # If the study visit has been incorrectly input into the forms, correct in the following function
@@ -86,4 +86,5 @@ final_cleaned_trap_data$spatial_data <- st_as_sf(final_cleaned_trap_data$clean_s
 write_rds(final_cleaned_trap_data$spatial_data, here("data", "clean_data", "spatial_traps", "trap_spatial.rds"))
 
 # Repositories have been created for chapter 3 and 4. These use this cleaned data, the next function produces these datasets.
+# This also includes some cleaning steps that have been added to the chapters and since relocated here
 save_for_chapters()
